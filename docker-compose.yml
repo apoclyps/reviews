@@ -1,0 +1,36 @@
+version: "3.7"
+services:
+  cli: &cli
+    build: .
+    command: python cli.py dashboard
+    working_dir: /usr/src/app/
+    environment:
+      - DEBUG=true
+    volumes:
+      - "./:/usr/src/app/"
+    stdin_open: true
+    tty: true
+
+  isort:
+    <<: *cli
+    command: isort cli.py dexi
+
+  black:
+    <<: *cli
+    command: black --check cli.py dexi
+
+  flake8:
+    <<: *cli
+    command: flake8 cli.py dexi
+
+  mypy:
+    <<: *cli
+    command: mypy . --ignore-missing-imports
+
+  pylint:
+    <<: *cli
+    command: pylint --rcfile=.pylintrc cli.py dexi
+
+  test:
+    <<: *cli
+    command: pytest -cov=dexi -cov-report -vvv

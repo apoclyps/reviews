@@ -1,0 +1,11 @@
+# Docker ignore whitelist
+
+!cli.py
+!dexi
+!tests
+!.flake8
+!.pylintrc
+!.isort.cfg
+!.pylintrc
+!requirements.txt
+!requirements_dev.txt
