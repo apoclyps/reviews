@@ -1,19 +1,21 @@
-import click
+# import click
+import asyncclick as click
 
 from time import sleep
 from rich.live import Live
 from dexi.fullscreen import new_job_progress, make_layout
+from dexi.git import get_repos
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
 
 
 @click.group(context_settings=CONTEXT_SETTINGS)
-def main():
+async def main():
     """Click entrypoint with help provided by default."""
 
 
 @main.command(help="Display a dashboard")
-def dashboard():
+async def dashboard():
     """ Dashboard command. """
 
     click.echo("start dashboard")
@@ -39,9 +41,12 @@ def dashboard():
                     overall_task,
                 ) = new_job_progress(layout)
 
+            await get_repos(layout)
+
             while not overall_progress.finished:
                 # TODO: use async defer
                 sleep(0.05)
+
                 for job in job_progress.tasks:
                     if not job.finished:
                         job_progress.advance(job.id)
@@ -50,5 +55,10 @@ def dashboard():
                 overall_progress.update(overall_task, completed=completed)
 
 
+click.anyio_backend = "asyncio"
+
 if __name__ == "__main__":
-    main()
+    # import asyncio
+    # asyncio.run(main())
+
+    main(_anyio_backend="asyncio")  # or asyncio, or curio

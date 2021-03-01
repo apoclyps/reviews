@@ -1,4 +1,7 @@
+import asyncio
 from github import Github
+from rich.table import Table
+import humanize
 
 from dexi import config
 
@@ -6,24 +9,31 @@ from dexi import config
 g = Github(config.GITHUB_TOKEN, per_page=config.DEFAULT_PAGE_SIZE)
 
 
-# for repo in g.get_user().get_repos():
-#     print(repo.name)
+async def get_repos(layout):
+    await asyncio.sleep(1)
 
-repo = g.get_repo("slicelife/ros-service")
-pulls = repo.get_pulls(state="open", sort="created", base="master")
-for pr in pulls:
-    import pdb
+    table = Table(show_header=True, header_style="bold white")
+    table.add_column("#", style="dim", width=4)
+    table.add_column("Title")
+    table.add_column("Created At")
+    table.add_column("Updated At")
+    table.add_column("Approved")
 
-    pdb.set_trace()
-    print(pr.number)
-    print(pr.title)
-    print(pr.created_at)
-    print(pr.state)
-    print(pr.updated_at)
-    print(pr.url)
-    print([r for r in pr.get_reviews()])
+    repo = g.get_repo("slicelife/ros-service")
+    pulls = repo.get_pulls(state="open", sort="created", base="master")
+    for pr in pulls:
+        approved = any([r for r in pr.get_reviews()])
+        created_at = humanize.naturaltime(pr.created_at)
+        updated_at = humanize.naturaltime(pr.updated_at)
 
+        table.add_row(
+            f"[white]{pr.number} ",
+            f"[red]{pr.title}",
+            f"{created_at}",
+            f"{updated_at}",
+            f"{approved}",
+        )
 
-import pdb
+        layout["body"].update(table)
 
-pdb.set_trace()
+    return
