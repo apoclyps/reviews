@@ -3,10 +3,8 @@ from github import Github
 from rich.table import Table
 import humanize
 
-from dexi import config
 
-
-g = Github(config.GITHUB_TOKEN, per_page=config.DEFAULT_PAGE_SIZE)
+from dexi.source_control.client import GithubAPI
 
 
 async def get_repos(layout):
@@ -19,8 +17,11 @@ async def get_repos(layout):
     table.add_column("Updated At")
     table.add_column("Approved")
 
-    repo = g.get_repo("slicelife/ros-service")
-    pulls = repo.get_pulls(state="open", sort="created", base="master")
+    repo = GithubAPI().get_repository(org="slicelife", repo="ros-service")
+    pulls = GithubAPI().get_pull_requests(
+        repository=repo, state="open", sort="created", base="master"
+    )
+
     for pr in pulls:
         approved = any([r for r in pr.get_reviews()])
         created_at = humanize.naturaltime(pr.created_at)

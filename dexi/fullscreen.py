@@ -10,6 +10,9 @@ from rich.table import Table
 from rich.text import Text
 from rich.tree import Tree
 
+from dexi import config
+from dexi.datasource.client import create_connection, create_table
+
 console = Console()
 
 
@@ -120,8 +123,15 @@ def new_job_progress(layout):
 
     pull_request_tree = tree_layout(workspace="apoclyps", tree=None)
 
+    database = config.DATA_PATH + "/" + config.FILENAME
+    conn = create_connection(database)
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM pull_requests")
+
+    rows = cur.fetchall()
+
     layout["header"].update(Header())
-    layout["body"].update(make_sponsor_message())
+    layout["body"].update(str(rows))
     layout["pull_requests"].update(
         Panel(pull_request_tree, title="Pull Requests", border_style="blue")
     )

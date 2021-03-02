@@ -4,7 +4,8 @@ import asyncclick as click
 from time import sleep
 from rich.live import Live
 from dexi.fullscreen import new_job_progress, make_layout
-from dexi.git import get_repos
+from dexi.source_control import get_repos
+from create import prepare_database
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
 
@@ -19,6 +20,8 @@ async def dashboard():
     """ Dashboard command. """
 
     click.echo("start dashboard")
+
+    prepare_database()
 
     layout = make_layout()
 
@@ -55,10 +58,7 @@ async def dashboard():
                 overall_progress.update(overall_task, completed=completed)
 
 
-click.anyio_backend = "asyncio"
-
 if __name__ == "__main__":
-    # import asyncio
-    # asyncio.run(main())
+    # click.anyio_backend = "asyncio"
 
-    main(_anyio_backend="asyncio")  # or asyncio, or curio
+    main(_anyio_backend="asyncio")
