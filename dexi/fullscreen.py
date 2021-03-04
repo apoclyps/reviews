@@ -11,7 +11,6 @@ from rich.text import Text
 from rich.tree import Tree
 
 from dexi import config
-from dexi.datasource.client import create_connection, create_table
 
 console = Console()
 
@@ -123,22 +122,26 @@ def new_job_progress(layout):
 
     pull_request_tree = tree_layout(workspace="apoclyps", tree=None)
 
-    database = config.DATA_PATH + "/" + config.FILENAME
-    conn = create_connection(database)
-    cur = conn.cursor()
-    cur.execute("SELECT * FROM pull_requests")
+    # database = config.DATA_PATH + "/" + config.FILENAME
+    # conn = create_connection(database)
+    # cur = conn.cursor()
+    # cur.execute("SELECT * FROM pull_requests")
 
-    rows = cur.fetchall()
+    # rows = cur.fetchall()
 
-    layout["header"].update(Header())
-    layout["body"].update(str(rows))
-    layout["pull_requests"].update(
-        Panel(pull_request_tree, title="Pull Requests", border_style="blue")
-    )
+    def initial_render():
+        layout["header"].update(Header())
+        layout["body"].update("")
+        layout["pull_requests"].update(
+            Panel(pull_request_tree, title="Pull Requests", border_style="blue")
+        )
 
-    layout["review"].update(Panel("", title="Ready to Review", border_style="blue"))
+        layout["review"].update(Panel("", title="Ready to Review", border_style="blue"))
 
-    layout["ship"].update(Panel("", title="Ready to Ship", border_style="blue"))
-    layout["footer"].update(progress_table)
+        layout["ship"].update(Panel("", title="Ready to Ship", border_style="blue"))
+        layout["footer"].update(progress_table)
+
+    
+    initial_render()
 
     return job_progress, layout, overall_progress, overall_task

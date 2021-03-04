@@ -35,6 +35,4 @@ async def get_repos(layout):
             f"{approved}",
         )
 
-        layout["body"].update(table)
-
-    return
+    return table

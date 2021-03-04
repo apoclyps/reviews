@@ -44,7 +44,8 @@ async def dashboard():
                     overall_task,
                 ) = new_job_progress(layout)
 
-            await get_repos(layout)
+            table = await get_repos(layout)
+            layout["body"].update(table)
 
             while not overall_progress.finished:
                 # TODO: use async defer
