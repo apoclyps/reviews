@@ -1,8 +1,8 @@
-# import click
-import asyncclick as click
-
 from time import sleep
+
+import asyncclick as click
 from rich.live import Live
+
 from dexi.fullscreen import new_job_progress, make_layout
 from dexi.source_control import get_repos
 from create import prepare_database
@@ -48,7 +48,6 @@ async def dashboard():
             layout["body"].update(table)
 
             while not overall_progress.finished:
-                # TODO: use async defer
                 sleep(0.05)
 
                 for job in job_progress.tasks:
@@ -60,6 +59,4 @@ async def dashboard():
 
 
 if __name__ == "__main__":
-    # click.anyio_backend = "asyncio"
-
     main(_anyio_backend="asyncio")

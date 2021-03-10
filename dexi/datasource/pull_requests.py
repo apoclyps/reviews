@@ -1,11 +1,9 @@
 import sqlite3
 
 
-
 class PullRequestManager:
     def __init__(self, client):
         self.client = client
-
 
     def query(self, sql, data):
         with self.client as db:

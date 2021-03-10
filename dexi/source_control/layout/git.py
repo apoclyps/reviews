@@ -8,8 +8,6 @@ from dexi.source_control.client import GithubAPI
 
 
 async def get_repos(layout):
-    await asyncio.sleep(1)
-
     table = Table(show_header=True, header_style="bold white")
     table.add_column("#", style="dim", width=4)
     table.add_column("Title")

@@ -141,7 +141,6 @@ def new_job_progress(layout):
         layout["ship"].update(Panel("", title="Ready to Ship", border_style="blue"))
         layout["footer"].update(progress_table)
 
-    
     initial_render()
 
     return job_progress, layout, overall_progress, overall_task
