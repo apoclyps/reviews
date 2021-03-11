@@ -8,7 +8,9 @@ from rich.panel import Panel
 from dexi.controller import retrieve_pull_requests
 from dexi.layout.helpers import generate_layout, generate_tree_layout
 from dexi.layout.managers import RenderLayoutManager, generate_progress_tracker
-
+from dexi.notifications.domain import PullRequestNotification
+from dexi.notifications.notify import Notification
+from dexi.notifications.enums import Language
 
 def _render_pull_requests():
     return Panel(
@@ -76,6 +78,10 @@ def render():
 
                 completed = sum(task.completed for task in job_progress.tasks)
                 overall_progress.update(overall_task, completed=completed)
+            
+            # trigger notification
+            pr_info = PullRequestNotification(org="Slice", repository="ros-service", name="nootifier", language=Language.PYTHON)
+            Notification.send_pull_request_approved(pr_info)
 
 
 async def update():
