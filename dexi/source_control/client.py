@@ -1,14 +1,13 @@
-import asyncio
-import humanize
 from github import Github
-from github.Repository import Repository
 from github.PullRequest import PullRequest
-from rich.table import Table
+from github.Repository import Repository
 
 from dexi import config
 
 
 class GithubAPI:
+    """ create and maintain queries to the Github"""
+
     def __init__(self) -> None:
         self._client = Github(config.GITHUB_TOKEN, per_page=config.DEFAULT_PAGE_SIZE)
 

@@ -27,7 +27,6 @@ repos:
       - id: debug-statements
       - id: requirements-txt-fixer
       - id: check-merge-conflict
-      - id: double-quote-string-fixer
       - id: sort-simple-yaml
       - id: fix-encoding-pragma
         args: ["--remove"]
