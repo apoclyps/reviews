@@ -1,5 +1,5 @@
 # Development Dependencies
-pdbr==0.4.1
+pdbr==0.4.4
 
 # Test Dependencies
 black==20.8b1
