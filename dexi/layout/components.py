@@ -7,7 +7,7 @@ from rich.table import Table
 class Header:
     """Display header with clock."""
 
-    def __rich__(self) -> Panel:
+    def __rich__(self) -> Panel:  # NOQA: R0201
         grid = Table.grid(expand=True)
         grid.add_column(justify="center", ratio=1)
         grid.add_column(justify="right")

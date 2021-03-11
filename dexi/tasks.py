@@ -1,67 +1,78 @@
 import asyncio
 from time import sleep
 
+from rich.console import RenderGroup
 from rich.live import Live
+from rich.panel import Panel
 
-from dexi.layout.helpers import generate_layout, render_pull_request_table
-from dexi.layout.terminal import generate_progress_tracker, render_layout
-from dexi.source_control.client import GithubAPI
+from dexi.controller import retrieve_pull_requests
+from dexi.layout.helpers import generate_layout, generate_tree_layout
+from dexi.layout.managers import RenderLayoutManager, generate_progress_tracker
+
+
+def _render_pull_requests():
+    return Panel(
+        RenderGroup(
+            retrieve_pull_requests(org="slicelife", repository="ros-service"),
+            retrieve_pull_requests(org="slicelife", repository="delivery-service"),
+            retrieve_pull_requests(org="slicelife", repository="pos-integration"),
+            retrieve_pull_requests(
+                org="slicelife", repository="candidate-code-challenges"
+            ),
+            retrieve_pull_requests(org="apoclyps", repository="dexi"),
+        ),
+        title="Activity",
+        border_style="blue",
+    )
 
 
 def render():
     """Renders Terminal UI Dashboard"""
-    layout = generate_layout()
-
     (
         job_progress,
-        layout,
         overall_progress,
         overall_task,
         progress_table,
-    ) = generate_progress_tracker(layout)
+    ) = generate_progress_tracker()
 
     overall_progress = None
 
-    repo = GithubAPI().get_repository(org="slicelife", repo="ros-service")
-    pull_requests = GithubAPI().get_pull_requests(
-        repository=repo, state="open", sort="created", base="master"
+    # intial load should be from database
+    layout_manager = RenderLayoutManager(layout=generate_layout())
+    layout_manager.render_layout(
+        progress_table=progress_table,
+        body=_render_pull_requests(),
+        status="loading",
+        pull_request_component=generate_tree_layout(),
+        log_component="",
     )
 
-    body = render_pull_request_table(pull_requests=pull_requests)
-    render_layout(layout=layout, progress_table=progress_table, body=body)
-
-    # TODO: fetch from database
-    # database = config.DATA_PATH + "/" + config.FILENAME
-    # conn = create_connection(database)
-    # cur = conn.cursor()
-    # cur.execute("SELECT * FROM pull_requests")
-    # rows = cur.fetchall()
-
-    with Live(layout, refresh_per_second=30, screen=True):
+    with Live(layout_manager.layout, refresh_per_second=30, screen=True):
         while True:
             if not overall_progress or overall_progress.finished:
                 (
                     job_progress,
-                    layout,
                     overall_progress,
                     overall_task,
                     progress_table,
-                ) = generate_progress_tracker(layout)
+                ) = generate_progress_tracker()
 
-            body = render_pull_request_table(pull_requests=pull_requests)
-            if not body:
-                body = ""
-            render_layout(layout=layout, progress_table=progress_table, body=body)
+            # update view (blocking operation)
+            layout_manager.render_review(component="pending")
+            layout_manager.render_layout(
+                progress_table=progress_table,
+                body=_render_pull_requests(),
+                status="updated",
+                pull_request_component=generate_tree_layout(),
+                log_component="",
+            )
 
+            # wait for update
             while not overall_progress.finished:
                 sleep(0.1)
                 for job in job_progress.tasks:
                     if not job.finished:
                         job_progress.advance(job.id)
-
-                pull_requests = GithubAPI().get_pull_requests(
-                    repository=repo, state="open", sort="created", base="master"
-                )
 
                 completed = sum(task.completed for task in job_progress.tasks)
                 overall_progress.update(overall_task, completed=completed)
