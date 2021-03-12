@@ -5,12 +5,14 @@ from rich.console import RenderGroup
 from rich.live import Live
 from rich.panel import Panel
 
+from dexi import config
 from dexi.controller import retrieve_pull_requests
 from dexi.layout.helpers import generate_layout, generate_tree_layout
 from dexi.layout.managers import RenderLayoutManager, generate_progress_tracker
 from dexi.notifications.domain import PullRequestNotification
-from dexi.notifications.notify import Notification
 from dexi.notifications.enums import Language
+from dexi.notifications.notify import NotificationClient
+
 
 def _render_pull_requests():
     return Panel(
@@ -39,7 +41,8 @@ def render():
 
     overall_progress = None
 
-    # intial load should be from database
+    # initial load should be from database
+    notification_client = NotificationClient()
     layout_manager = RenderLayoutManager(layout=generate_layout())
     layout_manager.render_layout(
         progress_table=progress_table,
@@ -78,10 +81,15 @@ def render():
 
                 completed = sum(task.completed for task in job_progress.tasks)
                 overall_progress.update(overall_task, completed=completed)
-            
-            # trigger notification
-            pr_info = PullRequestNotification(org="Slice", repository="ros-service", name="nootifier", language=Language.PYTHON)
-            Notification.send_pull_request_approved(pr_info)
+
+            if config.ENABLE_NOTIFICATIONS:
+                pull_request = PullRequestNotification(
+                    org="slicelife",
+                    repository="ros-service",
+                    name="nootifier",
+                    language=Language.PYTHON,
+                )
+                notification_client.send_pull_request_approved(model=pull_request)
 
 
 async def update():

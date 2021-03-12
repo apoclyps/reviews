@@ -1,12 +1,14 @@
-from dexi import config
 from enum import Enum, unique
-
 from os import path
+
+from dexi import config
+
 
 @unique
 class Sound(Enum):
     SUCCESS = path.join(config.DATA_PATH, "audio/success.wav")
     FAILURE = path.join(config.DATA_PATH, "audio/failure.wav")
+
 
 @unique
 class Language(Enum):

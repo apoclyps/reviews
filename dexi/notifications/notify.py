@@ -1,49 +1,60 @@
-from notifypy import Notify
 from typing import Optional
 
+from notifypy import Notify
+
 from dexi.notifications.domain import PullRequestNotification
-from dexi.notifications.enums import Sound, Language
+from dexi.notifications.enums import Sound
 
-class Notification:
 
-    @staticmethod
-    def send_notification(application_name: str, title: str, message: str, icon: Optional[str], audio: Optional[str]):
-        notification = Notify()
+class NotificationClient:
+    """Notifiction Client provides a warpper and convience methods for sending desktop notifications"""
 
-        notification.application_name = application_name
-        notification.title = title
-        notification.message = message
-        notification.icon = icon if icon else None
-        notification.audio = audio if audio else None
+    def __init__(self) -> None:
+        self.notification = Notify()
 
-        notification.send(block=False)
+    def _send_notification(
+        self,
+        application_name: str,
+        title: str,
+        message: str,
+        icon: Optional[str] = None,
+        audio: Optional[str] = None,
+    ):
+        """a generic wrapper around send notification."""
+        self.notification.application_name = application_name
+        self.notification.title = title
+        self.notification.message = message
+        self.notification.icon = icon
+        self.notification.audio = audio
 
-    @staticmethod
-    def send_pull_request_review(pr_info: PullRequestNotification):
-        Notification.send_notification(
+        self.notification.send(block=False)
+
+    def send_pull_request_review(self, model: PullRequestNotification):
+        """sends a notification for a pull request review"""
+        self._send_notification(
             application_name="dexi",
             title="Pull request review",
-            message=f"New reivew for {pr_info.name} in {pr_info.org}/{pr_info.repository}",
-            icon=pr_info.language.value,
-            audio=Sound.SUCCESS.value
+            message=f"New review for {model.name} in {model.org}/{model.repository}",
+            icon=model.language.value,
+            audio=Sound.SUCCESS.value,
         )
 
-    @staticmethod
-    def send_pull_request_approved(pr_info: PullRequestNotification):
-        Notification.send_notification(
+    def send_pull_request_approved(self, model: PullRequestNotification):
+        """sends a notification for a pull request approved"""
+        self._send_notification(
             application_name="dexi",
             title="Pull request approved",
-            message=f"{pr_info.name} has been approved in {pr_info.org}/{pr_info.repository}",
-            icon=pr_info.language.value,
-            audio=Sound.SUCCESS.value
+            message=f"{model.name} has been approved in {model.org}/{model.repository}",
+            icon=model.language.value,
+            audio=Sound.SUCCESS.value,
         )
 
-    @staticmethod
-    def send_pull_request_merged(pr_info: PullRequestNotification):
-        Notification.send_notification(
+    def send_pull_request_merged(self, model: PullRequestNotification):
+        """sends a notification for a pull request merged"""
+        self._send_notification(
             application_name="dexi",
             title="Pull request merged",
-            message=f"{pr_info.name} has been merged in {pr_info.org}/{pr_info.repository}",
-            icon=pr_info.language.value,
-            audio=Sound.FAILURE.value
+            message=f"{model.name} has been merged in {model.org}/{model.repository}",
+            icon=model.language.value,
+            audio=Sound.FAILURE.value,
         )
