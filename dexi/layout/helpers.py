@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import humanize
+from rich import box
 from rich.console import RenderGroup
 from rich.layout import Layout
 from rich.table import Table
@@ -141,3 +142,13 @@ def generate_tree_layout():
         trees[workspace] = tree
 
     return RenderGroup(*[t for t in trees.values()])
+
+
+def generate_log_table(logs):
+    table = Table("Time", "Message", box=box.SIMPLE)
+
+    for log in logs:
+        time, message = log
+        table.add_row(time, message)
+
+    return table

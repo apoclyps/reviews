@@ -1,5 +1,7 @@
 import asyncio
+from datetime import datetime
 from time import sleep
+from typing import List, Tuple
 
 from rich.console import RenderGroup
 from rich.live import Live
@@ -7,11 +9,27 @@ from rich.panel import Panel
 
 from dexi import config
 from dexi.controller import retrieve_pull_requests
-from dexi.layout.helpers import generate_layout, generate_tree_layout
+from dexi.layout.helpers import (
+    generate_layout,
+    generate_log_table,
+    generate_tree_layout,
+)
 from dexi.layout.managers import RenderLayoutManager, generate_progress_tracker
 from dexi.notifications.domain import PullRequestNotification
 from dexi.notifications.enums import Language
 from dexi.notifications.notify import NotificationClient
+
+logs = []
+
+
+def add_log_event(message: str) -> List[Tuple[str, str]]:
+    global logs
+
+    logs = logs[-20:]
+    logs.append(
+        (str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")), f"[white]{message}")
+    )
+    return logs
 
 
 def _render_pull_requests():
@@ -34,6 +52,8 @@ def _render_pull_requests():
 
 def render():
     """Renders Terminal UI Dashboard"""
+    global log_table
+
     (
         job_progress,
         overall_progress,
@@ -44,6 +64,8 @@ def render():
     overall_progress = None
 
     # initial load should be from database
+    add_log_event(message="initializing...")
+
     notification_client = NotificationClient()
     layout_manager = RenderLayoutManager(layout=generate_layout())
     layout_manager.render_layout(
@@ -51,8 +73,10 @@ def render():
         body=_render_pull_requests(),
         status="loading",
         pull_request_component=generate_tree_layout(),
-        log_component="",
+        log_component=generate_log_table(logs=logs),
     )
+
+    add_log_event(message="loading live view...")
 
     with Live(layout_manager.layout, refresh_per_second=30, screen=True):
         while True:
@@ -64,14 +88,15 @@ def render():
                     progress_table,
                 ) = generate_progress_tracker()
 
+            add_log_event(message="awaiting next refresh")
+
             # update view (blocking operation)
-            layout_manager.render_log(component="pending")
             layout_manager.render_layout(
                 progress_table=progress_table,
                 body=_render_pull_requests(),
-                status="updated",
+                status=generate_log_table(logs=logs),
                 pull_request_component=generate_tree_layout(),
-                log_component="",
+                log_component=generate_log_table(logs=logs),
             )
 
             # wait for update
@@ -84,7 +109,10 @@ def render():
                 completed = sum(task.completed for task in job_progress.tasks)
                 overall_progress.update(overall_task, completed=completed)
 
+            add_log_event(message="view refreshed")
+
             if config.ENABLE_NOTIFICATIONS:
+                add_log_event(message="sending notification")
                 pull_request = PullRequestNotification(
                     org="slicelife",
                     repository="ros-service",
@@ -92,6 +120,7 @@ def render():
                     language=Language.PYTHON,
                 )
                 notification_client.send_pull_request_approved(model=pull_request)
+                add_log_event(message="notification sent")
 
 
 async def update():
