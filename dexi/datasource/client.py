@@ -1,28 +1,24 @@
 import sqlite3
-from sqlite3 import Error
+from sqlite3 import Connection, Error
+from typing import Any, List
 
 
-class DBClient:
+class SQLClient:
     """create and manage database connections to the SQLite database"""
 
-    def __init__(self, path, filename):
+    database: str
+    connection: Connection
+
+    def __init__(self, path: str, filename: str) -> None:
         self.database = f"{path}/{filename}"
         self.connection = self.create_connection()
 
-    def create_connection(self):
-        """create a database connection to the SQLite database
-            specified by db_file
-        :param db_file: database file
-        :return: Connection object or None
-        """
+    def create_connection(self) -> Connection:
+        """create a database connection to the SQLite database specified by db_file."""
         return sqlite3.connect(self.database)
 
-    def create_table(self, create_table_sql):
-        """create a table from the create_table_sql statement
-        :param conn: Connection object
-        :param create_table_sql: a CREATE TABLE statement
-        :return:
-        """
+    def create_table(self, create_table_sql: str) -> None:
+        """create a table from the create_table_sql statement."""
 
         cursor = self.connection.cursor()
         try:
@@ -31,8 +27,9 @@ class DBClient:
             print(exc)
             raise exc
 
-    def query(self, sql, data=None):
-        """Query for data"""
+    def query(self, sql: str, data=None) -> List[Any]:
+        """query a table from a given sql statement."""
+
         with self.connection as db:
             cursor = db.cursor()
 
@@ -43,69 +40,3 @@ class DBClient:
                 cursor.execute(sql)
 
             return cursor.fetchall()
-
-    def select_all(self, table_name):
-        "show all the data of table from db"
-        sql = "SELECT * FROM {0}".format(table_name)
-        return self.query(sql, ())
-
-    # def insert(
-    #     self, table_name, firstname, lastname, street, town, postcode, telephone, email
-    # ):
-    #     "insert new data"
-    #     sql = """
-    #             INSERT INTO {0}(FirstName, LastName, Street, Town, PostCode, TelephoneNumber, EMailAddress)
-    #             VALUES (?,?,?,?,?,?,?)
-    #             """.format(
-    #         table_name
-    #     )
-    #     query(
-    #         sql=sql,
-    #         data=(
-    #             firstname,
-    #             lastname,
-    #             street,
-    #             town,
-    #             postcode,
-    #             telephone,
-    #             email,
-    #         ),
-    #     )
-
-    # def update(
-    #     self,
-    #     table_name,
-    #     customerid,
-    #     firstname,
-    #     lastname,
-    #     street,
-    #     town,
-    #     postcode,
-    #     telephone,
-    #     email,
-    # ):
-    #     "update the product"
-    #     sql = """
-    #             UPDATE {0} SET FirstName=?, LastName=?, Street=?, Town=?, PostCode=?, TelephoneNumber=?, EMailAddress=?
-    #             WHERE CustomerID=?
-    #             """.format(
-    #         table_name
-    #     )
-    #     query(
-    #         sql=sql,
-    #         data=(
-    #             firstname,
-    #             lastname,
-    #             street,
-    #             town,
-    #             postcode,
-    #             telephone,
-    #             email,
-    #             customerid,
-    #         ),
-    #     )
-
-    # def delete(db_name, table_name, customerid):
-    #     "delete the product from the table"
-    #     sql = "DELETE FROM {0} WHERE CustomerID=?".format(table_name)
-    #     query(db_name, sql, (customerid,))

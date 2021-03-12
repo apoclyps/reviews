@@ -17,7 +17,7 @@ async def main():
 async def dashboard():
     """ Dashboard command. """
 
-    click.echo("start dashboard")
+    click.echo("loading dashboard")
 
     prepare_database()
 

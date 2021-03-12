@@ -4,7 +4,6 @@ import humanize
 from rich.console import RenderGroup
 from rich.layout import Layout
 from rich.table import Table
-from rich.text import Text
 from rich.tree import Tree
 
 from dexi.models import PullRequest
@@ -12,9 +11,9 @@ from dexi.models import PullRequest
 
 def render_pull_request_table(title, pull_requests):
     table = Table(show_header=True, header_style="bold white")
-    table.add_column("#", style="dim", width=3)
-    table.add_column(title, width=70)
-    table.add_column("Latest Activity")
+    table.add_column("#", style="dim", width=5)
+    table.add_column(title, width=65)
+    table.add_column("Latest Activity", width=17)
     table.add_column("Status", width=10)
 
     pull_requests = sorted(pull_requests, key=lambda x: x.updated_at, reverse=True)
