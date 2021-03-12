@@ -15,16 +15,18 @@ from dexi.notifications.notify import NotificationClient
 
 
 def _render_pull_requests():
+
+    tables = [
+        retrieve_pull_requests(org="slicelife", repository="ros-service"),
+        retrieve_pull_requests(org="slicelife", repository="delivery-service"),
+        retrieve_pull_requests(org="slicelife", repository="pos-integration"),
+        retrieve_pull_requests(org="slicelife", repository="candidate-code-challenges"),
+        retrieve_pull_requests(org="apoclyps", repository="dexi"),
+    ]
+
+    # filter unrenderable `None` results
     return Panel(
-        RenderGroup(
-            retrieve_pull_requests(org="slicelife", repository="ros-service"),
-            retrieve_pull_requests(org="slicelife", repository="delivery-service"),
-            retrieve_pull_requests(org="slicelife", repository="pos-integration"),
-            retrieve_pull_requests(
-                org="slicelife", repository="candidate-code-challenges"
-            ),
-            retrieve_pull_requests(org="apoclyps", repository="dexi"),
-        ),
+        RenderGroup(*[t for t in tables if t]),
         title="Activity",
         border_style="blue",
     )
@@ -63,7 +65,7 @@ def render():
                 ) = generate_progress_tracker()
 
             # update view (blocking operation)
-            layout_manager.render_review(component="pending")
+            layout_manager.render_log(component="pending")
             layout_manager.render_layout(
                 progress_table=progress_table,
                 body=_render_pull_requests(),

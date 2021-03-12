@@ -13,18 +13,29 @@ def render_pull_request_table(title, pull_requests):
     table = Table(show_header=True, header_style="bold white")
     table.add_column("#", style="dim", width=5)
     table.add_column(title, width=65)
-    table.add_column("Latest Activity", width=17)
+    table.add_column("Labels")
+    table.add_column("Activity", width=20)
     table.add_column("Status", width=10)
 
     pull_requests = sorted(pull_requests, key=lambda x: x.updated_at, reverse=True)
 
     for pr in pull_requests:
-        approved = "Approved" if pr.approved else ""
+        approved = "[green]Approved" if pr.approved else ""
         updated_at = humanize.naturaltime(pr.updated_at)
+
+        colour = ""
+        if (datetime.now() - pr.updated_at).days >= 7:
+            colour = "[red]"
+        elif (datetime.now() - pr.updated_at).days >= 1:
+            colour = "[yellow]"
+        updated_at = f"{colour}{updated_at}"
+
+        labels = "python, [yellow]migrations"
 
         table.add_row(
             f"[white]{pr.number} ",
             f"[white]{pr.title}",
+            f"{labels}",
             f"{updated_at}",
             f"{approved}",
         )
@@ -44,11 +55,11 @@ def generate_layout() -> Layout:
     layout["main"].split(
         Layout(name="left_side"),
         Layout(name="body", ratio=2, minimum_size=60),
-        Layout(name="right_side"),
+        # Layout(name="right_side"),
         direction="horizontal",
     )
     layout["left_side"].split(Layout(name="configuration"), Layout(name="log"))
-    layout["right_side"].split(Layout(name="review"), Layout(name="ship"))
+    # layout["right_side"].split(Layout(name="review"), Layout(name="ship"))
     return layout
 
 

@@ -20,10 +20,10 @@ class RenderLayoutManager:
         """Renders the entire layout"""
         self.render_header()
         self.render_body(component=body)
-        self.render_log(component=log_component)
+        self.render_log(component=log_component or status)
         self.render_configuration(component=pull_request_component)
-        self.render_review(component=status)
-        self.render_shippable(component=status)
+        # self.render_review(component=status)
+        # self.render_shippable(component=status)
         self.render_footer(progress_table=progress_table)
 
         return self.layout

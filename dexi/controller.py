@@ -14,6 +14,9 @@ def retrieve_pull_requests(org, repository):
     title = f"{org}/{repository}"
     pull_requests = update_pull_requests(org=org, repository=repository)
 
+    if not pull_requests:
+        return
+
     manager.insert_all(pull_requests=pull_requests)
 
     # TODO: add adapter to convert rows back into models
