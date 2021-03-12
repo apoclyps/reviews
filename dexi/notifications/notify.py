@@ -44,7 +44,7 @@ class NotificationClient:
         """sends a notification for a pull request approved"""
         self._send_notification(
             title="Pull request approved",
-            message=f"{model.name} has been approved in {model.org}/{model.repository}",
+            message=f"{model.number} has been approved in {model.org}/{model.repository}",
             icon=model.language.value,
             audio=Sound.SUCCESS.value,
         )

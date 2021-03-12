@@ -16,7 +16,7 @@ ENABLE_NOTIFICATIONS = config("ENABLE_NOTIFICATIONS", cast=bool, default=False)
 REPOSITORY_CONFIGURATION = config(
     "REPOSITORY_CONFIGURATION",
     cast=Csv(),
-    default="slicelife/ros-service, slicelife/delivery-service, slicelife/pos-integration, slicelife/candidate-code-challenges, apoclyps/dexi, apoclyps/micropython-by-example",
+    default="apoclyps/dexi",
 )
 
 

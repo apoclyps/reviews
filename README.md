@@ -24,6 +24,8 @@ $ source env/bin/activate
 If you wish to keep a copy of Dexi on your host system forever, you can install and run it using:
 
 ```bash
+$ export ENABLE_NOTIFICATIONS=true
+$ export REPOSITORY_CONFIGURATION="apoclyps/dexi"
 $ pip install -e .
 $ dexi dashboard
 ```

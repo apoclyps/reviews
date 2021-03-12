@@ -87,7 +87,7 @@ def render():
                     progress_table,
                 ) = generate_progress_tracker()
 
-            add_log_event(message="awaiting refresh")
+            add_log_event(message="awaiting...")
 
             # update view (blocking operation)
             layout_manager.render_layout(
@@ -114,11 +114,13 @@ def render():
 
             if config.ENABLE_NOTIFICATIONS:
                 add_log_event(message="sending notification")
+                org, repo = configuration[0]
                 pull_request = PullRequestNotification(
-                    org="slicelife",
-                    repository="ros-service",
+                    org=org,
+                    repository=repo,
                     name="nootifier",
                     language=Language.PYTHON,
+                    number=1,
                 )
                 notification_client.send_pull_request_approved(model=pull_request)
                 add_log_event(message="notification sent")

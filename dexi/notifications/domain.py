@@ -11,6 +11,7 @@ class PullRequestNotification:
     repository: str
     name: str
     language: Language
+    number: int
 
     def __repr__(self):
         return (
