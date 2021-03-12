@@ -1,4 +1,12 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import List
+
+
+@dataclass
+class Label:
+    """Labels on a Pull Request."""
+
+    name: str
 
 
 @dataclass
@@ -10,3 +18,4 @@ class PullRequest:
     created_at: str
     updated_at: str
     approved: bool
+    labels: List[Label] = field(default_factory=list)

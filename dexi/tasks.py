@@ -63,13 +63,7 @@ def render():
     # initial load should be from database
     add_log_event(message="initializing...")
 
-    configuration = [
-        ("slicelife", "ros-service"),
-        ("slicelife", "delivery-service"),
-        ("slicelife", "pos-integration"),
-        ("slicelife", "candidate-code-challenges"),
-        ("apoclyps", "dexi"),
-    ]
+    configuration = config.get_configuration()
 
     notification_client = NotificationClient()
     layout_manager = RenderLayoutManager(layout=generate_layout())

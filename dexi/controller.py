@@ -6,7 +6,7 @@ from dexi import config
 from dexi.datasource.client import SQLClient
 from dexi.datasource.managers import PullRequestManager
 from dexi.layout.helpers import render_pull_request_table
-from dexi.models import PullRequest
+from dexi.models import Label, PullRequest
 from dexi.source_control.client import GithubAPI
 
 
@@ -41,6 +41,11 @@ def update_pull_requests(org: str, repository: str) -> List[PullRequest]:
             created_at=pull_request.created_at,
             updated_at=pull_request.updated_at,
             approved=any([r for r in pull_request.get_reviews()]),  # NOQA: R1721
+            labels=[
+                Label(name=label.name)
+                for label in pull_request.get_labels()
+                if label.name
+            ],
         )
         for pull_request in pull_requests
     ]

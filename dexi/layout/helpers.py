@@ -14,9 +14,9 @@ from dexi.models import PullRequest
 def render_pull_request_table(title: str, pull_requests: List[PullRequest]) -> Table:
     table = Table(show_header=True, header_style="bold white")
     table.add_column("#", style="dim", width=5)
-    table.add_column(title, width=65)
-    table.add_column("Labels")
-    table.add_column("Activity", width=20)
+    table.add_column(title, width=60)
+    table.add_column("Labels", width=40)
+    table.add_column("Activity", width=15)
     table.add_column("Status", width=10)
 
     pull_requests = sorted(pull_requests, key=lambda x: x.updated_at, reverse=True)
@@ -32,7 +32,7 @@ def render_pull_request_table(title: str, pull_requests: List[PullRequest]) -> T
             colour = "[yellow]"
         updated_at = f"{colour}{updated_at}"
 
-        labels = "python, [yellow]migrations"
+        labels = ", ".join([label.name for label in pr.labels])
 
         table.add_row(
             f"[white]{pr.number} ",
