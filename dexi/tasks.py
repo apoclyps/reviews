@@ -23,6 +23,7 @@ logs = []
 
 
 def add_log_event(message: str) -> List[Tuple[str, str]]:
+    """adds a log event to a list of logs and displays the top 20."""
     global logs
 
     logs = logs[-20:]
@@ -32,14 +33,12 @@ def add_log_event(message: str) -> List[Tuple[str, str]]:
     return logs
 
 
-def _render_pull_requests():
+def _render_pull_requests(configuration: List[Tuple[str, str]]):
+    """ Renders all pull requests for the provided configuration"""
 
     tables = [
-        retrieve_pull_requests(org="slicelife", repository="ros-service"),
-        retrieve_pull_requests(org="slicelife", repository="delivery-service"),
-        retrieve_pull_requests(org="slicelife", repository="pos-integration"),
-        retrieve_pull_requests(org="slicelife", repository="candidate-code-challenges"),
-        retrieve_pull_requests(org="apoclyps", repository="dexi"),
+        retrieve_pull_requests(org=org, repository=repo)
+        for (org, repo) in configuration
     ]
 
     # filter unrenderable `None` results
@@ -52,8 +51,6 @@ def _render_pull_requests():
 
 def render():
     """Renders Terminal UI Dashboard"""
-    global log_table
-
     (
         job_progress,
         overall_progress,
@@ -66,17 +63,25 @@ def render():
     # initial load should be from database
     add_log_event(message="initializing...")
 
+    configuration = [
+        ("slicelife", "ros-service"),
+        ("slicelife", "delivery-service"),
+        ("slicelife", "pos-integration"),
+        ("slicelife", "candidate-code-challenges"),
+        ("apoclyps", "dexi"),
+    ]
+
     notification_client = NotificationClient()
     layout_manager = RenderLayoutManager(layout=generate_layout())
     layout_manager.render_layout(
         progress_table=progress_table,
-        body=_render_pull_requests(),
+        body=_render_pull_requests(configuration=configuration),
         status="loading",
-        pull_request_component=generate_tree_layout(),
+        pull_request_component=generate_tree_layout(configuration=configuration),
         log_component=generate_log_table(logs=logs),
     )
 
-    add_log_event(message="loading live view...")
+    add_log_event(message="refreshing view...")
 
     with Live(layout_manager.layout, refresh_per_second=30, screen=True):
         while True:
@@ -88,14 +93,16 @@ def render():
                     progress_table,
                 ) = generate_progress_tracker()
 
-            add_log_event(message="awaiting next refresh")
+            add_log_event(message="awaiting refresh")
 
             # update view (blocking operation)
             layout_manager.render_layout(
                 progress_table=progress_table,
-                body=_render_pull_requests(),
+                body=_render_pull_requests(configuration=configuration),
                 status=generate_log_table(logs=logs),
-                pull_request_component=generate_tree_layout(),
+                pull_request_component=generate_tree_layout(
+                    configuration=configuration
+                ),
                 log_component=generate_log_table(logs=logs),
             )
 

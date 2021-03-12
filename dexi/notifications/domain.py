@@ -13,4 +13,7 @@ class PullRequestNotification:
     language: Language
 
     def __repr__(self):
-        return f"A {self.language} notification has been sent for {self.org}/{self.repository}: {self.name}"
+        return (
+            f"A {self.language} notification has been sent for"
+            "{self.org}/{self.repository}: {self.name}"
+        )

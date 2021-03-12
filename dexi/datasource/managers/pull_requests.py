@@ -1,4 +1,7 @@
+from typing import Any, List
+
 from dexi.datasource.client import SQLClient
+from dexi.models import PullRequest
 
 
 class PullRequestManager:
@@ -12,7 +15,7 @@ class PullRequestManager:
         self.table_name = "pull_requests"
 
     def create_table(self):
-        """Creates the Table."""
+        """creates the table."""
         sql = f"""
             CREATE TABLE IF NOT EXISTS {self.table_name}
              (
@@ -27,14 +30,14 @@ class PullRequestManager:
         return self.client.query(sql=sql)
 
     def drop_table(self):
-        """Drops the Table."""
+        """drops the Table."""
         sql = f"""
             DROP TABLE IF EXISTS {self.table_name};
             """
         return self.client.query(sql=sql)
 
     def all(self):
-        """Fetch all persisted database rows for pull requests."""
+        """fetch all persisted database rows for pull requests."""
         sql = f"""
             SELECT *
             FROM {self.table_name};
@@ -42,7 +45,7 @@ class PullRequestManager:
         return self.client.query(sql=sql)
 
     def get_by_id(self, row_id: int):
-        """Fetch all persisted database rows for pull requests."""
+        """fetch all persisted database rows for pull requests."""
         sql = f"""
             SELECT *
             FROM   {self.table_name}
@@ -50,16 +53,17 @@ class PullRequestManager:
         """
         return self.client.query(sql=sql, data=(row_id,))
 
-    def insert_all(self, pull_requests):
+    def insert_all(self, models: List[PullRequest]) -> List[Any]:
+        """inserts a list of models into the database"""
         inserted = []
-        for pull_request in pull_requests:
+        for pull_request in models:
             row = self.insert(pull_request=pull_request)
             inserted.append(row)
 
         return inserted
 
     def insert(self, pull_request):
-        """Insert pull request into database."""
+        """insert pull request into database."""
         sql = f"""
             INSERT INTO {self.table_name}
             (
@@ -84,7 +88,7 @@ class PullRequestManager:
         )
 
     def update(self, pull_request):
-        """Upsert pull request into database."""
+        """upsert pull request into database."""
         sql = f"""
             UPDATE into {self.table_name}
             SET

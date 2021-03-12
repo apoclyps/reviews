@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import List, Tuple
 
 import humanize
 from rich import box
@@ -10,7 +11,7 @@ from rich.tree import Tree
 from dexi.models import PullRequest
 
 
-def render_pull_request_table(title, pull_requests):
+def render_pull_request_table(title: str, pull_requests: List[PullRequest]) -> Table:
     table = Table(show_header=True, header_style="bold white")
     table.add_column("#", style="dim", width=5)
     table.add_column(title, width=65)
@@ -64,84 +65,14 @@ def generate_layout() -> Layout:
     return layout
 
 
-def generate_tree_layout():
-    data = [
-        {
-            "org": "apoclyps",
-            "repository_name": "dexi",
-            "pull_requests": [
-                PullRequest(
-                    number=1,
-                    title="test",
-                    created_at=datetime.now(),
-                    updated_at=datetime.now(),
-                    approved=False,
-                ),
-            ],
-        },
-        {
-            "org": "slicelife",
-            "repository_name": "ros-service",
-            "pull_requests": [
-                PullRequest(
-                    number=2,
-                    title="test",
-                    created_at=datetime.now(),
-                    updated_at=datetime.now(),
-                    approved=True,
-                ),
-            ],
-        },
-        {
-            "org": "slicelife",
-            "repository_name": "delivery-service",
-            "pull_requests": [
-                PullRequest(
-                    number=1,
-                    title="test",
-                    created_at=datetime.now(),
-                    updated_at=datetime.now(),
-                    approved=False,
-                ),
-                PullRequest(
-                    number=3,
-                    title="test",
-                    created_at=datetime.now(),
-                    updated_at=datetime.now(),
-                    approved=True,
-                ),
-            ],
-        },
-        {
-            "org": "slicelife",
-            "repository_name": "pos-integration",
-            "pull_requests": [
-                PullRequest(
-                    number=2,
-                    title="test",
-                    created_at=datetime.now(),
-                    updated_at=datetime.now(),
-                    approved=True,
-                ),
-            ],
-        },
-    ]
+def generate_tree_layout(configuration: List[Tuple[str, str]]) -> RenderGroup:
+    organization_tree_mapping = {}
+    for (org, repo) in configuration:
+        tree = organization_tree_mapping.get(f"{org}", Tree(f"[white]{org}"))
+        tree.add(f"{repo}")
+        organization_tree_mapping[org] = tree
 
-    trees = {}
-    for org in data:
-        workspace = org["org"]
-        tree = trees.get(workspace, Tree(f"[white]{workspace}"))
-
-        # icon = "🐍 Contains: Python"
-        inner_tree = tree.add(org.get("repository_name", []))
-
-        for pull_request in org.get("pull_requests", []):
-            repo_tree = inner_tree.add(f"[{pull_request.number}] {pull_request.title}")
-            # repo_tree.add(Text(icon))
-
-        trees[workspace] = tree
-
-    return RenderGroup(*[t for t in trees.values()])
+    return RenderGroup(*organization_tree_mapping.values())
 
 
 def generate_log_table(logs):

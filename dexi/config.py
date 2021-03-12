@@ -11,4 +11,4 @@ DATA_PATH = config("DATA_PATH", cast=str, default=f"{str(Path.home())}/.dexi")
 FILENAME = config("FILENAME", cast=str, default="dexi.db")
 
 # Application Config
-ENABLE_NOTIFICATIONS = config("ENABLE_NOTIFICATIONS", cast=bool, default=False)
+ENABLE_NOTIFICATIONS = config("ENABLE_NOTIFICATIONS", cast=bool, default=True)
