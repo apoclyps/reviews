@@ -12,4 +12,4 @@ mypy==0.790
 pylint==2.7.2
 pytest-mock==3.5.1
 pytest==6.2.2
-responses==0.12.1
+responses==0.13.0
