@@ -1,40 +1,40 @@
-# Dexi
+# Code Review Manager
 
 > Automate everything!
 
 ### Quick Start
 
-If you want to get up and running with Dexi immediately, run:
+If you want to get up and running with Code Review Manager immediately, run:
 
 ```
-docker-compose build cli && docker-compose run --rm cli python cli.py dexi dashboard
+docker-compose build cli && docker-compose run --rm cli python cli.py dashboard
 ```
 
 ### Getting Started
 
-To build and run the CLI on your host, you will need Python 3.9, pip, and virtualenv to build and run `dexi`:
+To build and run the CLI on your host, you will need Python 3.9, pip, and virtualenv to build and run `review`:
 
 ```bash
 $ python3 -m venv env
 $ source env/bin/activate
 (env)$ pip install -r requirements_dev.txt
-(env)$ python cli.py dexi dashboard
+(env)$ python cli.py dashboard
 ```
 
-If you wish to keep a copy of Dexi on your host system forever, you can install and run it using:
+If you wish to keep a copy of code review manager on your host system forever, you can install and run it using:
 
 ```bash
 $ export ENABLE_NOTIFICATIONS=true
-$ export REPOSITORY_CONFIGURATION="apoclyps/dexi"
+$ export REPOSITORY_CONFIGURATION="apoclyps/code-review-manager"
 $ pip install -e .
-$ dexi dashboard
+$ review dashboard
 ```
 
 Alternatively, you can use docker to build an image and run that image with all of the necessary dependencies using the following commands:
 
 ```bash
 $ docker-compose build cli
-$ docker-compose run --rm cli python cli.py dexi dashboard
+$ docker-compose run --rm cli python cli.py dashboard
 ```
 
 ### Testing
@@ -63,7 +63,7 @@ tests/test_cli.py
 ----------- coverage: platform linux, python 3.9.0-final-0 -----------
 Name                     Stmts   Miss  Cover   Missing
 ------------------------------------------------------
-dexi/__init__.py         0      0   100%
+app/__init__.py         0      0   100%
 ------------------------------------------------------
 TOTAL                    0      0   100%
 ```

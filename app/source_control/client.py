@@ -4,7 +4,7 @@ from github import Github
 from github.PullRequest import PullRequest
 from github.Repository import Repository
 
-from dexi import config
+from app import config
 
 
 class GithubAPI:

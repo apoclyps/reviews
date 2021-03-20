@@ -2,12 +2,12 @@ from typing import List, Union
 
 from rich.table import Table
 
-from dexi import config
-from dexi.datasource.client import SQLClient
-from dexi.datasource.managers import PullRequestManager
-from dexi.layout.helpers import render_pull_request_table
-from dexi.models import Label, PullRequest
-from dexi.source_control.client import GithubAPI
+from app import config
+from app.datasource.client import SQLClient
+from app.datasource.managers import PullRequestManager
+from app.layout.helpers import render_pull_request_table
+from app.models import Label, PullRequest
+from app.source_control.client import GithubAPI
 
 
 def retrieve_pull_requests(org: str, repository: str) -> Union[Table, None]:

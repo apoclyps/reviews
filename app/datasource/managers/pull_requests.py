@@ -1,7 +1,7 @@
 from typing import Any, List
 
-from dexi.datasource.client import SQLClient
-from dexi.models import PullRequest
+from app.datasource.client import SQLClient
+from app.models import PullRequest
 
 
 class PullRequestManager:

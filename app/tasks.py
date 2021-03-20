@@ -7,17 +7,17 @@ from rich.console import RenderGroup
 from rich.live import Live
 from rich.panel import Panel
 
-from dexi import config
-from dexi.controller import retrieve_pull_requests
-from dexi.layout.helpers import (
+from app import config
+from app.controller import retrieve_pull_requests
+from app.layout.helpers import (
     generate_layout,
     generate_log_table,
     generate_tree_layout,
 )
-from dexi.layout.managers import RenderLayoutManager, generate_progress_tracker
-from dexi.notifications.domain import PullRequestNotification
-from dexi.notifications.enums import Language
-from dexi.notifications.notify import NotificationClient
+from app.layout.managers import RenderLayoutManager, generate_progress_tracker
+from app.notifications.domain import PullRequestNotification
+from app.notifications.enums import Language
+from app.notifications.notify import NotificationClient
 
 logs: List[Tuple[str, str]] = []
 

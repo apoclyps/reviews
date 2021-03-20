@@ -3,7 +3,7 @@ from rich.panel import Panel
 from rich.progress import BarColumn, Progress, SpinnerColumn, TextColumn
 from rich.table import Table
 
-from dexi.layout.components import Header
+from app.layout.components import Header
 
 console = Console()
 

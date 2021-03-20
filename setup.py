@@ -10,8 +10,8 @@ with open("README.md", "r") as fh:
 
 
 setup(
-    name="dexi",
-    packages=["dexi"],
+    name="code review manager",
+    packages=["code_review_manager"],
     version="0.0.1",
     license="MIT",
     description=("Dexi written in Python. Standalone client included."),
@@ -19,13 +19,14 @@ setup(
     author_email="kyle.harrison.dev@gmail.com",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/apoclyps/dexi",
-    download_url="https://github.com/apoclyps/dexi/archive/0.0.1.tar.gz",
+    url="https://github.com/apoclyps/code-review-manager",
+    download_url="https://github.com/apoclyps/code-review-manager/archive/0.0.1.tar.gz",
     keywords=[
-        "dexi",
+        "code review manager",
+        "pull request review"
     ],
     install_requires=_requires_from_file("requirements.txt"),
-    entry_points={"console_scripts": ["dexi = cli:main"]},
+    entry_points={"console_scripts": ["review = cli:main"]},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",

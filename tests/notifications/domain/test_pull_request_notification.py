@@ -1,7 +1,7 @@
 import dataclasses
 
-from dexi.notifications import PullRequestNotification
-from dexi.notifications import Language
+from app.notifications import PullRequestNotification
+from app.notifications import Language
 
 
 def test_model_with_required_fields():

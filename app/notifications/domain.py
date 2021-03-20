@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from dexi.notifications.enums import Language
+from app.notifications.enums import Language
 
 
 @dataclass

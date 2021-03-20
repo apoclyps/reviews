@@ -3,9 +3,9 @@ from typing import Optional
 
 from notifypy import Notify
 
-from dexi import config
-from dexi.notifications.domain import PullRequestNotification
-from dexi.notifications.enums import Sound
+from app import config
+from app.notifications.domain import PullRequestNotification
+from app.notifications.enums import Sound
 
 
 class NotificationClient:

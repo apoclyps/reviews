@@ -1,10 +1,14 @@
-from dexi import config
-from dexi.datasource.client import SQLClient
-from dexi.datasource.managers import PullRequestManager
+from pathlib import Path
+
+from app import config
+from app.datasource.client import SQLClient
+from app.datasource.managers import PullRequestManager
 
 
 def prepare_database():
     """Setup Database"""
+    Path(config.DATA_PATH).mkdir(parents=True, exist_ok=True)
+
     client = SQLClient(path=config.DATA_PATH, filename=config.FILENAME)
     if client.connection:
         manager = PullRequestManager(client=client)
