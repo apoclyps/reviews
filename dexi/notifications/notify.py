@@ -1,7 +1,9 @@
+from os import path
 from typing import Optional
 
 from notifypy import Notify
 
+from dexi import config
 from dexi.notifications.domain import PullRequestNotification
 from dexi.notifications.enums import Sound
 
@@ -31,13 +33,13 @@ class NotificationClient:
 
         self.notification.send(block=False)
 
-    def send_pull_request_review(self, model: PullRequestNotification):
+    def send_pull_request_review(self, model: PullRequestNotification) -> bool:
         """sends a notification for a pull request review"""
-        self._send_notification(
+        return self._send_notification(
             title="Pull request review",
             message=f"New review for {model.name} in {model.org}/{model.repository}",
-            icon=model.language.value,
-            audio=Sound.SUCCESS.value,
+            icon=path.join(config.DATA_PATH, model.language.value),
+            audio=path.join(config.DATA_PATH, Sound.SUCCESS.value),
         )
 
     def send_pull_request_approved(self, model: PullRequestNotification):
@@ -45,8 +47,8 @@ class NotificationClient:
         self._send_notification(
             title="Pull request approved",
             message=f"{model.number} has been approved in {model.org}/{model.repository}",
-            icon=model.language.value,
-            audio=Sound.SUCCESS.value,
+            icon=path.join(config.DATA_PATH, model.language.value),
+            audio=path.join(config.DATA_PATH, Sound.SUCCESS.value),
         )
 
     def send_pull_request_merged(self, model: PullRequestNotification):
@@ -54,6 +56,6 @@ class NotificationClient:
         self._send_notification(
             title="Pull request merged",
             message=f"{model.name} has been merged in {model.org}/{model.repository}",
-            icon=model.language.value,
-            audio=Sound.FAILURE.value,
+            icon=path.join(config.DATA_PATH, model.language.value),
+            audio=path.join(config.DATA_PATH, Sound.FAILURE.value),
         )
