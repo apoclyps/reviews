@@ -39,7 +39,7 @@ $ docker-compose run --rm cli python cli.py dashboard
 
 ### Testing
 
-A test suite has been included to ensure Dexi functions correctly:.
+A test suite has been included to ensure Code Review Manager functions correctly:.
 
 To run the entire test suite with verbose output, run the following:
 

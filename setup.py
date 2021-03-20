@@ -14,7 +14,7 @@ setup(
     packages=["code_review_manager"],
     version="0.0.1",
     license="MIT",
-    description=("Dexi written in Python. Standalone client included."),
+    description=("Code Review MAnager written in Python. Standalone client included."),
     author="Kyle Harrison",
     author_email="kyle.harrison.dev@gmail.com",
     long_description=long_description,

@@ -1,5 +1,6 @@
 from os import path
-from typing import Optional
+from pathlib import Path
+from typing import Optional, Union
 
 from notifypy import Notify
 
@@ -17,6 +18,14 @@ class NotificationClient:
         self.notification = Notify()
         self.application_name = "Code Review Manager"
 
+    @staticmethod
+    def _asset_exists(asset: str) -> Union[str, None]:
+        """"Checks if an asset exists and returns the path (if it does)"""
+        if asset_path := Path(path.join(config.DATA_PATH, asset)):
+            if asset_path.exists():
+                return str(asset_path)
+        return None
+
     def _send_notification(
         self,
         title: str,
@@ -28,8 +37,12 @@ class NotificationClient:
         self.notification.application_name = self.application_name
         self.notification.title = title
         self.notification.message = message
-        self.notification.icon = icon
-        self.notification.audio = audio
+        if icon:
+            if file_path := self._asset_exists(asset=icon):
+                self.notification.icon = file_path
+        if audio:
+            if file_path := self._asset_exists(asset=audio):
+                self.notification.audio = file_path
 
         self.notification.send(block=False)
 
@@ -38,8 +51,8 @@ class NotificationClient:
         return self._send_notification(
             title="Pull request review",
             message=f"New review for {model.name} in {model.org}/{model.repository}",
-            icon=path.join(config.DATA_PATH, model.language.value),
-            audio=path.join(config.DATA_PATH, Sound.SUCCESS.value),
+            icon=model.language.value,
+            audio=Sound.SUCCESS.value,
         )
 
     def send_pull_request_approved(self, model: PullRequestNotification):
@@ -49,8 +62,8 @@ class NotificationClient:
             message=(
                 f"{model.number} has been approved in {model.org}/{model.repository}"
             ),
-            icon=path.join(config.DATA_PATH, model.language.value),
-            audio=path.join(config.DATA_PATH, Sound.SUCCESS.value),
+            icon=model.language.value,
+            audio=Sound.SUCCESS.value,
         )
 
     def send_pull_request_merged(self, model: PullRequestNotification):
@@ -58,6 +71,6 @@ class NotificationClient:
         self._send_notification(
             title="Pull request merged",
             message=f"{model.name} has been merged in {model.org}/{model.repository}",
-            icon=path.join(config.DATA_PATH, model.language.value),
-            audio=path.join(config.DATA_PATH, Sound.FAILURE.value),
+            icon=model.language.value,
+            audio=Sound.FAILURE.value,
         )

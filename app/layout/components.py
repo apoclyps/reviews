@@ -12,7 +12,7 @@ class Header:  # NOQA: R0903
         grid.add_column(justify="center", ratio=1)
         grid.add_column(justify="right")
         grid.add_row(
-            "[b]Dexi[/b] Code Review Manager",
+            "[b]Code Review[/b] Manager",
             datetime.now().ctime().replace(":", "[blink]:[/]"),
         )
         return Panel(grid, style="white on blue")
