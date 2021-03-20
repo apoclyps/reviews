@@ -4,7 +4,7 @@ from rich.panel import Panel
 from rich.table import Table
 
 
-class Header:
+class Header:  # NOQA: R0903
     """Display header with clock."""
 
     def __rich__(self) -> Panel:  # NOQA: R0201

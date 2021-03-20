@@ -15,15 +15,13 @@ class RenderLayoutManager:
         self.layout = layout
 
     def render_layout(
-        self, progress_table, body, status, pull_request_component, log_component
+        self, progress_table, body, pull_request_component, log_component
     ):
         """Renders the entire layout"""
         self.render_header()
         self.render_body(component=body)
-        self.render_log(component=log_component or status)
+        self.render_log(component=log_component)
         self.render_configuration(component=pull_request_component)
-        # self.render_review(component=status)
-        # self.render_shippable(component=status)
         self.render_footer(progress_table=progress_table)
 
         return self.layout
@@ -64,6 +62,7 @@ class RenderLayoutManager:
 
 
 def generate_progress_tracker():
+    """Tracks the progress of background tasks"""
     progress = Progress(
         "{task.description}",
         SpinnerColumn(),

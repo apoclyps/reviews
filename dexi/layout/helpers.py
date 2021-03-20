@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 
 import humanize
 from rich import box
@@ -12,6 +12,7 @@ from dexi.models import PullRequest
 
 
 def render_pull_request_table(title: str, pull_requests: List[PullRequest]) -> Table:
+    """Renders a list of pull requests as a table"""
     table = Table(show_header=True, header_style="bold white")
     table.add_column("#", style="dim", width=5)
     table.add_column(title, width=60)
@@ -46,7 +47,7 @@ def render_pull_request_table(title: str, pull_requests: List[PullRequest]) -> T
 
 
 def generate_layout() -> Layout:
-    """Define the layout."""
+    """Define the layout for the terminal UI."""
     layout = Layout(name="root")
 
     layout.split(
@@ -57,16 +58,15 @@ def generate_layout() -> Layout:
     layout["main"].split(
         Layout(name="left_side"),
         Layout(name="body", ratio=2, minimum_size=60),
-        # Layout(name="right_side"),
         direction="horizontal",
     )
     layout["left_side"].split(Layout(name="configuration"), Layout(name="log"))
-    # layout["right_side"].split(Layout(name="review"), Layout(name="ship"))
     return layout
 
 
 def generate_tree_layout(configuration: List[Tuple[str, str]]) -> RenderGroup:
-    organization_tree_mapping = {}
+    """Generates a tree layout for the settings configuration"""
+    organization_tree_mapping: Dict[str, Tree] = {}
     for (org, repo) in configuration:
         tree = organization_tree_mapping.get(f"{org}", Tree(f"[white]{org}"))
         tree.add(f"{repo}")
@@ -76,6 +76,7 @@ def generate_tree_layout(configuration: List[Tuple[str, str]]) -> RenderGroup:
 
 
 def generate_log_table(logs):
+    """Generetes a table for logging activity"""
     table = Table("Time", "Message", box=box.SIMPLE)
 
     for log in logs:

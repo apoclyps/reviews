@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from datetime import datetime
 from typing import List
 
 
@@ -15,7 +16,7 @@ class PullRequest:
 
     number: int
     title: str
-    created_at: str
-    updated_at: str
+    created_at: datetime
+    updated_at: datetime
     approved: bool
     labels: List[Label] = field(default_factory=list)

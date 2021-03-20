@@ -8,6 +8,7 @@ def prepare_database():
     client = SQLClient(path=config.DATA_PATH, filename=config.FILENAME)
     if client.connection:
         manager = PullRequestManager(client=client)
+        # manager.drop_table()
         manager.create_table()
     else:
         print("Error! cannot create the database connection.")

@@ -21,12 +21,14 @@ REPOSITORY_CONFIGURATION = config(
 
 
 def get_configuration() -> List[Tuple[str, str]]:
-    """converts a comma seperated list of organizations/repositories into a list of tuples."""
+    """converts a comma seperated list of organizations/repositories into a list
+    of tuples.
+    """
 
-    def to_tuple(values):
+    def _to_tuple(values):
         return (values[0], values[1])
 
     return [
-        to_tuple(values=configuration.split(sep="/", maxsplit=1))
+        _to_tuple(values=configuration.split(sep="/", maxsplit=1))
         for configuration in REPOSITORY_CONFIGURATION
     ]

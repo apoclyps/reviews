@@ -17,7 +17,7 @@ services:
 
   black:
     <<: *cli
-    command: black --check cli.py dexi
+    command: black --line-length 88 --check cli.py dexi
 
   flake8:
     <<: *cli

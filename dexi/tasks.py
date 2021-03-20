@@ -19,7 +19,7 @@ from dexi.notifications.domain import PullRequestNotification
 from dexi.notifications.enums import Language
 from dexi.notifications.notify import NotificationClient
 
-logs = []
+logs: List[Tuple[str, str]] = []
 
 
 def add_log_event(message: str) -> List[Tuple[str, str]]:
@@ -70,7 +70,6 @@ def render():
     layout_manager.render_layout(
         progress_table=progress_table,
         body=_render_pull_requests(configuration=configuration),
-        status="loading",
         pull_request_component=generate_tree_layout(configuration=configuration),
         log_component=generate_log_table(logs=logs),
     )
@@ -93,7 +92,6 @@ def render():
             layout_manager.render_layout(
                 progress_table=progress_table,
                 body=_render_pull_requests(configuration=configuration),
-                status=generate_log_table(logs=logs),
                 pull_request_component=generate_tree_layout(
                     configuration=configuration
                 ),

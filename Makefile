@@ -53,9 +53,10 @@ lint: ## lint and autocorrect the code
 	@docker-compose build cli
 	@docker-compose run --rm --no-deps black
 	@docker-compose run --rm --no-deps isort
+	@docker-compose run --rm --no-deps mypy
 	@docker-compose run --rm --no-deps flake8
 	@docker-compose run --rm --no-deps pylint
-	@docker-compose run --rm --no-deps mypy
+
 
 install: ## build and install the cli
 	sudo pip install -e .
