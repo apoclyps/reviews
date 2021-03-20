@@ -21,10 +21,7 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/apoclyps/code-review-manager",
     download_url="https://github.com/apoclyps/code-review-manager/archive/0.0.1.tar.gz",
-    keywords=[
-        "code review manager",
-        "pull request review"
-    ],
+    keywords=["code review manager", "pull request review"],
     install_requires=_requires_from_file("requirements.txt"),
     entry_points={"console_scripts": ["review = cli:main"]},
     classifiers=[

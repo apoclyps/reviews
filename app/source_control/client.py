@@ -19,7 +19,7 @@ class GithubAPI:
 
     @staticmethod
     def _get_pull_requests(
-        repository: Repository = None,
+        repository: Repository,
         state: str = "open",
         sort: str = "created",
     ) -> PullRequest:

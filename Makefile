@@ -1,4 +1,4 @@
-.PHONY: help build.test build.cli run start debug stop clean logs shell lint test 
+.PHONY: help build.test build.cli run start debug stop clean logs shell lint test
 
 GIT_SHA = $(shell git rev-parse HEAD)
 DOCKER_REPOTAG = $(DOCKER_REGISTRY)/$(DOCKER_IMAGE_NAME):$(GIT_SHA)
@@ -21,7 +21,7 @@ build.lint: ## Build the lint container
 	@docker-compose build pylint
 
 build.all: build.cli build.test build.lint  ## Build all containers
-	
+
 help: ## show this help
 	@echo
 	@fgrep -h " ## " $(MAKEFILE_LIST) | fgrep -v fgrep | sed -Ee 's/([a-z.]*):[^#]*##(.*)/\1##\2/' | column -t -s "##"

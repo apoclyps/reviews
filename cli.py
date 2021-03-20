@@ -2,8 +2,8 @@ import asyncio
 
 import asyncclick as click
 
-from create import prepare_database
 from app.tasks import render, update
+from create import prepare_database
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
 

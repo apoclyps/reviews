@@ -9,11 +9,7 @@ from rich.panel import Panel
 
 from app import config
 from app.controller import retrieve_pull_requests
-from app.layout.helpers import (
-    generate_layout,
-    generate_log_table,
-    generate_tree_layout,
-)
+from app.layout.helpers import generate_layout, generate_log_table, generate_tree_layout
 from app.layout.managers import RenderLayoutManager, generate_progress_tracker
 from app.notifications.domain import PullRequestNotification
 from app.notifications.enums import Language

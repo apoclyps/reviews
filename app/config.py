@@ -8,7 +8,9 @@ GITHUB_TOKEN = config("GITHUB_TOKEN")
 DEFAULT_PAGE_SIZE = config("DEFAULT_PAGE_SIZE", cast=int, default=100)
 
 # Database Config
-DATA_PATH = config("DATA_PATH", cast=str, default=f"{str(Path.home())}/.code_review_manager")
+DATA_PATH = config(
+    "DATA_PATH", cast=str, default=f"{str(Path.home())}/.code_review_manager"
+)
 FILENAME = config("FILENAME", cast=str, default="code_review_manager.db")
 
 # Application Config

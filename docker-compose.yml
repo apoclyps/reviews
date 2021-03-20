@@ -13,15 +13,15 @@ services:
 
   isort:
     <<: *cli
-    command: isort cli.py dexi
+    command: isort .
 
   black:
     <<: *cli
-    command: black --line-length 88 --check cli.py dexi
+    command: black --line-length 88 --check .
 
   flake8:
     <<: *cli
-    command: flake8 cli.py dexi
+    command: flake8 .
 
   mypy:
     <<: *cli
@@ -29,8 +29,8 @@ services:
 
   pylint:
     <<: *cli
-    command: pylint --rcfile=.pylintrc cli.py dexi
+    command: pylint --rcfile=.pylintrc .
 
   test:
     <<: *cli
-    command: pytest -cov=dexi -cov-report -vvv
+    command: pytest -cov=app -cov-report -vvv
