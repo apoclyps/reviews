@@ -16,7 +16,7 @@ from app.layout import (
     generate_progress_tracker,
     generate_tree_layout,
 )
-from app.notifications import Language, NotificationClient, PullRequestNotification
+from app.notifications import NotificationClient, PullRequestNotification
 
 logs: List[Tuple[str, str]] = []
 
