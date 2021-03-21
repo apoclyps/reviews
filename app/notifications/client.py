@@ -5,8 +5,7 @@ from typing import Optional, Union
 from notifypy import Notify
 
 from app import config
-from app.notifications.domain import PullRequestNotification
-from app.notifications.enums import Sound
+from app.notifications.models import PullRequestNotification, Sound
 
 
 class NotificationClient:

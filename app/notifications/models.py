@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from enum import Enum, unique
 
 
@@ -18,3 +19,16 @@ class Language(Enum):
     GO = "icon/go_icon.png"
     JAVASCRIPT = "icon/javascript_icon.png"
     TERRAFORM = "icon/terraform_icon.png"
+
+
+@dataclass
+class PullRequestNotification:
+    """Represents a pull request notification"""
+
+    org: str
+    repository: str
+    name: str
+    number: int
+
+    def __repr__(self):
+        return f"{self.org}/{self.repository} updated with {self.name}"

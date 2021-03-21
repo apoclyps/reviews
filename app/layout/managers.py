@@ -70,8 +70,6 @@ def generate_progress_tracker():
         TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
     )
     progress.add_task("[white]Pull Requests", total=100)
-    # progress.add_task("[white]Review", total=120)
-    # progress.add_task("[white]Shippable", total=180)
 
     total = sum(task.total for task in progress.tasks)
     overall_progress = Progress()

@@ -3,11 +3,9 @@ from typing import List, Union
 from rich.table import Table
 
 from app import config
-from app.datasource.client import SQLClient
-from app.datasource.managers import PullRequestManager
-from app.layout.helpers import render_pull_request_table
-from app.models import Label, PullRequest
-from app.source_control.client import GithubAPI
+from app.datasource import Label, PullRequest, PullRequestManager, SQLClient
+from app.layout import render_pull_request_table
+from app.source_control import GithubAPI
 
 
 def retrieve_pull_requests(org: str, repository: str) -> Union[Table, None]:

@@ -1,8 +1,7 @@
 from pathlib import Path
 
 from app import config
-from app.datasource.client import SQLClient
-from app.datasource.managers import PullRequestManager
+from app.datasource import PullRequestManager, SQLClient
 
 
 def prepare_database():

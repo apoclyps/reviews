@@ -2,9 +2,8 @@ from unittest.mock import patch
 
 import pytest
 
-from app.notifications.enums import Language
-from app.notifications.domain import PullRequestNotification
-from app.notifications.notify import NotificationClient
+from app.notifications import Language, PullRequestNotification
+from app.notifications import NotificationClient
 
 
 @pytest.fixture

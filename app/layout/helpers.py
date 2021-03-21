@@ -8,7 +8,7 @@ from rich.layout import Layout
 from rich.table import Table
 from rich.tree import Tree
 
-from app.models import PullRequest
+from app.datasource import PullRequest
 
 
 def render_pull_request_table(title: str, pull_requests: List[PullRequest]) -> Table:

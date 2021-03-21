@@ -1,7 +1,7 @@
 from typing import Any, List
 
 from app.datasource.client import SQLClient
-from app.models import PullRequest
+from app.datasource.models import PullRequest
 
 
 class PullRequestManager:
