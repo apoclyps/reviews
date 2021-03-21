@@ -8,7 +8,7 @@ from rich.live import Live
 from rich.panel import Panel
 
 from app import config
-from app.controller import retrieve_pull_requests
+from app.controller import PullRequestController
 from app.layout import (
     RenderLayoutManager,
     generate_layout,
@@ -32,11 +32,13 @@ def add_log_event(message: str) -> List[Tuple[str, str]]:
     return logs
 
 
-def _render_pull_requests(configuration: List[Tuple[str, str]]):
+def _render_pull_requests(
+    controller: PullRequestController, configuration: List[Tuple[str, str]]
+):
     """ Renders all pull requests for the provided configuration"""
 
     tables = [
-        retrieve_pull_requests(org=org, repository=repo)
+        controller.retrieve_pull_requests(org=org, repository=repo)
         for (org, repo) in configuration
     ]
 
@@ -63,12 +65,13 @@ def render():
     add_log_event(message="initializing...")
 
     configuration = config.get_configuration()
+    controller = PullRequestController()
 
     notification_client = NotificationClient()
     layout_manager = RenderLayoutManager(layout=generate_layout())
     layout_manager.render_layout(
         progress_table=progress_table,
-        body=_render_pull_requests(configuration=configuration),
+        body=_render_pull_requests(controller=controller, configuration=configuration),
         pull_request_component=generate_tree_layout(configuration=configuration),
         log_component=generate_log_table(logs=logs),
     )
@@ -90,7 +93,9 @@ def render():
             # update view (blocking operation)
             layout_manager.render_layout(
                 progress_table=progress_table,
-                body=_render_pull_requests(configuration=configuration),
+                body=_render_pull_requests(
+                    controller=controller, configuration=configuration
+                ),
                 pull_request_component=generate_tree_layout(
                     configuration=configuration
                 ),
@@ -116,7 +121,6 @@ def render():
                     org=org,
                     repository=repo,
                     name="nootifier",
-                    language=Language.PYTHON,
                     number=1,
                 )
                 notification_client.send_pull_request_approved(model=pull_request)

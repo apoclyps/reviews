@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 import pytest
 
-from app.notifications import Language, PullRequestNotification
+from app.notifications import PullRequestNotification
 from app.notifications import NotificationClient
 
 
@@ -17,7 +17,6 @@ def pull_request() -> PullRequestNotification:
         org="apoclyps",
         repository="Code Review Manager",
         name="Pull Request Approved",
-        language=Language.PYTHON,
         number=1,
     )
 

@@ -1,6 +1,7 @@
 import sqlite3
 from sqlite3 import Connection, Error
-from typing import Any, List
+from sqlite3.dbapi2 import connect
+from typing import Any, List, Optional
 
 
 class SQLClient:
@@ -9,9 +10,17 @@ class SQLClient:
     database: str
     connection: Connection
 
-    def __init__(self, path: str, filename: str) -> None:
+    def __init__(
+        self,
+        path: str = "",
+        filename: str = "",
+        connection: Optional[Connection] = None,
+    ) -> None:
         self.database = f"{path}/{filename}"
-        self.connection = self.create_connection()
+        if connection:
+            self.connection = connection
+        else:
+            self.connection = self.create_connection()
 
     def create_connection(self) -> Connection:
         """create a database connection to the SQLite database specified by db_file."""
@@ -40,3 +49,17 @@ class SQLClient:
                 cursor.execute(sql)
 
             return cursor.fetchall()
+
+    def insert(self, sql: str, data=None) -> int:
+        """query a table from a given sql statement."""
+
+        with self.connection as db:
+            cursor = db.cursor()
+
+            cursor.execute("PRAGMA Foreign_Keys = ON")
+            if data:
+                cursor.execute(sql, data)
+            else:
+                cursor.execute(sql)
+
+            return cursor.lastrowid

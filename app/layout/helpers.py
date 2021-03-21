@@ -5,6 +5,8 @@ import humanize
 from rich import box
 from rich.console import RenderGroup
 from rich.layout import Layout
+from rich.panel import Panel
+from rich.progress import BarColumn, Progress, SpinnerColumn, TextColumn
 from rich.table import Table
 from rich.tree import Tree
 
@@ -84,3 +86,32 @@ def generate_log_table(logs):
         table.add_row(time, message)
 
     return table
+
+
+def generate_progress_tracker():
+    """Tracks the progress of background tasks"""
+    progress = Progress(
+        "{task.description}",
+        SpinnerColumn(),
+        BarColumn(),
+        TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
+    )
+    progress.add_task("[white]Pull Requests", total=100)
+
+    total = sum(task.total for task in progress.tasks)
+    overall_progress = Progress()
+    overall_task = overall_progress.add_task("All", total=int(total))
+
+    progress_table = Table.grid(expand=True)
+    progress_table.add_row(
+        Panel(
+            overall_progress,
+            title="Next Refresh",
+            border_style="blue",
+        ),
+        Panel(
+            progress, title="[b]Next fetch for:", border_style="blue", padding=(1, 2)
+        ),
+    )
+
+    return progress, overall_progress, overall_task, progress_table

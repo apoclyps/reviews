@@ -50,7 +50,6 @@ class NotificationClient:
         return self._send_notification(
             title="Pull request review",
             message=f"New review for {model.name} in {model.org}/{model.repository}",
-            icon=model.language.value,
             audio=Sound.SUCCESS.value,
         )
 
@@ -61,7 +60,6 @@ class NotificationClient:
             message=(
                 f"{model.number} has been approved in {model.org}/{model.repository}"
             ),
-            icon=model.language.value,
             audio=Sound.SUCCESS.value,
         )
 
@@ -70,6 +68,5 @@ class NotificationClient:
         self._send_notification(
             title="Pull request merged",
             message=f"{model.name} has been merged in {model.org}/{model.repository}",
-            icon=model.language.value,
             audio=Sound.FAILURE.value,
         )

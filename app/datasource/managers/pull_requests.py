@@ -56,13 +56,13 @@ class PullRequestManager:
     def insert_all(self, models: List[PullRequest]) -> List[Any]:
         """inserts a list of models into the database"""
         inserted = []
-        for pull_request in models:
-            row = self.insert(pull_request=pull_request)
+        for model in models:
+            row = self.insert(model=model)
             inserted.append(row)
 
         return inserted
 
-    def insert(self, pull_request):
+    def insert(self, model):
         """insert pull request into database."""
         sql = f"""
             INSERT INTO {self.table_name}
@@ -76,21 +76,21 @@ class PullRequestManager:
             VALUES (?,?,?,?,?);
             """
 
-        return self.client.query(
+        return self.client.insert(
             sql=sql,
             data=(
-                pull_request.title,
-                pull_request.created_at,
-                pull_request.updated_at,
-                pull_request.approved,
-                pull_request.number,
+                model.title,
+                model.created_at,
+                model.updated_at,
+                model.approved,
+                model.number,
             ),
         )
 
-    def update(self, pull_request):
+    def update(self, row_id: int, model: PullRequest):
         """upsert pull request into database."""
         sql = f"""
-            UPDATE into {self.table_name}
+            UPDATE OR REPLACE {self.table_name}
             SET
                 title = ?,
                 created_at = ?,
@@ -103,11 +103,12 @@ class PullRequestManager:
         return self.client.query(
             sql=sql,
             data=(
-                pull_request.title,
-                pull_request.created_at,
-                pull_request.updated_at,
-                pull_request.approved,
-                pull_request.number,
+                model.title,
+                model.created_at,
+                model.updated_at,
+                model.approved,
+                model.number,
+                row_id,
             ),
         )
 
@@ -121,3 +122,17 @@ class PullRequestManager:
             sql=sql,
             data=(row_id,),
         )
+
+    def exists(self) -> bool:
+        """checks if the table exists"""
+        sql = f"""
+            SELECT count(name) FROM sqlite_master WHERE type='table' AND name='{self.table_name}' LIMIT 1;
+        """
+        result = self.client.query(
+            sql=sql,
+        )
+
+        # first element in the array, first result in the tuple
+        exists = result[0][0]
+
+        return bool(int(exists))
