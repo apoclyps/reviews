@@ -6,6 +6,6 @@ flake8-unused-arguments==0.0.6
 freezegun==1.1.0
 isort==5.8.0
 mypy==0.790
-pdbr==0.4.5
+pdbr==0.4.6
 pylint==2.7.2
 pytest==6.2.2
