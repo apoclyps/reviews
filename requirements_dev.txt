@@ -7,5 +7,5 @@ freezegun==1.1.0
 isort==5.8.0
 mypy==0.790
 pdbr==0.4.7
-pylint==2.7.2
+pylint==2.7.3
 pytest==6.2.2
