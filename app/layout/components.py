@@ -4,10 +4,10 @@ from rich.panel import Panel
 from rich.table import Table
 
 
-class Header:  # NOQA: R0903
+class Header:
     """Display header with clock."""
 
-    def __rich__(self) -> Panel:  # NOQA: R0201
+    def __rich__(self) -> Panel:
         grid = Table.grid(expand=True)
         grid.add_column(justify="center", ratio=1)
         grid.add_column(justify="right")

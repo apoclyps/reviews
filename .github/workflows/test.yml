@@ -1,0 +1,45 @@
+name: Test Code Review Manager
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+          architecture: x64
+      - name: Install libnotify
+        run: sudo apt-get install libnotify-bin
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements_dev.txt ]; then pip install -r requirements_dev.txt; fi
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Format check with black
+        run: |
+          black --line-length 88 --check --diff .
+          isort --check-only --diff .
+          flake8 .
+          pylint --rcfile=.pylintrc app
+      - name: Typecheck with mypy
+        run: mypy . --ignore-missing-imports
+      - name: Test with pytest
+        run: pytest -vvv --cov=./app --cov-report=xml:./coverage.xml --cov-report term-missing
+      - name: Upload code coverage
+        uses: codecov/codecov-action@v1.3.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          name: code_review_manager
+          flags: unittests
+          env_vars: OS,PYTHON

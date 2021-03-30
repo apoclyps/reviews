@@ -1,6 +1,5 @@
 import sqlite3
 from sqlite3 import Connection, Error
-from sqlite3.dbapi2 import connect
 from typing import Any, List, Optional
 
 
