@@ -57,10 +57,9 @@ def generate_layout() -> Layout:
         Layout(name="main", ratio=1),
         Layout(name="footer", size=7),
     )
-    layout["main"].split(
+    layout["main"].split_row(
         Layout(name="left_side"),
         Layout(name="body", ratio=2, minimum_size=60),
-        direction="horizontal",
     )
     layout["left_side"].split(Layout(name="configuration"), Layout(name="log"))
     return layout
