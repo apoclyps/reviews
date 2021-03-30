@@ -22,8 +22,8 @@ class GithubAPI:
         repository: Repository,
         state: str = "open",
         sort: str = "created",
-    ) -> PullRequest:
-        return repository.get_pulls(state=state, sort=sort)
+    ) -> List[PullRequest]:
+        return list(repository.get_pulls(state=state, sort=sort))
 
     def get_pull_requests(self, org: str, repo: str) -> List[PullRequest]:
         """Returns a list of pull requests for a given organization and repository."""

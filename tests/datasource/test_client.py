@@ -40,7 +40,7 @@ def test_table_dropped(manager):
     assert manager.exists() is False
 
 
-def test_bulk_insert(manager, pull_request):
+def test_insert(manager, pull_request):
     manager.insert(model=pull_request)
 
     assert len(manager.all()) == 1
