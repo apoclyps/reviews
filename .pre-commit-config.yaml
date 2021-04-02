@@ -25,7 +25,6 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: debug-statements
-      - id: requirements-txt-fixer
       - id: check-merge-conflict
       - id: sort-simple-yaml
       - id: fix-encoding-pragma
@@ -36,8 +35,6 @@ repos:
         description: Forces to replace line ending by the UNIX 'lf' character.
       - id: check-added-large-files
         args: ["--maxkb=500"]
-      # - id: no-commit-to-branch
-      #   args: [--branch, main]
       - id: check-yaml
       - id: check-json
         files: ^tests/app/
@@ -47,7 +44,6 @@ repos:
 
   - repo: meta
     hooks:
-      # - id: check-hooks-apply
       - id: check-useless-excludes
 
   - repo: https://github.com/ambv/black
@@ -59,4 +55,4 @@ repos:
   - repo: https://github.com/timothycrosley/isort
     rev: 5.7.0
     hooks:
-      -   id: isort
+      -  id: isort

@@ -1,6 +1,6 @@
 # Code Review Manager
 
-> Automate everything!
+> Simplify code review!
 
 ### Quick Start
 
@@ -10,6 +10,8 @@ If you want to get up and running with Code Review Manager immediately, run:
 docker-compose build cli && docker-compose run --rm cli python cli.py dashboard
 ```
 
+[![asciicast](https://asciinema.org/a/LEs7tltVE3guhsLEEFGc5FDiD.svg)](https://asciinema.org/a/LEs7tltVE3guhsLEEFGc5FDiD)
+
 ### Getting Started
 
 To build and run the CLI on your host, you will need Python 3.9, pip, and virtualenv to build and run `review`:
@@ -18,6 +20,7 @@ To build and run the CLI on your host, you will need Python 3.9, pip, and virtua
 $ python3 -m venv env
 $ source env/bin/activate
 (env)$ pip install -r requirements_dev.txt
+(env)$ pip install -r requirements.txt
 (env)$ python cli.py dashboard
 ```
 
@@ -57,18 +60,11 @@ All tests can be run within docker by using the following command:
 
 ```bash
 $ docker-compose build pytest && docker-compose run --rm pytest
-
-tests/test_cli.py
-
------------ coverage: platform linux, python 3.9.0-final-0 -----------
-Name                     Stmts   Miss  Cover   Missing
-------------------------------------------------------
-app/__init__.py         0      0   100%
-------------------------------------------------------
-TOTAL                    0      0   100%
 ```
 
 ### Linting
+
+To run individual linting steps:
 
 ```
 docker-compose build
