@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from app import config
-from app.datasource import PullRequestManager, SQLClient
+from reviews import config
+from reviews.datasource import PullRequestManager, SQLClient
 
 
 def prepare_database():

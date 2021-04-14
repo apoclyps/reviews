@@ -2,8 +2,8 @@ from unittest.mock import patch
 
 import pytest
 
-from app.notifications import PullRequestNotification
-from app.notifications import NotificationClient
+from reviews.notifications import PullRequestNotification
+from reviews.notifications import NotificationClient
 
 
 @pytest.fixture

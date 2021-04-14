@@ -10,7 +10,7 @@ from rich.progress import BarColumn, Progress, SpinnerColumn, TextColumn
 from rich.table import Table
 from rich.tree import Tree
 
-from app.datasource import PullRequest
+from reviews.datasource import PullRequest
 
 
 def render_pull_request_table(title: str, pull_requests: List[PullRequest]) -> Table:

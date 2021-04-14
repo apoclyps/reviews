@@ -4,7 +4,7 @@ from github import Github
 from github.PullRequest import PullRequest
 from github.Repository import Repository
 
-from app import config
+from reviews import config
 
 
 class GithubAPI:

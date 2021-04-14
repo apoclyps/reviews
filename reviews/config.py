@@ -15,6 +15,7 @@ FILENAME = config("FILENAME", cast=str, default="code_review_manager.db")
 
 # Application Config
 ENABLE_NOTIFICATIONS = config("ENABLE_NOTIFICATIONS", cast=bool, default=False)
+ENABLE_PERSISTED_DATA = config("ENABLE_PERSISTED_DATA", cast=bool, default=False)
 REPOSITORY_CONFIGURATION = config(
     "REPOSITORY_CONFIGURATION",
     cast=Csv(),

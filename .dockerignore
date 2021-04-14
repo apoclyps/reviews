@@ -1,7 +1,7 @@
 # Docker ignore whitelist
 
 !cli.py
-!app
+!reviews
 !tests
 !.flake8
 !.pylintrc

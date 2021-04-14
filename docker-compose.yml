@@ -33,4 +33,4 @@ services:
 
   test:
     <<: *cli
-    command: pytest -cov=app -cov-report -vvv
+    command: pytest -cov=reviews -cov-report -vvv
