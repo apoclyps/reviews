@@ -1,18 +1,25 @@
 # Code Review Manager
 
-> Simplify code review!
+> Simplify code review with an all in one dashboard providing an overview of open PRs !
 
 ### Quick Start
 
 If you want to get up and running with Code Review Manager immediately, run:
 
-```
-docker-compose build cli && docker-compose run --rm cli python cli.py dashboard
+```bash
+# your personal github token used for interacting with the API
+export GITHUB_TOKEN="your-github-token"
+# comma seperated list of org/repo
+export REPOSITORY_CONFIGURATION="apoclyps/code-review-manager"
+
+pip install reviews
+
+reviews dashboard
 ```
 
 [![asciicast](https://asciinema.org/a/LEs7tltVE3guhsLEEFGc5FDiD.svg)](https://asciinema.org/a/LEs7tltVE3guhsLEEFGc5FDiD)
 
-### Getting Started
+### Getting started with local development
 
 To build and run the CLI on your host, you will need Python 3.9, pip, and virtualenv to build and run `review`:
 
@@ -31,7 +38,13 @@ $ export ENABLE_NOTIFICATIONS=true
 $ export ENABLE_PERSISTED_DATA=false
 $ export REPOSITORY_CONFIGURATION="apoclyps/code-review-manager"
 $ pip install -e .
-$ review dashboard
+$ reviews dashboard
+```
+
+Alternatively, you can also run the code review manager within Docker:
+
+```bash
+docker-compose build cli && docker-compose run --rm cli python cli.py dashboard
 ```
 
 Alternatively, you can use docker to build an image and run that image with all of the necessary dependencies using the following commands:
@@ -54,7 +67,7 @@ $ pytest -vvv
 Alternatively, to run a single set of tests.
 
 ```bash
-$ pytest -vvv tests/models/test_delivery.py
+$ pytest -vvv tests/test_config.py
 ```
 
 All tests can be run within docker by using the following command:
