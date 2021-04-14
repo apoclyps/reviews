@@ -28,6 +28,7 @@ If you wish to keep a copy of code review manager on your host system forever, y
 
 ```bash
 $ export ENABLE_NOTIFICATIONS=true
+$ export ENABLE_PERSISTED_DATA=false
 $ export REPOSITORY_CONFIGURATION="apoclyps/code-review-manager"
 $ pip install -e .
 $ review dashboard

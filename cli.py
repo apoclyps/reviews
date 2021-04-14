@@ -2,6 +2,7 @@ import asyncio
 
 import asyncclick as click
 
+from app import config
 from app.tasks import render, update
 from create import prepare_database
 
@@ -19,10 +20,12 @@ async def dashboard():
 
     click.echo("loading dashboard")
 
-    prepare_database()
+    if config.ENABLE_PERSISTED_DATA:
+        prepare_database()
 
+    # TODO: move github polling to another thread
     await asyncio.gather(
-        asyncio.to_thread(update),
+        # asyncio.to_thread(update),
         asyncio.to_thread(render),
     )
 

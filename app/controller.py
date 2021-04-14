@@ -26,9 +26,8 @@ class PullRequestController:
         if not pull_requests:
             return None
 
-        self.manager.insert_all(models=pull_requests)
-
-        # all_pull_requests = manager.all()
+        if config.ENABLE_PERSISTED_DATA:
+            self.manager.insert_all(models=pull_requests)
 
         return render_pull_request_table(title=title, pull_requests=pull_requests)
 
