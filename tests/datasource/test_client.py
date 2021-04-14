@@ -1,12 +1,12 @@
-from app.datasource.managers import pull_requests
+from reviews.datasource.managers import pull_requests
 from datetime import datetime
 
 from freezegun import freeze_time
 import pytest
 
-from app.datasource.client import SQLClient
-from app.datasource import PullRequestManager
-from app.datasource import PullRequest, Label
+from reviews.datasource.client import SQLClient
+from reviews.datasource import PullRequestManager
+from reviews.datasource import PullRequest, Label
 
 
 @pytest.fixture

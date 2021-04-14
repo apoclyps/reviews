@@ -2,10 +2,10 @@ from typing import List, Union
 
 from rich.table import Table
 
-from app import config
-from app.datasource import Label, PullRequest, PullRequestManager, SQLClient
-from app.layout import render_pull_request_table
-from app.source_control import GithubAPI
+from reviews import config
+from reviews.datasource import Label, PullRequest, PullRequestManager, SQLClient
+from reviews.layout import render_pull_request_table
+from reviews.source_control import GithubAPI
 
 
 class PullRequestController:

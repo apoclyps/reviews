@@ -1,7 +1,7 @@
 from rich.console import Console
 from rich.panel import Panel
 
-from app.layout.components import Header
+from reviews.layout.components import Header
 
 console = Console()
 

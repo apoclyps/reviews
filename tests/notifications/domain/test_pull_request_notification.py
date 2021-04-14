@@ -1,6 +1,6 @@
 import dataclasses
 
-from app.notifications import PullRequestNotification
+from reviews.notifications import PullRequestNotification
 
 
 def test_model_with_required_fields():

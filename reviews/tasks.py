@@ -7,16 +7,16 @@ from rich.console import RenderGroup
 from rich.live import Live
 from rich.panel import Panel
 
-from app import config
-from app.controller import PullRequestController
-from app.layout import (
+from reviews import config
+from reviews.controller import PullRequestController
+from reviews.layout import (
     RenderLayoutManager,
     generate_layout,
     generate_log_table,
     generate_progress_tracker,
     generate_tree_layout,
 )
-from app.notifications import NotificationClient, PullRequestNotification
+from reviews.notifications import NotificationClient, PullRequestNotification
 
 logs: List[Tuple[str, str]] = []
 

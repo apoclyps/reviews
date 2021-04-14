@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import find_namespace_packages, setup
 
 
 def _requires_from_file(filename):
@@ -10,11 +10,11 @@ with open("README.md", "r") as fh:
 
 
 setup(
-    name="code review manager",
-    packages=["code_review_manager"],
+    name="reviews",
+    packages=find_namespace_packages(include=["reviews.*"]),
     version="0.0.1",
     license="MIT",
-    description=("Code Review MAnager written in Python. Standalone client included."),
+    description=("Code Review Manager written in Python. Standalone client included."),
     author="Kyle Harrison",
     author_email="kyle.harrison.dev@gmail.com",
     long_description=long_description,
@@ -23,7 +23,7 @@ setup(
     download_url="https://github.com/apoclyps/code-review-manager/archive/0.0.1.tar.gz",
     keywords=["code review manager", "pull request review"],
     install_requires=_requires_from_file("requirements.txt"),
-    entry_points={"console_scripts": ["review = cli:main"]},
+    entry_points={"console_scripts": ["reviews = cli:main"]},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",

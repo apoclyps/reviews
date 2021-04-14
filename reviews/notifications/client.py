@@ -4,8 +4,8 @@ from typing import Optional, Union
 
 from notifypy import Notify
 
-from app import config
-from app.notifications.models import PullRequestNotification, Sound
+from reviews import config
+from reviews.notifications.models import PullRequestNotification, Sound
 
 
 class NotificationClient:
