@@ -126,6 +126,10 @@ def render():
                 notification_client.send_pull_request_approved(model=pull_request)
                 add_log_event(message="notification sent")
 
+            if config.DELAY_REFRESH:
+                add_log_event(message=f"next refresh in {config.DELAY_REFRESH} seconds")
+                sleep(config.DELAY_REFRESH)
+
 
 async def update():
     """Updates data in the background."""
