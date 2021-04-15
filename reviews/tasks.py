@@ -71,14 +71,16 @@ def render():
     layout_manager = RenderLayoutManager(layout=generate_layout())
     layout_manager.render_layout(
         progress_table=progress_table,
-        body=_render_pull_requests(controller=controller, configuration=configuration),
+        body=Panel(
+            RenderGroup(),
+            title="Activity",
+            border_style="blue",
+        ),
         pull_request_component=generate_tree_layout(configuration=configuration),
         log_component=generate_log_table(logs=logs),
     )
 
-    add_log_event(message="refreshing view...")
-
-    with Live(layout_manager.layout, refresh_per_second=30, screen=True):
+    with Live(layout_manager.layout, refresh_per_second=10, screen=True):
         while True:
             if not overall_progress or overall_progress.finished:
                 (
@@ -88,7 +90,7 @@ def render():
                     progress_table,
                 ) = generate_progress_tracker()
 
-            add_log_event(message="awaiting...")
+            add_log_event(message="waiting...")
 
             # update view (blocking operation)
             layout_manager.render_layout(
@@ -102,18 +104,6 @@ def render():
                 log_component=generate_log_table(logs=logs),
             )
 
-            # wait for update
-            while not overall_progress.finished:
-                sleep(0.1)
-                for job in job_progress.tasks:
-                    if not job.finished:
-                        job_progress.advance(job.id)
-
-                completed = sum(task.completed for task in job_progress.tasks)
-                overall_progress.update(overall_task, completed=completed)
-
-            add_log_event(message="view refreshed")
-
             if config.ENABLE_NOTIFICATIONS:
                 add_log_event(message="sending notification")
                 org, repo = configuration[0]
@@ -125,6 +115,18 @@ def render():
                 )
                 notification_client.send_pull_request_approved(model=pull_request)
                 add_log_event(message="notification sent")
+
+            delay = config.DELAY_REFRESH * 0.01
+            while not overall_progress.finished:
+                sleep(delay)
+                for job in job_progress.tasks:
+                    if not job.finished:
+                        job_progress.advance(job.id)
+
+                completed = sum(task.completed for task in job_progress.tasks)
+                overall_progress.update(overall_task, completed=completed)
+
+            add_log_event(message="updated")
 
 
 async def update():
