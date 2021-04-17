@@ -2,8 +2,7 @@ from typing import List, Union
 
 from rich.table import Table
 
-from reviews import config
-from reviews.datasource import Label, PullRequest, PullRequestManager, SQLClient
+from reviews.datasource import Label, PullRequest
 from reviews.layout import render_pull_request_table
 from reviews.source_control import GithubAPI
 
@@ -13,11 +12,6 @@ class PullRequestController:
 
     def __init__(self) -> None:
         self.client = GithubAPI()
-        self.manager = PullRequestManager(
-            client=SQLClient(path=config.DATA_PATH, filename=config.FILENAME)
-            if config.ENABLE_PERSISTED_DATA
-            else None
-        )
 
     def retrieve_pull_requests(self, org: str, repository: str) -> Union[Table, None]:
         """Renders Terminal UI Dashboard"""
@@ -27,9 +21,6 @@ class PullRequestController:
 
         if not pull_requests:
             return None
-
-        if config.ENABLE_PERSISTED_DATA:
-            self.manager.insert_all(models=pull_requests)
 
         return render_pull_request_table(title=title, pull_requests=pull_requests)
 
