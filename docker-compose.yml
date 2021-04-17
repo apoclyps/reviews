@@ -6,6 +6,7 @@ services:
     working_dir: /usr/src/app/
     environment:
       - DEBUG=true
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
     volumes:
       - "./:/usr/src/app/"
     stdin_open: true
@@ -33,4 +34,6 @@ services:
 
   test:
     <<: *cli
+    environment:
+      - GITHUB_TOKEN=${GITHUB_TOKEN-"token"}
     command: pytest -cov=reviews -cov-report -vvv

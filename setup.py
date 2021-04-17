@@ -25,11 +25,14 @@ setup(
     install_requires=_requires_from_file("requirements.txt"),
     entry_points={"console_scripts": ["reviews = cli:main"]},
     classifiers=[
-        "Development Status :: 5 - Production/Stable",
+        "Development Status :: 3 - Alpha",
+        "Environment :: Console",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
+        "Natural Language :: English",
         "Operating System :: MacOS",
         "Operating System :: Microsoft :: Windows :: Windows 10",
         "Programming Language :: Python :: 3.9",
+        "Topic :: Terminals",
     ],
 )
