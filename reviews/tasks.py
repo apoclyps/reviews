@@ -80,7 +80,7 @@ def render():
         log_component=generate_log_table(logs=logs),
     )
 
-    with Live(layout_manager.layout, refresh_per_second=10, screen=True):
+    with Live(layout_manager.layout, refresh_per_second=5, screen=True):
         while True:
             if not overall_progress or overall_progress.finished:
                 (

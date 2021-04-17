@@ -4,7 +4,7 @@ from typing import List, Tuple
 from decouple import Csv, config
 
 # Github Config
-GITHUB_TOKEN = config("GITHUB_TOKEN", cast=str, default="")
+GITHUB_TOKEN = config("GITHUB_TOKEN", cast=str)
 DEFAULT_PAGE_SIZE = config("DEFAULT_PAGE_SIZE", cast=int, default=100)
 
 # Database Config

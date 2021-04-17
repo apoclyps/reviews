@@ -15,6 +15,8 @@ class PullRequestController:
         self.client = GithubAPI()
         self.manager = PullRequestManager(
             client=SQLClient(path=config.DATA_PATH, filename=config.FILENAME)
+            if config.ENABLE_PERSISTED_DATA
+            else None
         )
 
     def retrieve_pull_requests(self, org: str, repository: str) -> Union[Table, None]:
