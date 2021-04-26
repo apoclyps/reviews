@@ -8,7 +8,7 @@ from reviews import config
 
 
 class GithubAPI:
-    """ create and maintain queries to the Github"""
+    """Create and execute requests using the Github API"""
 
     def __init__(self) -> None:
         self._client = Github(config.GITHUB_TOKEN, per_page=config.DEFAULT_PAGE_SIZE)

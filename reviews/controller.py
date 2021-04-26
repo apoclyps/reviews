@@ -25,7 +25,7 @@ class PullRequestController:
         return render_pull_request_table(title=title, pull_requests=pull_requests)
 
     def update_pull_requests(self, org: str, repository: str) -> List[PullRequest]:
-        """ Updates repository models."""
+        """Updates repository models."""
         pull_requests = self.client.get_pull_requests(org=org, repo=repository)
 
         return [

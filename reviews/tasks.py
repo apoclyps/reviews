@@ -35,7 +35,7 @@ def add_log_event(message: str) -> List[Tuple[str, str]]:
 def _render_pull_requests(
     controller: PullRequestController, configuration: List[Tuple[str, str]]
 ):
-    """ Renders all pull requests for the provided configuration"""
+    """Renders all pull requests for the provided configuration"""
 
     tables = [
         controller.retrieve_pull_requests(org=org, repository=repo)
