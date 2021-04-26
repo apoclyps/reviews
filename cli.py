@@ -16,7 +16,7 @@ async def main():
 
 @main.command(help="Display a dashboard")
 async def dashboard():
-    """ Dashboard command. """
+    """Dashboard command."""
 
     click.echo("loading dashboard")
 

@@ -19,7 +19,7 @@ class NotificationClient:
 
     @staticmethod
     def _asset_exists(asset: str) -> Union[str, None]:
-        """"Checks if an asset exists and returns the path (if it does)"""
+        """Checks if an asset exists and returns the path (if it does)"""
         if asset_path := Path(path.join(config.DATA_PATH, asset)):
             if asset_path.exists():
                 return str(asset_path)
@@ -46,7 +46,7 @@ class NotificationClient:
         self.notification.send(block=False)
 
     def send_pull_request_review(self, model: PullRequestNotification) -> bool:
-        """sends a notification for a pull request review"""
+        """Sends a notification for a pull request review"""
         return self._send_notification(
             title="Pull request review",
             message=f"New review for {model.name} in {model.org}/{model.repository}",
@@ -54,7 +54,7 @@ class NotificationClient:
         )
 
     def send_pull_request_approved(self, model: PullRequestNotification):
-        """sends a notification for a pull request approved"""
+        """Sends a notification for a pull request approved"""
         self._send_notification(
             title="Pull request approved",
             message=(
@@ -64,7 +64,7 @@ class NotificationClient:
         )
 
     def send_pull_request_merged(self, model: PullRequestNotification):
-        """sends a notification for a pull request merged"""
+        """Sends a notification for a pull request merged"""
         self._send_notification(
             title="Pull request merged",
             message=f"{model.name} has been merged in {model.org}/{model.repository}",
