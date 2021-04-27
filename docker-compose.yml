@@ -30,7 +30,7 @@ services:
 
   pylint:
     <<: *cli
-    command: pylint --rcfile=.pylintrc .
+    command: pylint --rcfile=.pylintrc reviews
 
   test:
     <<: *cli

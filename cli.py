@@ -5,11 +5,13 @@ import asyncclick as click
 from create import prepare_database
 from reviews import config
 from reviews.tasks import render
+from reviews.version import __version__
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
 
 
 @click.group(context_settings=CONTEXT_SETTINGS)
+@click.version_option(__version__, "-v", "--version", message="version %(version)s")
 async def main():
     """Click entrypoint with help provided by default."""
 
