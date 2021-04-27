@@ -63,3 +63,4 @@ ENV/
 
 # editors
 .vscode/*
+.idea/*

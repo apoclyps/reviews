@@ -9,3 +9,9 @@
 !.pylintrc
 !requirements.txt
 !requirements_dev.txt
+
+.dependabot
+.idea
+.git
+.github
+**/__pycache__
