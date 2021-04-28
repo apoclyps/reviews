@@ -1,5 +1,9 @@
 # Docker ignore whitelist
 
+# Ignore everything
+*
+
+# except these items
 !cli.py
 !reviews
 !tests
@@ -9,9 +13,3 @@
 !.pylintrc
 !requirements.txt
 !requirements_dev.txt
-
-.dependabot
-.idea
-.git
-.github
-**/__pycache__
