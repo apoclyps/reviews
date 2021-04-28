@@ -1,5 +1,9 @@
 # Docker ignore whitelist
 
+# Ignore everything
+*
+
+# except these items
 !cli.py
 !reviews
 !tests

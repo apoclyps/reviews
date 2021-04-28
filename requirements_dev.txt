@@ -1,3 +1,4 @@
+-r requirements.txt
 
 black==21.4b0
 factory-boy==3.2.0
