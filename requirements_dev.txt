@@ -1,6 +1,6 @@
 -r requirements.txt
 
-black==21.4b1
+black==21.4b2
 factory-boy==3.2.0
 flake8==3.9.1
 flake8-unused-arguments==0.0.6
