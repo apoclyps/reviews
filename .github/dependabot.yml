@@ -1,0 +1,35 @@
+version: 2
+updates:
+- package-ecosystem: docker
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: idna
+    versions:
+    - "3.1"
+  - dependency-name: pdbr
+    versions:
+    - 0.4.3
+    - 0.4.8
+    - 0.4.9
+    - 0.5.1
+  - dependency-name: pylint
+    versions:
+    - 2.7.3
+  - dependency-name: responses
+    versions:
+    - 0.13.0
+  - dependency-name: rich
+    versions:
+    - 9.12.1
+    - 9.12.2
+  - dependency-name: mypy
+    versions:
+    - "0.812"
