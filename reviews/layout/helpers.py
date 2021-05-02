@@ -13,7 +13,9 @@ from rich.tree import Tree
 from reviews.datasource import PullRequest
 
 
-def render_pull_request_table(title: str, pull_requests: List[PullRequest]) -> Table:
+def render_pull_request_table(
+    title: str, pull_requests: List[PullRequest], org: str, repository: str
+) -> Table:
     """Renders a list of pull requests as a table"""
     table = Table(show_header=True, header_style="bold white")
     table.add_column("#", style="dim", width=5)
@@ -36,10 +38,12 @@ def render_pull_request_table(title: str, pull_requests: List[PullRequest]) -> T
         updated_at = f"{colour}{updated_at}"
 
         labels = ", ".join([label.name for label in pr.labels])
-
         table.add_row(
             f"[white]{pr.number} ",
-            f"[white]{pr.title}",
+            (
+                f"[white][link=https://www.github.com/"
+                f"{org}/{repository}/pull/{pr.number}]{pr.title}[/link]"
+            ),
             f"{labels}",
             f"{updated_at}",
             f"{approved}",
