@@ -22,7 +22,9 @@ class PullRequestController:
         if not pull_requests:
             return None
 
-        return render_pull_request_table(title=title, pull_requests=pull_requests)
+        return render_pull_request_table(
+            title=title, pull_requests=pull_requests, org=org, repository=repository
+        )
 
     def update_pull_requests(self, org: str, repository: str) -> List[PullRequest]:
         """Updates repository models."""
