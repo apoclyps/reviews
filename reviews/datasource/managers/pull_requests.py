@@ -24,7 +24,8 @@ class PullRequestManager:
                 title text NOT NULL,
                 created_at text NOT NULL,
                 updated_at text NOT NULL,
-                approved INTEGER DEFAULT 0
+                approved text DEFAULT NULL,
+                approved_by_others BOOL DEFAULT FALSE
              );
             """
         return self.client.query(sql=sql)
@@ -71,9 +72,10 @@ class PullRequestManager:
                     created_at,
                     updated_at,
                     approved,
+                    approved_by_others,
                     number
             )
-            VALUES (?,?,?,?,?);
+            VALUES (?,?,?,?,?,?);
             """
 
         return self.client.insert(
@@ -83,6 +85,7 @@ class PullRequestManager:
                 model.created_at,
                 model.updated_at,
                 model.approved,
+                model.approved_by_others,
                 model.number,
             ),
         )
@@ -96,6 +99,7 @@ class PullRequestManager:
                 created_at = ?,
                 updated_at = ?,
                 approved = ?,
+                approved_by_others=?,
                 number = ?
             WHERE id = ?;
             """
@@ -107,6 +111,7 @@ class PullRequestManager:
                 model.created_at,
                 model.updated_at,
                 model.approved,
+                model.approved_by_others,
                 model.number,
                 row_id,
             ),
