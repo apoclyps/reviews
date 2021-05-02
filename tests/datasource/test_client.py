@@ -25,7 +25,8 @@ def pull_request():
         title="[1] Initial Commit",
         created_at=datetime.now(),
         updated_at=datetime.now(),
-        approved=False,
+        approved=None,
+        approved_by_others=False,
         labels=[Label(name="Python")],
     )
 
@@ -62,7 +63,8 @@ def test_bulk_insert(manager):
                 title="[1] Initial Commit",
                 created_at=datetime.now(),
                 updated_at=datetime.now(),
-                approved=False,
+                approved=None,
+                approved_by_others=False,
                 labels=[Label(name="Python")],
             ),
             PullRequest(
@@ -70,7 +72,8 @@ def test_bulk_insert(manager):
                 title="[2] Adds README",
                 created_at=datetime.now(),
                 updated_at=datetime.now(),
-                approved=False,
+                approved=None,
+                approved_by_others=False,
                 labels=[Label(name="Python")],
             ),
         ]
@@ -83,6 +86,7 @@ def test_update(manager, pull_request):
     last_row_id = manager.insert(model=pull_request)
 
     pull_request.title = "[1] Initial setup of repository"
+    pull_request.approved_by_others = True
     manager.update(row_id=last_row_id, model=pull_request)
 
     assert len(manager.all()) == 1
@@ -93,7 +97,8 @@ def test_update(manager, pull_request):
             "[1] Initial setup of repository",
             "2020-01-01 00:00:00",
             "2020-01-01 00:00:00",
-            0,
+            None,
+            1,
         )
     ]
 
