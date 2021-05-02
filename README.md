@@ -7,6 +7,8 @@
 If you want to get up and running with Code Review Manager immediately, run:
 
 ```bash
+# your github username
+export GITHUB_USER="your-github-username"
 # your personal github token used for interacting with the API
 export GITHUB_TOKEN="your-github-token"
 # comma seperated list of org/repo

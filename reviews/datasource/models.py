@@ -18,5 +18,6 @@ class PullRequest:
     title: str
     created_at: datetime
     updated_at: datetime
-    approved: bool
+    approved: str
+    approved_by_others: bool
     labels: List[Label] = field(default_factory=list)

@@ -1,7 +1,9 @@
-from typing import List, Union
+from typing import Dict, List, Union
 
+from github.PullRequest import PullRequest as ghPullRequest
 from rich.table import Table
 
+from reviews import config
 from reviews.datasource import Label, PullRequest
 from reviews.layout import render_pull_request_table
 from reviews.source_control import GithubAPI
@@ -23,20 +25,49 @@ class PullRequestController:
             return None
 
         return render_pull_request_table(
-            title=title, pull_requests=pull_requests, org=org, repository=repository
+            title=title,
+            pull_requests=pull_requests,
+            org=org,
+            repository=repository,
         )
 
     def update_pull_requests(self, org: str, repository: str) -> List[PullRequest]:
         """Updates repository models."""
-        pull_requests = self.client.get_pull_requests(org=org, repo=repository)
 
+        def _get_reviews(pull_request: ghPullRequest) -> Dict[str, str]:
+            """Inner function to retrieve reviews for a pull request"""
+            reviews = sorted(
+                pull_request.get_reviews(),
+                key=lambda r: r.submitted_at,
+                reverse=True,
+            )
+            res, seen = {}, []
+            for review in reviews:
+                if review.user.login in seen or review.state == "COMMENTED":
+                    continue
+                res[review.user.login] = review.state
+                seen.append(review.user.login)
+            return res
+
+        pull_requests = self.client.get_pull_requests(org=org, repo=repository)
         return [
             PullRequest(
                 number=pull_request.number,
                 title=pull_request.title,
                 created_at=pull_request.created_at,
                 updated_at=pull_request.updated_at,
-                approved=any(pull_request.get_reviews()),  # NOQA: R1721
+                approved=_get_reviews(pull_request=pull_request).get(
+                    config.GITHUB_USER, ""
+                ),  # NOQA: R1721
+                approved_by_others=any(
+                    [
+                        True
+                        for user, status in _get_reviews(
+                            pull_request=pull_request
+                        ).items()
+                        if user != config.GITHUB_USER and status == "APPROVED"
+                    ]
+                ),
                 labels=[
                     Label(name=label.name)
                     for label in pull_request.get_labels()

@@ -22,12 +22,20 @@ def render_pull_request_table(
     table.add_column(title, width=60)
     table.add_column("Labels", width=40)
     table.add_column("Activity", width=15)
-    table.add_column("Status", width=10)
+    table.add_column("Approved", width=15)
+    table.add_column("Ready To Release", width=10)
 
     pull_requests = sorted(pull_requests, key=lambda x: x.updated_at, reverse=True)
 
     for pr in pull_requests:
-        approved = "[green]Approved" if pr.approved else ""
+        approved = ""
+        if pr.approved == "APPROVED":
+            approved = "[green]Approved"
+        elif pr.approved == "CHANGES_REQUESTED":
+            approved = "[yellow]Changes Requested"
+
+        approved_by_others = "[green]Ready" if pr.approved_by_others else ""
+
         updated_at = humanize.naturaltime(pr.updated_at)
 
         colour = ""
@@ -47,6 +55,7 @@ def render_pull_request_table(
             f"{labels}",
             f"{updated_at}",
             f"{approved}",
+            f"{approved_by_others}",
         )
 
     return table
@@ -62,8 +71,8 @@ def generate_layout() -> Layout:
         Layout(name="footer", size=7),
     )
     layout["main"].split_row(
-        Layout(name="left_side"),
-        Layout(name="body", ratio=2, minimum_size=60),
+        Layout(name="left_side", size=50),
+        Layout(name="body", ratio=2, minimum_size=80),
     )
     layout["left_side"].split(Layout(name="configuration"), Layout(name="log"))
     return layout
@@ -113,7 +122,10 @@ def generate_progress_tracker():
             border_style="blue",
         ),
         Panel(
-            progress, title="[b]Next fetch for:", border_style="blue", padding=(1, 2)
+            progress,
+            title="[b]Next fetch for:",
+            border_style="blue",
+            padding=(1, 2),
         ),
     )
 
