@@ -1,20 +1,17 @@
-# Code Review Manager
+# Reviews
 
-> Simplify code review with an all in one dashboard providing an overview of open PRs !
+> Simplify code review with an all-in-one TUI dashboard providing an overview of open PRs requiring review!
 
 ### Quick Start
 
 If you want to get up and running with Code Review Manager immediately, run:
 
 ```bash
-# your github username
 export GITHUB_USER="your-github-username"
-# your personal github token used for interacting with the API
-export GITHUB_TOKEN="your-github-token"
-# comma seperated list of org/repo
+export GITHUB_TOKEN="your personal github token used for interacting with the API"
 export REPOSITORY_CONFIGURATION="apoclyps/code-review-manager"
 
-pip install reviews
+pip install --upgrade reviews
 
 reviews dashboard
 ```
@@ -43,18 +40,20 @@ $ pip install -e .
 $ reviews dashboard
 ```
 
-Alternatively, you can also run the code review manager within Docker:
+You can run the code review manager within Docker:
 
 ```bash
 docker-compose build cli && docker-compose run --rm cli python cli.py dashboard
 ```
 
-Alternatively, you can use docker to build an image and run that image with all of the necessary dependencies using the following commands:
+To build an image and run that image with all of the necessary dependencies using the following commands:
 
 ```bash
 $ docker-compose build cli
 $ docker-compose run --rm cli python cli.py dashboard
 ```
+
+For instructions on setting up a development enviroment outside of Docker, checkout the [wiki](https://github.com/apoclyps/reviews/wiki/Development-Enviromnent).
 
 ### Testing
 
