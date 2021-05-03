@@ -50,7 +50,7 @@ def _render_pull_requests(
     )
 
 
-def render():
+def render(no_reload: bool):
     """Renders Terminal UI Dashboard"""
     (
         job_progress,
@@ -80,7 +80,9 @@ def render():
         log_component=generate_log_table(logs=logs),
     )
 
-    with Live(layout_manager.layout, refresh_per_second=5, screen=True):
+    with Live(
+        layout_manager.layout, refresh_per_second=5, screen=not no_reload
+    ) as live:
         while True:
             if not overall_progress or overall_progress.finished:
                 (
@@ -103,6 +105,9 @@ def render():
                 ),
                 log_component=generate_log_table(logs=logs),
             )
+            if no_reload:
+                live.stop()
+                break
 
             if config.ENABLE_NOTIFICATIONS:
                 add_log_event(message="sending notification")

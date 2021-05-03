@@ -17,7 +17,8 @@ async def main():
 
 
 @main.command(help="Display a dashboard")
-async def dashboard():
+@click.option("-n", "--no-reload", is_flag=True)
+async def dashboard(no_reload):
     """Dashboard command."""
 
     click.echo("loading dashboard")
@@ -28,7 +29,7 @@ async def dashboard():
     # TODO: move github polling to another thread
     await asyncio.gather(
         # asyncio.to_thread(update),
-        asyncio.to_thread(render),
+        asyncio.to_thread(render, no_reload=no_reload),
     )
 
 
