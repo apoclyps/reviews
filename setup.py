@@ -12,7 +12,7 @@ with open("README.md", "r") as fh:
 setup(
     name="reviews",
     packages=find_namespace_packages(include=["reviews.*"]),
-    version="0.1.3",
+    version="0.1.4",
     license="MIT",
     description=("Code Review Manager written in Python. Standalone client included."),
     author="Kyle Harrison",
