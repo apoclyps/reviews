@@ -1,6 +1,10 @@
 # Reviews
 
-> Simplify code review with an all-in-one TUI dashboard providing an overview of open PRs requiring review!
+[![Tests](https://github.com/apoclyps/reviews/actions/workflows/test.yml/badge.svg)](https://github.com/apoclyps/reviews/actions/workflows/test.yml)
+![pypi](https://img.shields.io/pypi/v/reviews.svg)
+![versions](https://img.shields.io/pypi/pyversions/reviews.svg)
+
+Simplify code review with an all-in-one TUI dashboard providing an overview of open PRs requiring review!
 
 ### Quick Start
 

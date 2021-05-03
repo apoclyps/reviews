@@ -1,9 +1,10 @@
-name: Test Code Review Manager
+name: Tests
 
 on: [pull_request]
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -11,6 +12,7 @@ jobs:
     defaults:
       run:
         shell: bash
+
     steps:
       - uses: actions/checkout@v2.3.4
       - name: Set up Python ${{ matrix.python-version }}
