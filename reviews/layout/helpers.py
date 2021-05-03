@@ -19,7 +19,9 @@ def render_pull_request_table(
     """Renders a list of pull requests as a table"""
     table = Table(show_header=True, header_style="bold white")
     table.add_column("#", style="dim", width=5)
-    table.add_column(title, width=60)
+    table.add_column(
+        f"[link=https://www.github.com/{org}/{repository}]{title}[/link]", width=60
+    )
     table.add_column("Labels", width=40)
     table.add_column("Activity", width=15)
     table.add_column("Approved", width=15)
