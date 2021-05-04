@@ -4,7 +4,7 @@ import asyncclick as click
 
 from create import prepare_database
 from reviews import config
-from reviews.tasks import render
+from reviews.tasks import render, single_render
 from reviews.version import __version__
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
@@ -17,7 +17,8 @@ async def main():
 
 
 @main.command(help="Display a dashboard")
-async def dashboard():
+@click.option("-r", "--reload/--no-reload", default=True, is_flag=True)
+async def dashboard(reload):
     """Dashboard command."""
 
     click.echo("loading dashboard")
@@ -25,11 +26,14 @@ async def dashboard():
     if config.ENABLE_PERSISTED_DATA:
         prepare_database()
 
-    # TODO: move github polling to another thread
-    await asyncio.gather(
-        # asyncio.to_thread(update),
-        asyncio.to_thread(render),
-    )
+    if reload:
+        # TODO: move github polling to another thread
+        await asyncio.gather(
+            # asyncio.to_thread(update),
+            asyncio.to_thread(render),
+        )
+    else:
+        single_render()
 
 
 if __name__ == "__main__":

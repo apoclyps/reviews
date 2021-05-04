@@ -63,15 +63,15 @@ def render_pull_request_table(
     return table
 
 
-def generate_layout() -> Layout:
+def generate_layout(footer: bool = True) -> Layout:
     """Define the layout for the terminal UI."""
     layout = Layout(name="root")
 
-    layout.split(
-        Layout(name="header", size=3),
-        Layout(name="main", ratio=1),
-        Layout(name="footer", size=7),
-    )
+    sections = [Layout(name="header", size=3), Layout(name="main", ratio=1)]
+    if footer:
+        sections.append(Layout(name="footer", size=7))
+    layout.split(*sections)
+
     layout["main"].split_row(
         Layout(name="left_side", size=50),
         Layout(name="body", ratio=2, minimum_size=80),
