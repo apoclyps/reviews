@@ -52,14 +52,8 @@ def _render_pull_requests(
 
 def render(no_reload: bool):
     """Renders Terminal UI Dashboard"""
-    (
-        job_progress,
-        overall_progress,
-        overall_task,
-        progress_table,
-    ) = generate_progress_tracker()
-
-    overall_progress = None
+    prog_tracker = generate_progress_tracker()
+    prog_tracker["overall_progress"] = None
 
     # initial load should be from database
     add_log_event(message="initializing...")
@@ -70,7 +64,7 @@ def render(no_reload: bool):
     notification_client = NotificationClient()
     layout_manager = RenderLayoutManager(layout=generate_layout())
     layout_manager.render_layout(
-        progress_table=progress_table,
+        progress_table=prog_tracker["progress_table"],
         body=Panel(
             RenderGroup(),
             title="Activity",
@@ -81,22 +75,20 @@ def render(no_reload: bool):
     )
 
     with Live(
-        layout_manager.layout, refresh_per_second=5, screen=not no_reload
+        layout_manager.layout, refresh_per_second=5, screen=(not no_reload)
     ) as live:
         while True:
-            if not overall_progress or overall_progress.finished:
-                (
-                    job_progress,
-                    overall_progress,
-                    overall_task,
-                    progress_table,
-                ) = generate_progress_tracker()
+            if (
+                not prog_tracker["overall_progress"]
+                or prog_tracker["overall_progress"].finished
+            ):
+                prog_tracker = generate_progress_tracker()
 
             add_log_event(message="waiting...")
 
             # update view (blocking operation)
             layout_manager.render_layout(
-                progress_table=progress_table,
+                progress_table=prog_tracker["progress_table"],
                 body=_render_pull_requests(
                     controller=controller, configuration=configuration
                 ),
@@ -122,14 +114,18 @@ def render(no_reload: bool):
                 add_log_event(message="notification sent")
 
             delay = config.DELAY_REFRESH * 0.01
-            while not overall_progress.finished:
+            while not prog_tracker["overall_progress"].finished:
                 sleep(delay)
-                for job in job_progress.tasks:
+                for job in prog_tracker["job_progress"].tasks:
                     if not job.finished:
-                        job_progress.advance(job.id)
+                        prog_tracker["job_progress"].advance(job.id)
 
-                completed = sum(task.completed for task in job_progress.tasks)
-                overall_progress.update(overall_task, completed=completed)
+                completed = sum(
+                    task.completed for task in prog_tracker["job_progress"].tasks
+                )
+                prog_tracker["overall_progress"].update(
+                    prog_tracker["overall_task"], completed=completed
+                )
 
             add_log_event(message="updated")
 

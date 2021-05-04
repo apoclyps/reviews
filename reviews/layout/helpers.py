@@ -131,4 +131,9 @@ def generate_progress_tracker():
         ),
     )
 
-    return progress, overall_progress, overall_task, progress_table
+    return {
+        "job_progress": progress,
+        "overall_progress": overall_progress,
+        "overall_task": overall_task,
+        "progress_table": progress_table,
+    }
