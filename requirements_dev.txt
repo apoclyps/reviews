@@ -9,5 +9,5 @@ isort==5.8.0
 mypy==0.812
 pdbr==0.5.1
 pylint==2.8.2
-pytest==6.2.3
+pytest==6.2.4
 pytest-cov==2.11.1
