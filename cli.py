@@ -37,7 +37,6 @@ async def dashboard(reload):
         prepare_database()
 
     if reload:
-        # TODO: move github polling to another thread
         await asyncio.gather(
             # asyncio.to_thread(update),
             asyncio.to_thread(render),

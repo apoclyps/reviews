@@ -15,7 +15,8 @@ setup(
     version="0.1.5",
     license="MIT",
     description=(
-        "A terminal UI Dashboard for monitoring requests for code review across several Github repositories and pull requests."
+        "A terminal UI Dashboard for monitoring requests for code review across "
+        "several Github repositories and pull requests."
     ),
     author="Kyle Harrison",
     author_email="kyle.harrison.dev@gmail.com",
