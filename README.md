@@ -39,7 +39,6 @@ $ source env/bin/activate
 If you wish to keep a copy of Reviews on your host system forever, you can install and run it using:
 
 ```bash
-$ export ENABLE_NOTIFICATIONS=true
 $ export ENABLE_PERSISTED_DATA=false
 $ export REPOSITORY_CONFIGURATION="apoclyps/reviews"
 $ pip install -e .

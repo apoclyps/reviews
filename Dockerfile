@@ -3,7 +3,7 @@ FROM python:3.9.5-alpine
 # Don't write .pyc files (or __pycache__ dirs) inside the container
 ENV PYTHONDONTWRITEBYTECODE 1
 
-RUN /sbin/apk add --no-cache --virtual .deps gcc musl-dev libnotify libffi-dev make
+RUN /sbin/apk add --no-cache --virtual .deps gcc musl-dev libffi-dev make
 
 # Install Python dependencies from PyPI
 COPY requirements*.txt ./

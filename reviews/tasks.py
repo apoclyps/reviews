@@ -16,7 +16,6 @@ from reviews.layout import (
     generate_progress_tracker,
     generate_tree_layout,
 )
-from reviews.notifications import NotificationClient, PullRequestNotification
 
 logs: List[Tuple[str, str]] = []
 
@@ -88,7 +87,6 @@ def render() -> None:
     configuration = config.get_configuration()
     controller = PullRequestController()
 
-    notification_client = NotificationClient()
     layout_manager = RenderLayoutManager(layout=generate_layout())
     layout_manager.render_layout(
         progress_table=progress_table,
@@ -124,18 +122,6 @@ def render() -> None:
                 ),
                 log_component=generate_log_table(logs=logs),
             )
-
-            if config.ENABLE_NOTIFICATIONS:
-                add_log_event(message="sending notification")
-                org, repo = configuration[0]
-                pull_request = PullRequestNotification(
-                    org=org,
-                    repository=repo,
-                    name="nootifier",
-                    number=1,
-                )
-                notification_client.send_pull_request_approved(model=pull_request)
-                add_log_event(message="notification sent")
 
             delay = config.DELAY_REFRESH * 0.01
             while not overall_progress.finished:
