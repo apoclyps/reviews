@@ -14,7 +14,7 @@ class PullRequestManager:
         self.client = client
         self.table_name = "pull_requests"
 
-    def create_table(self):
+    def create_table(self) -> List[Any]:
         """creates the table."""
         sql = f"""
             CREATE TABLE IF NOT EXISTS {self.table_name}
@@ -30,14 +30,14 @@ class PullRequestManager:
             """
         return self.client.query(sql=sql)
 
-    def drop_table(self):
+    def drop_table(self) -> List[Any]:
         """drops the Table."""
         sql = f"""
             DROP TABLE IF EXISTS {self.table_name};
             """
         return self.client.query(sql=sql)
 
-    def all(self):
+    def all(self) -> List[Any]:
         """fetch all persisted database rows for pull requests."""
         sql = f"""
             SELECT *
@@ -45,7 +45,7 @@ class PullRequestManager:
         """
         return self.client.query(sql=sql)
 
-    def get_by_id(self, row_id: int):
+    def get_by_id(self, row_id: int) -> List[Any]:
         """fetch all persisted database rows for pull requests."""
         sql = f"""
             SELECT *
@@ -63,7 +63,7 @@ class PullRequestManager:
 
         return inserted
 
-    def insert(self, model):
+    def insert(self, model: PullRequest) -> int:
         """insert pull request into database."""
         sql = f"""
             INSERT INTO {self.table_name}
@@ -90,7 +90,7 @@ class PullRequestManager:
             ),
         )
 
-    def update(self, row_id: int, model: PullRequest):
+    def update(self, row_id: int, model: PullRequest) -> List[Any]:
         """upsert pull request into database."""
         sql = f"""
             UPDATE OR REPLACE {self.table_name}
@@ -117,7 +117,7 @@ class PullRequestManager:
             ),
         )
 
-    def delete(self, row_id):
+    def delete(self, row_id: int) -> List[Any]:
         """delete from the table"""
         sql = f"""
             DELETE FROM {self.table_name}

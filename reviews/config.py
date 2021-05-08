@@ -30,7 +30,7 @@ def get_configuration() -> List[Tuple[str, str]]:
     of tuples.
     """
 
-    def _to_tuple(values):
+    def _to_tuple(values: List[str]) -> Tuple[str, str]:
         return (values[0], values[1])
 
     return [

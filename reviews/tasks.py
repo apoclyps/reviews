@@ -34,7 +34,7 @@ def add_log_event(message: str) -> List[Tuple[str, str]]:
 
 def _render_pull_requests(
     controller: PullRequestController, configuration: List[Tuple[str, str]]
-):
+) -> Panel:
     """Renders all pull requests for the provided configuration"""
 
     tables = [
@@ -50,7 +50,7 @@ def _render_pull_requests(
     )
 
 
-def render():
+def render() -> None:
     """Renders Terminal UI Dashboard"""
     (
         job_progress,
@@ -59,7 +59,7 @@ def render():
         progress_table,
     ) = generate_progress_tracker()
 
-    overall_progress = None
+    # overall_progress = None
 
     # initial load should be from database
     add_log_event(message="initializing...")
@@ -129,7 +129,7 @@ def render():
             add_log_event(message="updated")
 
 
-async def update():
+async def update() -> None:
     """Updates data in the background."""
 
     while True:
