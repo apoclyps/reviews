@@ -35,7 +35,7 @@ def render_pull_request_table(
         if "Security" in pr.title:
             title_colour = "[yellow]"
 
-        # Formatting Activity Column
+        # format pull request last modified at datetime as a human-readable time
         updated_at = humanize.naturaltime(pr.updated_at)
         colour = ""
         if (datetime.now() - pr.updated_at).days >= 7:
