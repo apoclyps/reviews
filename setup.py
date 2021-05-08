@@ -14,7 +14,9 @@ setup(
     packages=find_namespace_packages(include=["reviews.*"]),
     version="0.1.4",
     license="MIT",
-    description=("Reviews written in Python. Standalone client included."),
+    description=(
+        "A terminal UI Dashboard for monitoring requests for code review across several Github repositories and pull requests."
+    ),
     author="Kyle Harrison",
     author_email="kyle.harrison.dev@gmail.com",
     long_description=long_description,
