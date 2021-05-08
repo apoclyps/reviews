@@ -1,3 +1,5 @@
+from typing import Optional
+
 from rich.console import Console, RenderGroup
 from rich.layout import Layout
 from rich.panel import Panel
@@ -16,17 +18,18 @@ class RenderLayoutManager:
 
     def render_layout(
         self,
-        progress_table: Table,
         body: Panel,
         pull_request_component: RenderGroup,
         log_component: Table,
+        progress_table: Optional[Table] = None,
     ) -> Layout:
         """Renders the entire layout"""
         self.render_header()
         self.render_body(component=body)
         self.render_log(component=log_component)
         self.render_configuration(component=pull_request_component)
-        self.render_footer(progress_table=progress_table)
+        if progress_table:
+            self.render_footer(progress_table=progress_table)
 
         return self.layout
 

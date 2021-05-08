@@ -50,6 +50,29 @@ def _render_pull_requests(
     )
 
 
+def single_render() -> None:
+    """Renders the Terminal UI Dashboard once before closing the application"""
+
+    configuration = config.get_configuration()
+    controller = PullRequestController()
+
+    layout_manager = RenderLayoutManager(layout=generate_layout(footer=False))
+    layout_manager.render_layout(
+        progress_table=None,
+        body=_render_pull_requests(controller=controller, configuration=configuration),
+        pull_request_component=generate_tree_layout(configuration=configuration),
+        log_component=generate_log_table(logs=logs),
+    )
+
+    with Live(
+        renderable=layout_manager.layout,
+        refresh_per_second=5,
+        transient=False,
+        screen=False,
+    ):
+        add_log_event(message="updated")
+
+
 def render() -> None:
     """Renders Terminal UI Dashboard"""
     (
@@ -58,8 +81,6 @@ def render() -> None:
         overall_task,
         progress_table,
     ) = generate_progress_tracker()
-
-    # overall_progress = None
 
     # initial load should be from database
     add_log_event(message="initializing...")
