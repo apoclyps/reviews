@@ -30,7 +30,7 @@ def render_pull_request_table(
     pull_requests = sorted(pull_requests, key=lambda x: x.updated_at, reverse=True)
 
     for pr in pull_requests:
-        # Formatting PR Title Column
+        # format and colourize pull request title
         title_colour = "[white]"
         if "Security" in pr.title:
             title_colour = "[yellow]"
