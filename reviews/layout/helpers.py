@@ -44,7 +44,7 @@ def render_pull_request_table(
             colour = "[yellow]"
         updated_at = f"{colour}{updated_at}"
 
-        # Formatting Approved Column
+        # formats the approval status (approved by me)
         approved = ""
         if pr.approved == "APPROVED":
             approved = "[green]Approved"
