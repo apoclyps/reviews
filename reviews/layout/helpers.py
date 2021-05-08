@@ -33,7 +33,7 @@ def render_pull_request_table(
         # format and colourize pull request title
         title_colour = "[white]"
         if "Security" in pr.title:
-            title_colour = "[yellow]"
+            title_colour = "[red]"
 
         # format pull request last modified at datetime as a human-readable time
         updated_at = humanize.naturaltime(pr.updated_at)
