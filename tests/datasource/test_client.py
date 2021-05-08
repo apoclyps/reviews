@@ -1,4 +1,3 @@
-from reviews.datasource.managers import pull_requests
 from datetime import datetime
 
 from freezegun import freeze_time

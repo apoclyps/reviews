@@ -46,13 +46,46 @@ repos:
     hooks:
       - id: check-useless-excludes
 
-  - repo: https://github.com/ambv/black
-    rev: 20.8b1
+  - repo: https://github.com/psf/black
+    rev: 21.5b0
     hooks:
       - id: black
-        language_version: python3.9
+        args: [--safe, --quiet]
 
-  - repo: https://github.com/timothycrosley/isort
-    rev: 5.7.0
+  - repo: https://github.com/PyCQA/flake8
+    rev: 3.9.1
     hooks:
-      -  id: isort
+      - id: flake8
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.8.0
+    hooks:
+      - id: isort
+        name: isort (python)
+      - id: isort
+        name: isort (cython)
+        types: [cython]
+      - id: isort
+        name: isort (pyi)
+        types: [pyi]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v0.812
+    hooks:
+      - id: mypy
+        name: mypy
+        entry: mypy
+        language: python
+        types: [python]
+        args: ["--ignore-missing-imports", "--scripts-are-modules", "--config-file=mypy.ini"]
+        require_serial: true
+        additional_dependencies: []
+
+  - repo: local
+    hooks:
+    -   id: pylint
+        name: pylint
+        entry: pylint
+        language: system
+        types: [python]
+        exclude: tests
