@@ -16,7 +16,6 @@ FILENAME = config("FILENAME", cast=str, default="code_review_manager.db")
 
 # Application Config
 DELAY_REFRESH = config("DELAY_REFRESH", cast=int, default=60)
-ENABLE_NOTIFICATIONS = config("ENABLE_NOTIFICATIONS", cast=bool, default=False)
 ENABLE_PERSISTED_DATA = config("ENABLE_PERSISTED_DATA", cast=bool, default=False)
 REPOSITORY_CONFIGURATION = config(
     "REPOSITORY_CONFIGURATION",

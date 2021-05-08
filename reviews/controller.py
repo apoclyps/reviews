@@ -36,11 +36,7 @@ class PullRequestController:
 
         def _get_reviews(pull_request: ghPullRequest) -> Dict[str, str]:
             """Inner function to retrieve reviews for a pull request"""
-            reviews = sorted(
-                pull_request.get_reviews(),
-                key=lambda r: r.submitted_at,
-                reverse=True,
-            )
+            reviews = pull_request.get_reviews()
             res, seen = {}, []
             for review in reviews:
                 if review.user.login in seen or review.state == "COMMENTED":
