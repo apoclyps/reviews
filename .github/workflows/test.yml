@@ -34,7 +34,7 @@ jobs:
           flake8 .
           pylint --rcfile=.pylintrc reviews
       - name: Typecheck with mypy
-        run: mypy . --ignore-missing-imports
+        run: mypy reviews --ignore-missing-imports --disallow-untyped-defs
       - name: Test with pytest
         run: pytest -vvv --cov=./reviews --cov-report=xml:./coverage.xml --cov-report term-missing
       - name: Upload code coverage

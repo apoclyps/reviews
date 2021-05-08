@@ -31,7 +31,7 @@ class NotificationClient:
         message: str,
         icon: Optional[str] = None,
         audio: Optional[str] = None,
-    ):
+    ) -> None:
         """a generic wrapper around send notification."""
         self.notification.application_name = self.application_name
         self.notification.title = title
@@ -45,7 +45,7 @@ class NotificationClient:
 
         self.notification.send(block=False)
 
-    def send_pull_request_review(self, model: PullRequestNotification) -> bool:
+    def send_pull_request_review(self, model: PullRequestNotification) -> None:
         """Sends a notification for a pull request review"""
         return self._send_notification(
             title="Pull request review",
@@ -53,7 +53,7 @@ class NotificationClient:
             audio=Sound.SUCCESS.value,
         )
 
-    def send_pull_request_approved(self, model: PullRequestNotification):
+    def send_pull_request_approved(self, model: PullRequestNotification) -> None:
         """Sends a notification for a pull request approved"""
         self._send_notification(
             title="Pull request approved",
@@ -63,7 +63,7 @@ class NotificationClient:
             audio=Sound.SUCCESS.value,
         )
 
-    def send_pull_request_merged(self, model: PullRequestNotification):
+    def send_pull_request_merged(self, model: PullRequestNotification) -> None:
         """Sends a notification for a pull request merged"""
         self._send_notification(
             title="Pull request merged",

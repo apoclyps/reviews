@@ -30,5 +30,5 @@ class PullRequestNotification:
     name: str
     number: int
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.org}/{self.repository} updated with {self.name}"

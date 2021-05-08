@@ -6,7 +6,7 @@ from rich import box
 from rich.console import RenderGroup
 from rich.layout import Layout
 from rich.panel import Panel
-from rich.progress import BarColumn, Progress, SpinnerColumn, TextColumn
+from rich.progress import BarColumn, Progress, SpinnerColumn, TaskID, TextColumn
 from rich.table import Table
 from rich.tree import Tree
 
@@ -91,18 +91,19 @@ def generate_tree_layout(configuration: List[Tuple[str, str]]) -> RenderGroup:
     return RenderGroup(*organization_tree_mapping.values())
 
 
-def generate_log_table(logs):
+def generate_log_table(logs: List[Tuple[str, str]]) -> Table:
     """Generetes a table for logging activity"""
     table = Table("Time", "Message", box=box.SIMPLE)
 
-    for log in logs:
-        time, message = log
-        table.add_row(time, message)
+    if logs:
+        for log in logs:
+            time, message = log
+            table.add_row(time, message)
 
     return table
 
 
-def generate_progress_tracker():
+def generate_progress_tracker() -> Tuple[Progress, Progress, TaskID, Table]:
     """Tracks the progress of background tasks"""
     progress = Progress(
         "{task.description}",
@@ -114,17 +115,17 @@ def generate_progress_tracker():
 
     total = sum(task.total for task in progress.tasks)
     overall_progress = Progress()
-    overall_task = overall_progress.add_task("All", total=int(total))
+    overall_task = overall_progress.add_task(description="All", total=int(total))
 
     progress_table = Table.grid(expand=True)
     progress_table.add_row(
         Panel(
-            overall_progress,
+            renderable=overall_progress,  # type: ignore
             title="Next Refresh",
             border_style="blue",
         ),
         Panel(
-            progress,
+            renderable=progress,  # type: ignore
             title="[b]Next fetch for:",
             border_style="blue",
             padding=(1, 2),

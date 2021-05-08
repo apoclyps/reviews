@@ -1,6 +1,6 @@
 import sqlite3
 from sqlite3 import Connection, Error
-from typing import Any, List, Optional
+from typing import List, Optional, Tuple
 
 
 class SQLClient:
@@ -35,7 +35,7 @@ class SQLClient:
             print(exc)
             raise exc
 
-    def query(self, sql: str, data=None) -> List[Any]:
+    def query(self, sql: str, data: Optional[Tuple] = None) -> List:
         """query a table from a given sql statement."""
 
         with self.connection as db:
@@ -49,7 +49,7 @@ class SQLClient:
 
             return cursor.fetchall()
 
-    def insert(self, sql: str, data=None) -> int:
+    def insert(self, sql: str, data: Optional[Tuple] = None) -> int:
         """query a table from a given sql statement."""
 
         with self.connection as db:
@@ -61,4 +61,4 @@ class SQLClient:
             else:
                 cursor.execute(sql)
 
-            return cursor.lastrowid
+            return int(cursor.lastrowid)
