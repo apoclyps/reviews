@@ -15,7 +15,7 @@ class NotificationClient:
 
     def __init__(self) -> None:
         self.notification = Notify()
-        self.application_name = "Code Review Manager"
+        self.application_name = "Reviews"
 
     @staticmethod
     def _asset_exists(asset: str) -> Union[str, None]:

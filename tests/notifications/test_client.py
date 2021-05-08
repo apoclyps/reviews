@@ -15,7 +15,7 @@ def client() -> NotificationClient:
 def pull_request() -> PullRequestNotification:
     return PullRequestNotification(
         org="apoclyps",
-        repository="Code Review Manager",
+        repository="Reviews",
         name="Pull Request Approved",
         number=1,
     )

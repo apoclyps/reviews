@@ -38,8 +38,8 @@ stop: ## stop the cli
 clean: ## delete all data from the local databases
 	@docker-compose down --remove-orphans --volumes
 
-network: ## Create the code-review-manager network if it doesn't exist
-	docker network create --driver bridge code-review-manager || true
+network: ## Create the reviews network if it doesn't exist
+	docker network create --driver bridge reviews || true
 
 shell: ## shell into a development container
 	@docker-compose build cli

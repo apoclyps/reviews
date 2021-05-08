@@ -21,7 +21,7 @@ ENABLE_PERSISTED_DATA = config("ENABLE_PERSISTED_DATA", cast=bool, default=False
 REPOSITORY_CONFIGURATION = config(
     "REPOSITORY_CONFIGURATION",
     cast=Csv(),
-    default="apoclyps/code-review-manager",
+    default="apoclyps/reviews",
 )
 
 

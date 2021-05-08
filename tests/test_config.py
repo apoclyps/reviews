@@ -8,7 +8,7 @@ from reviews import config as application_config
 def test_repository_configuration():
     os.environ[
         "REPOSITORY_CONFIGURATION"
-    ] = "apoclyps/code-review-manager, apoclyps/my-dev-space, apoclyps/magic-home"
+    ] = "apoclyps/reviews, apoclyps/my-dev-space, apoclyps/magic-home"
 
     application_config.REPOSITORY_CONFIGURATION = config(
         "REPOSITORY_CONFIGURATION",
@@ -17,7 +17,7 @@ def test_repository_configuration():
     configuration = application_config.get_configuration()
 
     assert configuration == [
-        ("apoclyps", "code-review-manager"),
+        ("apoclyps", "reviews"),
         ("apoclyps", "my-dev-space"),
         ("apoclyps", "magic-home"),
     ]
