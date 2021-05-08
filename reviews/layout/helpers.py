@@ -49,7 +49,7 @@ def render_pull_request_table(
         if pr.approved == "APPROVED":
             approved = "[green]Approved"
         elif pr.approved == "CHANGES_REQUESTED":
-            approved = "[yellow]Changes Requested"
+            approved = "[red]Changes Requested"
 
         # format the ready to release status (approved by others)
         approved_by_others = "[green]Ready" if pr.approved_by_others else ""
