@@ -30,16 +30,13 @@ def render_pull_request_table(
     pull_requests = sorted(pull_requests, key=lambda x: x.updated_at, reverse=True)
 
     for pr in pull_requests:
-        approved = ""
-        if pr.approved == "APPROVED":
-            approved = "[green]Approved"
-        elif pr.approved == "CHANGES_REQUESTED":
-            approved = "[yellow]Changes Requested"
+        # Formatting PR Title Column
+        title_colour = "[white]"
+        if "Security" in pr.title:
+            title_colour = "[yellow]"
 
-        approved_by_others = "[green]Ready" if pr.approved_by_others else ""
-
+        # Formatting Activity Column
         updated_at = humanize.naturaltime(pr.updated_at)
-
         colour = ""
         if (datetime.now() - pr.updated_at).days >= 7:
             colour = "[red]"
@@ -47,11 +44,22 @@ def render_pull_request_table(
             colour = "[yellow]"
         updated_at = f"{colour}{updated_at}"
 
+        # Formatting Approved Column
+        approved = ""
+        if pr.approved == "APPROVED":
+            approved = "[green]Approved"
+        elif pr.approved == "CHANGES_REQUESTED":
+            approved = "[yellow]Changes Requested"
+
+        # Formatting Ready To Release Column
+        approved_by_others = "[green]Ready" if pr.approved_by_others else ""
+
         labels = ", ".join([label.name for label in pr.labels])
+
         table.add_row(
             f"[white]{pr.number} ",
             (
-                f"[white][link=https://www.github.com/"
+                f"{title_colour}[link=https://www.github.com/"
                 f"{org}/{repository}/pull/{pr.number}]{pr.title}[/link]"
             ),
             f"{labels}",
