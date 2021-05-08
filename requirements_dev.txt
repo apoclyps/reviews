@@ -11,3 +11,4 @@ pdbr==0.5.1
 pylint==2.8.2
 pytest==6.2.4
 pytest-cov==2.11.1
+pre-commit==2.12.1

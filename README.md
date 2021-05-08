@@ -96,6 +96,12 @@ docker-compose run --rm mypy
 docker-compose run --rm pylint
 ```
 
+You can also set up ``pre-commit`` to run the linting steps automatically during the commit phase,
+the pre-commit pipeline can be set up by running the following command on the project root:
+```bash
+pre-commit install
+```
+
 # Contributions
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
