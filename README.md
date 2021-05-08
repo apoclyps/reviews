@@ -15,7 +15,7 @@ If you want to get up and running with Reviews immediately, run:
 ```bash
 export GITHUB_USER="your-github-username"
 export GITHUB_TOKEN="your personal github token used for interacting with the API"
-export REPOSITORY_CONFIGURATION="apoclyps/code-review-manager"
+export REPOSITORY_CONFIGURATION="apoclyps/reviews"
 
 pip install --upgrade reviews
 
@@ -41,7 +41,7 @@ If you wish to keep a copy of Reviews on your host system forever, you can insta
 ```bash
 $ export ENABLE_NOTIFICATIONS=true
 $ export ENABLE_PERSISTED_DATA=false
-$ export REPOSITORY_CONFIGURATION="apoclyps/code-review-manager"
+$ export REPOSITORY_CONFIGURATION="apoclyps/reviews"
 $ pip install -e .
 $ reviews dashboard
 ```
