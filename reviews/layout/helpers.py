@@ -10,7 +10,12 @@ from rich.progress import BarColumn, Progress, SpinnerColumn, TaskID, TextColumn
 from rich.table import Table
 from rich.tree import Tree
 
+from reviews.config import get_label_colour_map
 from reviews.datasource import PullRequest
+
+
+def _colourise_label(label: str) -> str:
+    return get_label_colour_map().get(label.lower(), "[white]") + label
 
 
 def render_pull_request_table(
@@ -54,7 +59,7 @@ def render_pull_request_table(
         # format the ready to release status (approved by others)
         approved_by_others = "[green]Ready" if pr.approved_by_others else ""
 
-        labels = ", ".join([label.name for label in pr.labels])
+        labels = ", ".join([_colourise_label(label.name) for label in pr.labels])
 
         table.add_row(
             f"[white]{pr.number} ",
