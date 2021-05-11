@@ -1,7 +1,8 @@
 from pathlib import Path
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 
 from decouple import Csv, config
+from rich.color import ANSI_COLOR_NAMES
 
 # Github Config
 GITHUB_TOKEN = config("GITHUB_TOKEN", cast=str, default="")
@@ -22,6 +23,11 @@ REPOSITORY_CONFIGURATION = config(
     cast=Csv(),
     default="apoclyps/reviews",
 )
+LABEL_CONFIGURATION = config(
+    "LABEL_CONFIGURATION",
+    cast=Csv(),
+    default="docker/purple,security/red,python/green",
+)
 
 
 def get_configuration() -> List[Tuple[str, str]]:
@@ -36,3 +42,18 @@ def get_configuration() -> List[Tuple[str, str]]:
         _to_tuple(values=configuration.split(sep="/", maxsplit=1))
         for configuration in REPOSITORY_CONFIGURATION
     ]
+
+
+def get_label_colour_map() -> Dict[str, str]:
+    """converts a comma seperated list of organizations/repositories into a list
+    of tuples.
+    """
+
+    def _preproc(label_colour: str) -> List[str]:
+        return label_colour.lower().split(sep="/")
+
+    return {
+        label: f"[{colour}]"
+        for label, colour in map(_preproc, LABEL_CONFIGURATION)
+        if colour in ANSI_COLOR_NAMES
+    }
