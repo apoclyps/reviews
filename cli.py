@@ -2,8 +2,6 @@ import asyncio
 
 import asyncclick as click
 
-from create import prepare_database
-from reviews import config
 from reviews.tasks import render, single_render
 from reviews.version import __version__
 
@@ -32,9 +30,6 @@ async def dashboard(reload):
     """
 
     click.echo("loading dashboard")
-
-    if config.ENABLE_PERSISTED_DATA:
-        prepare_database()
 
     if reload:
         await asyncio.gather(
