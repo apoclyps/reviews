@@ -1,7 +1,6 @@
-from datetime import datetime
+from operator import attrgetter
 from typing import Dict, List, Tuple
 
-import humanize
 from rich import box
 from rich.console import RenderGroup
 from rich.layout import Layout
@@ -14,67 +13,34 @@ from reviews.config import get_label_colour_map
 from reviews.source_control import PullRequest
 
 
-def _colourise_label(label: str) -> str:
-    return get_label_colour_map().get(label.lower(), "[white]") + label
-
-
 def render_pull_request_table(
-    title: str, pull_requests: List[PullRequest], org: str, repository: str
+    title: str,
+    pull_requests: List[PullRequest],
+    org: str,
+    repository: str,
 ) -> Table:
     """Renders a list of pull requests as a table"""
     table = Table(show_header=True, header_style="bold white")
     table.add_column("#", style="dim", width=5)
     table.add_column(
-        f"[link=https://www.github.com/{org}/{repository}]{title}[/link]", width=75
+        f"[link=https://www.github.com/{org}/{repository}]{title}[/link]",
+        width=75,
     )
     table.add_column("Labels", width=40)
     table.add_column("Activity", width=15)
     table.add_column("Approved", width=10)
     table.add_column("Mergeable", width=10)
 
-    pull_requests = sorted(pull_requests, key=lambda x: x.updated_at, reverse=True)
+    label_colour_map = get_label_colour_map()
 
-    for pr in pull_requests:
-        # format and colourize pull request title
-
-        title_colour = ""
-        if pr.title.startswith("[Security]"):
-            pr.title = pr.title.removeprefix("[Security]")
-            title_colour = "[bold red][Security][/]"
-        if pr.draft:
-            title_colour = "[bold grey][Draft] [/]"
-
-        # format pull request last modified at datetime as a human-readable time
-        updated_at = humanize.naturaltime(pr.updated_at)
-        colour = ""
-        if (datetime.now() - pr.updated_at).days >= 7:
-            colour = "[red]"
-        elif (datetime.now() - pr.updated_at).days >= 1:
-            colour = "[yellow]"
-        updated_at = f"{colour}{updated_at}"
-
-        # formats the approval status (approved by me)
-        approved = ""
-        if pr.approved == "APPROVED":
-            approved = "[green]Approved[/]"
-        elif pr.approved == "CHANGES_REQUESTED":
-            approved = "[red]Changes Requested[/]"
-
-        # format the ready to release status (approved by others)
-        approved_by_others = "[green]Ready[/]" if pr.approved_by_others else ""
-
-        labels = ", ".join([_colourise_label(label.name) for label in pr.labels])
-
+    for pr in sorted(pull_requests, key=attrgetter("updated_at"), reverse=True):
         table.add_row(
             f"[white]{pr.number} ",
-            (
-                f"{title_colour}[white][link=https://www.github.com/"
-                f"{org}/{repository}/pull/{pr.number}]{pr.title}[/link][/]"
-            ),
-            f"{labels}",
-            f"{updated_at}",
-            f"{approved}",
-            f"{approved_by_others}",
+            f"{pr.render_title(org, repository)}",
+            f"{pr.render_labels(label_colour_map)}",
+            f"{pr.render_updated_at()}",
+            f"{pr.render_approved()}",
+            f"{pr.render_approved_by_others()}",
         )
 
     return table

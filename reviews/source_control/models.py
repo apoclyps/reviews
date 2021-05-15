@@ -1,6 +1,8 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import List
+from typing import Dict, List
+
+import humanize
 
 
 @dataclass
@@ -22,3 +24,50 @@ class PullRequest:
     approved: str
     approved_by_others: bool
     labels: List[Label] = field(default_factory=list)
+
+    def render_approved(self) -> str:
+        """Renders the approved status as a colourised string"""
+        if self.approved == "APPROVED":
+            return "[green]Approved[/]"
+        if self.approved == "CHANGES_REQUESTED":
+            return "[red]Changes Requested[/]"
+        return ""
+
+    def render_approved_by_others(self) -> str:
+        """Renders approved_by_others flag as a colourised string"""
+        return "[green]Ready[/]" if self.approved_by_others else ""
+
+    def render_labels(self, colour_map: Dict[str, str]) -> str:
+        """Renders the labels as a joined colourised string"""
+        return ", ".join(
+            [
+                f"{colour_map.get(label.name.lower(), '[white]')}{label.name}"
+                for label in self.labels
+            ]
+        )
+
+    def render_title(self, org: str, repository: str) -> str:
+        """Renders the title as a colourised string"""
+        colour, title = "", self.title
+
+        if title.startswith("[Security]"):
+            title = title.removeprefix("[Security]")
+            colour = "[bold red][Security][/]"
+        elif self.draft:
+            colour = "[bold grey][Draft] [/]"
+
+        return (
+            f"{colour}[white][link=https://www.github.com/{org}/{repository}/"
+            f"pull/{self.number}]{title}[/link][/]"
+        )
+
+    def render_updated_at(self) -> str:
+        """Renders the updated_at as a human-readable and colourised string"""
+        colour, days = "", (datetime.now() - self.updated_at).days
+
+        if days >= 7:
+            colour = "[red]"
+        elif days >= 1:
+            colour = "[yellow]"
+
+        return f"{colour}{humanize.naturaltime(self.updated_at)}"
