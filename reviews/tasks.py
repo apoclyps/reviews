@@ -57,12 +57,14 @@ def single_render() -> None:
 
     body = _render_pull_requests(controller=controller, configuration=configuration)
 
-    layout_manager = RenderLayoutManager(layout=generate_layout(footer=False))
+    layout_manager = RenderLayoutManager(
+        layout=generate_layout(log=False, footer=False)
+    )
     layout_manager.render_layout(
         progress_table=None,
         body=body,
         pull_request_component=generate_tree_layout(configuration=configuration),
-        log_component=generate_log_table(logs=logs),
+        log_component=None,
     )
 
     with Live(

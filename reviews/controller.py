@@ -4,9 +4,8 @@ from github.PullRequest import PullRequest as ghPullRequest
 from rich.table import Table
 
 from reviews import config
-from reviews.datasource import Label, PullRequest
 from reviews.layout import render_pull_request_table
-from reviews.source_control import GithubAPI
+from reviews.source_control import GithubAPI, Label, PullRequest
 
 
 class PullRequestController:

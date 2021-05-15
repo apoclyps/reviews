@@ -20,13 +20,14 @@ class RenderLayoutManager:
         self,
         body: Panel,
         pull_request_component: RenderGroup,
-        log_component: Table,
-        progress_table: Optional[Table] = None,
+        log_component: Optional[Table],
+        progress_table: Optional[Table],
     ) -> Layout:
         """Renders the entire layout"""
         self.render_header()
         self.render_body(component=body)
-        self.render_log(component=log_component)
+        if log_component:
+            self.render_log(component=log_component)
         self.render_configuration(component=pull_request_component)
         if progress_table:
             self.render_footer(progress_table=progress_table)
@@ -49,7 +50,7 @@ class RenderLayoutManager:
 
     def render_log(self, component: Table) -> None:
         """Rends the log component"""
-        self.layout["log"].update(Panel(component, title="Log", border_style="blue"))
+        self.layout["log"].update(Panel(component))
 
     def render_footer(self, progress_table: Table) -> None:
         """Renders the Footer component"""

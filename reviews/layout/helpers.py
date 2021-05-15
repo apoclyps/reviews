@@ -11,7 +11,7 @@ from rich.table import Table
 from rich.tree import Tree
 
 from reviews.config import get_label_colour_map
-from reviews.datasource import PullRequest
+from reviews.source_control import PullRequest
 
 
 def _colourise_label(label: str) -> str:
@@ -80,7 +80,7 @@ def render_pull_request_table(
     return table
 
 
-def generate_layout(footer: bool = True) -> Layout:
+def generate_layout(log: bool = True, footer: bool = True) -> Layout:
     """Define the layout for the terminal UI."""
     layout = Layout(name="root")
 
@@ -93,7 +93,13 @@ def generate_layout(footer: bool = True) -> Layout:
         Layout(name="left_side", size=40),
         Layout(name="body", ratio=2, minimum_size=90),
     )
-    layout["left_side"].split(Layout(name="configuration"), Layout(name="log"))
+
+    nav_sections = [Layout(name="configuration")]
+    if log:
+        nav_sections.append(Layout(name="log"))
+
+    layout["left_side"].split(*nav_sections)
+
     return layout
 
 
