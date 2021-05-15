@@ -16,6 +16,7 @@ class PullRequest:
 
     number: int
     title: str
+    draft: bool
     created_at: datetime
     updated_at: datetime
     approved: str

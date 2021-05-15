@@ -25,20 +25,24 @@ def render_pull_request_table(
     table = Table(show_header=True, header_style="bold white")
     table.add_column("#", style="dim", width=5)
     table.add_column(
-        f"[link=https://www.github.com/{org}/{repository}]{title}[/link]", width=60
+        f"[link=https://www.github.com/{org}/{repository}]{title}[/link]", width=75
     )
     table.add_column("Labels", width=40)
     table.add_column("Activity", width=15)
-    table.add_column("Approved", width=15)
-    table.add_column("Ready To Release", width=10)
+    table.add_column("Approved", width=10)
+    table.add_column("Mergeable", width=10)
 
     pull_requests = sorted(pull_requests, key=lambda x: x.updated_at, reverse=True)
 
     for pr in pull_requests:
         # format and colourize pull request title
-        title_colour = "[white]"
-        if "Security" in pr.title:
-            title_colour = "[red]"
+
+        title_colour = ""
+        if pr.title.startswith("[Security]"):
+            pr.title = pr.title.removeprefix("[Security]")
+            title_colour = "[bold red][Security][/]"
+        if pr.draft:
+            title_colour = "[bold grey][Draft] [/]"
 
         # format pull request last modified at datetime as a human-readable time
         updated_at = humanize.naturaltime(pr.updated_at)
@@ -52,20 +56,20 @@ def render_pull_request_table(
         # formats the approval status (approved by me)
         approved = ""
         if pr.approved == "APPROVED":
-            approved = "[green]Approved"
+            approved = "[green]Approved[/]"
         elif pr.approved == "CHANGES_REQUESTED":
-            approved = "[red]Changes Requested"
+            approved = "[red]Changes Requested[/]"
 
         # format the ready to release status (approved by others)
-        approved_by_others = "[green]Ready" if pr.approved_by_others else ""
+        approved_by_others = "[green]Ready[/]" if pr.approved_by_others else ""
 
         labels = ", ".join([_colourise_label(label.name) for label in pr.labels])
 
         table.add_row(
             f"[white]{pr.number} ",
             (
-                f"{title_colour}[link=https://www.github.com/"
-                f"{org}/{repository}/pull/{pr.number}]{pr.title}[/link]"
+                f"{title_colour}[white][link=https://www.github.com/"
+                f"{org}/{repository}/pull/{pr.number}]{pr.title}[/link][/]"
             ),
             f"{labels}",
             f"{updated_at}",
@@ -86,8 +90,8 @@ def generate_layout(footer: bool = True) -> Layout:
     layout.split(*sections)
 
     layout["main"].split_row(
-        Layout(name="left_side", size=50),
-        Layout(name="body", ratio=2, minimum_size=80),
+        Layout(name="left_side", size=40),
+        Layout(name="body", ratio=2, minimum_size=90),
     )
     layout["left_side"].split(Layout(name="configuration"), Layout(name="log"))
     return layout

@@ -10,10 +10,8 @@ GITHUB_USER = config("GITHUB_USER", cast=str, default="")
 DEFAULT_PAGE_SIZE = config("DEFAULT_PAGE_SIZE", cast=int, default=100)
 
 # Database Config
-DATA_PATH = config(
-    "DATA_PATH", cast=str, default=f"{str(Path.home())}/.code_review_manager"
-)
-FILENAME = config("FILENAME", cast=str, default="code_review_manager.db")
+DATA_PATH = config("DATA_PATH", cast=str, default=f"{str(Path.home())}/.reviews")
+FILENAME = config("FILENAME", cast=str, default="reviews.db")
 
 # Application Config
 DELAY_REFRESH = config("DELAY_REFRESH", cast=int, default=60)
@@ -26,7 +24,7 @@ REPOSITORY_CONFIGURATION = config(
 LABEL_CONFIGURATION = config(
     "LABEL_CONFIGURATION",
     cast=Csv(),
-    default="docker/purple,security/red,python/green",
+    default="blocked/orange,docker/blue,security/red,python/green",
 )
 
 

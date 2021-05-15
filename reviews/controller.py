@@ -38,6 +38,7 @@ class PullRequestController:
             """Inner function to retrieve reviews for a pull request"""
             reviews = pull_request.get_reviews()
             res, seen = {}, []
+
             for review in reviews:
                 if review.user.login in seen or review.state == "COMMENTED":
                     continue
@@ -46,10 +47,12 @@ class PullRequestController:
             return res
 
         pull_requests = self.client.get_pull_requests(org=org, repo=repository)
+
         return [
             PullRequest(
                 number=pull_request.number,
                 title=pull_request.title,
+                draft=pull_request.draft,
                 created_at=pull_request.created_at,
                 updated_at=pull_request.updated_at,
                 approved=_get_reviews(pull_request=pull_request).get(

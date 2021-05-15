@@ -21,6 +21,7 @@ def manager(setup_database):
 def pull_request():
     return PullRequest(
         number=1,
+        draft=False,
         title="[1] Initial Commit",
         created_at=datetime.now(),
         updated_at=datetime.now(),
@@ -59,6 +60,7 @@ def test_bulk_insert(manager):
         models=[
             PullRequest(
                 number=1,
+                draft=False,
                 title="[1] Initial Commit",
                 created_at=datetime.now(),
                 updated_at=datetime.now(),
@@ -68,6 +70,7 @@ def test_bulk_insert(manager):
             ),
             PullRequest(
                 number=2,
+                draft=True,
                 title="[2] Adds README",
                 created_at=datetime.now(),
                 updated_at=datetime.now(),

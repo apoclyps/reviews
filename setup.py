@@ -23,7 +23,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/apoclyps/reviews",
-    download_url="https://github.com/apoclyps/reviews/archive/0.1.0.tar.gz",
+    download_url="https://pypi.org/project/reviews/",
     keywords=["Reviews", "pull request review"],
     install_requires=_requires_from_file("requirements.txt"),
     entry_points={"console_scripts": ["reviews = cli:main"]},

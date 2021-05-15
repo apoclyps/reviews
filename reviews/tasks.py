@@ -55,10 +55,12 @@ def single_render() -> None:
     configuration = config.get_configuration()
     controller = PullRequestController()
 
+    body = _render_pull_requests(controller=controller, configuration=configuration)
+
     layout_manager = RenderLayoutManager(layout=generate_layout(footer=False))
     layout_manager.render_layout(
         progress_table=None,
-        body=_render_pull_requests(controller=controller, configuration=configuration),
+        body=body,
         pull_request_component=generate_tree_layout(configuration=configuration),
         log_component=generate_log_table(logs=logs),
     )
