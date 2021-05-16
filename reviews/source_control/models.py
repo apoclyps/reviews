@@ -48,13 +48,15 @@ class PullRequest:
 
     def render_title(self, org: str, repository: str) -> str:
         """Renders the title as a colourised string"""
-        colour, title = "", self.title
+        colour = ""
+        title = self.title
 
         if title.startswith("[Security]"):
             title = title.removeprefix("[Security]")
             colour = "[bold red][Security][/]"
-        elif self.draft:
-            colour = "[bold grey][Draft] [/]"
+
+        if self.draft:
+            colour += "[bold grey][Draft] [/]"
 
         return (
             f"{colour}[white][link=https://www.github.com/{org}/{repository}/"
@@ -63,7 +65,8 @@ class PullRequest:
 
     def render_updated_at(self) -> str:
         """Renders the updated_at as a human-readable and colourised string"""
-        colour, days = "", (datetime.now() - self.updated_at).days
+        colour = ""
+        days = (datetime.now() - self.updated_at).days
 
         if days >= 7:
             colour = "[red]"
