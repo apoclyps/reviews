@@ -22,7 +22,7 @@ pip install --upgrade reviews
 reviews dashboard --no-reload
 ```
 
-[![asciicast](https://asciinema.org/a/LEs7tltVE3guhsLEEFGc5FDiD.svg)](https://asciinema.org/a/LEs7tltVE3guhsLEEFGc5FDiD)
+[![asciicast](https://asciinema.org/a/414444.svg)](https://asciinema.org/a/414444)
 
 ### Getting started with local development
 
