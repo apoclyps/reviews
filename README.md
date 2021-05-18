@@ -24,6 +24,17 @@ reviews dashboard --no-reload
 
 [![asciicast](https://asciinema.org/a/LEs7tltVE3guhsLEEFGc5FDiD.svg)](https://asciinema.org/a/LEs7tltVE3guhsLEEFGc5FDiD)
 
+### Addtional Support
+
+If you wish to use Reviews with a Github Enterprise instead of Github (https://api.github.com", you can set the `GITHUB_URL` with your custom hostname. You will also need to ensure your `GITHUB_USER` and `GITHUB_TOKEN` exist within your Enterprise Github instance:
+
+```bash
+export GITHUB_URL=https://{hostname}/api/v3
+export GITHUB_USER=user
+export GITHUB_TOKEN=token
+```
+
+
 ### Getting started with local development
 
 To build and run the CLI on your host, you will need Python 3.9, pip, and virtualenv to build and run `review`:
@@ -100,6 +111,6 @@ the pre-commit pipeline can be set up by running the following command on the pr
 pre-commit install
 ```
 
-# Contributions
+### Contributions
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.

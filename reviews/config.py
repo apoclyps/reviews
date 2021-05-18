@@ -7,6 +7,7 @@ from rich.color import ANSI_COLOR_NAMES
 # Github Config
 GITHUB_TOKEN = config("GITHUB_TOKEN", cast=str, default="")
 GITHUB_USER = config("GITHUB_USER", cast=str, default="")
+GITHUB_URL = config("GITHUB_URL", cast=str, default="https://api.github.com")
 DEFAULT_PAGE_SIZE = config("DEFAULT_PAGE_SIZE", cast=int, default=100)
 
 # Database Config
