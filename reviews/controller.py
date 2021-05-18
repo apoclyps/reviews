@@ -52,6 +52,8 @@ class PullRequestController:
                 number=pull_request.number,
                 title=pull_request.title,
                 draft=pull_request.draft,
+                additions=pull_request.additions,
+                deletions=pull_request.deletions,
                 created_at=pull_request.created_at,
                 updated_at=pull_request.updated_at,
                 approved=_get_reviews(pull_request=pull_request).get(
