@@ -47,9 +47,7 @@ def pull_request(request) -> PullRequest:
 )
 def test_pull_request_renders_approved(pull_request, approved, expected):
     pull_request.approved = approved
-
     rendered = pull_request.render_approved()
-
     assert rendered == expected
 
 
@@ -81,9 +79,7 @@ def test_pull_request_renders_approved_by_others(
 )
 def test_pull_request_renders_labels(pull_request, label_colour_map, labels, expected):
     pull_request.labels = labels
-
     rendered = pull_request.render_labels(label_colour_map)
-
     assert rendered == expected
 
 
@@ -105,9 +101,7 @@ def test_pull_request_renders_title(
 ):
     pull_request.draft = draft
     pull_request.title = title
-
     rendered = pull_request.render_title(org=organization, repository=repository)
-
     assert rendered.startswith(expected)
 
 
@@ -119,6 +113,5 @@ def test_pull_request_renders_title(
     ],
 )
 def test_pull_request_renders_updated_at(pull_request, since, expected):
-    updated_at = pull_request.render_updated_at(since=since)
-
-    assert updated_at == expected
+    rendered = pull_request.render_updated_at(since=since)
+    assert rendered == expected
