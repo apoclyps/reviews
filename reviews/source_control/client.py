@@ -11,7 +11,11 @@ class GithubAPI:
     """Create and execute requests using the Github API"""
 
     def __init__(self) -> None:
-        self._client = Github(config.GITHUB_TOKEN, per_page=config.DEFAULT_PAGE_SIZE)
+        self._client = Github(
+            config.GITHUB_TOKEN,
+            per_page=config.DEFAULT_PAGE_SIZE,
+            base_url=config.GITHUB_URL,
+        )
 
     def get_repository(self, org: str, repo: str) -> Repository:
         """Returns a repository for a given organization."""
