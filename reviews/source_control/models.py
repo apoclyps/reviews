@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 import humanize
 
@@ -41,7 +41,7 @@ class PullRequest:
         """Renders the labels as a joined colourised string"""
         return ", ".join(
             [
-                f"{colour_map.get(label.name.lower(), '[white]')}{label.name}"
+                f"{colour_map.get(label.name.lower(), '[white]')}{label.name}[/]"
                 for label in self.labels
             ]
         )
@@ -56,21 +56,25 @@ class PullRequest:
             colour = "[bold red][Security][/]"
 
         if self.draft:
-            colour += "[bold grey][Draft] [/]"
+            colour += "[bold grey][Draft][/] "
 
         return (
             f"{colour}[white][link=https://www.github.com/{org}/{repository}/"
             f"pull/{self.number}]{title}[/link][/]"
         )
 
-    def render_updated_at(self) -> str:
+    def render_updated_at(self, since: Optional[datetime] = None) -> str:
         """Renders the updated_at as a human-readable and colourised string"""
         colour = ""
-        days = (datetime.now() - self.updated_at).days
+        suffix = ""
+        days = ((since or datetime.now()) - self.updated_at).days
 
         if days >= 7:
             colour = "[red]"
         elif days >= 1:
             colour = "[yellow]"
 
-        return f"{colour}{humanize.naturaltime(self.updated_at)}"
+        if colour:
+            suffix = "[/]"
+
+        return f"{colour}{humanize.naturaltime(self.updated_at, when=since)}{suffix}"
