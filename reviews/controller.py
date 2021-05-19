@@ -47,32 +47,42 @@ class PullRequestController:
 
         pull_requests = self.client.get_pull_requests(org=org, repo=repository)
 
-        return [
-            PullRequest(
-                number=pull_request.number,
-                title=pull_request.title,
-                draft=pull_request.draft,
-                additions=pull_request.additions,
-                deletions=pull_request.deletions,
-                created_at=pull_request.created_at,
-                updated_at=pull_request.updated_at,
-                approved=_get_reviews(pull_request=pull_request).get(
-                    config.GITHUB_USER, ""
-                ),  # NOQA: R1721
-                approved_by_others=any(
-                    [
-                        True
-                        for user, status in _get_reviews(
-                            pull_request=pull_request
-                        ).items()
-                        if user != config.GITHUB_USER and status == "APPROVED"
-                    ]
-                ),
-                labels=[
-                    Label(name=label.name)
-                    for label in pull_request.get_labels()
-                    if label.name
-                ],
+        code_review_requests = []
+        for pull_request in pull_requests:
+
+            reviews = _get_reviews(pull_request=pull_request)
+
+            if pull_request.user.login == config.GITHUB_USER:
+                approved_by_me = "AUTHOR"
+            else:
+                approved_by_me = reviews.get(config.GITHUB_USER, "")  # NOQA: R1721
+
+            approved_by_others = any(
+                [
+                    True
+                    for user, status in reviews.items()
+                    if user != config.GITHUB_USER and status == "APPROVED"
+                ]
             )
-            for pull_request in pull_requests
-        ]
+            labels = [
+                Label(name=label.name)
+                for label in pull_request.get_labels()
+                if label.name
+            ]
+
+            code_review_requests.append(
+                PullRequest(
+                    number=pull_request.number,
+                    title=pull_request.title,
+                    draft=pull_request.draft,
+                    additions=pull_request.additions,
+                    deletions=pull_request.deletions,
+                    created_at=pull_request.created_at,
+                    updated_at=pull_request.updated_at,
+                    approved=approved_by_me,
+                    approved_by_others=approved_by_others,
+                    labels=labels,
+                )
+            )
+
+        return code_review_requests

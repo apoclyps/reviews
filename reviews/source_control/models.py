@@ -29,11 +29,16 @@ class PullRequest:
 
     def render_approved(self) -> str:
         """Renders the approved status as a colourised string"""
-        if self.approved == "APPROVED":
-            return "[green]Approved[/]"
-        if self.approved == "CHANGES_REQUESTED":
-            return "[red]Changes Requested[/]"
-        return ""
+        status = ""
+
+        if self.approved == "AUTHOR":
+            status = "[grey]Author[/]"
+        elif self.approved == "APPROVED":
+            status = "[green]Approved[/]"
+        elif self.approved == "CHANGES_REQUESTED":
+            status = "[red]Changes Requested[/]"
+
+        return status
 
     def render_approved_by_others(self) -> str:
         """Renders approved_by_others flag as a colourised string"""
