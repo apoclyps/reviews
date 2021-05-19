@@ -36,11 +36,11 @@ def render_pull_request_table(
     for pr in sorted(pull_requests, key=attrgetter("updated_at"), reverse=True):
         table.add_row(
             f"[white]{pr.number} ",
-            {pr.render_title(org, repository)},
-            {pr.render_labels(label_colour_map)},
-            {pr.render_updated_at()},
-            {pr.render_approved()},
-            {pr.render_approved_by_others()},
+            pr.render_title(org, repository),
+            pr.render_labels(label_colour_map),
+            pr.render_updated_at(),
+            pr.render_approved(),
+            pr.render_approved_by_others(),
         )
 
     return table
