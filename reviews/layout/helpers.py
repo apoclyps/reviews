@@ -26,7 +26,8 @@ def render_pull_request_table(
         f"[link=https://www.github.com/{org}/{repository}]{title}[/link]",
         width=75,
     )
-    table.add_column("Labels", width=40)
+    table.add_column("Labels", width=30)
+    table.add_column("Diff +/-", width=10)
     table.add_column("Activity", width=15)
     table.add_column("Approved", width=10)
     table.add_column("Mergeable", width=10)
@@ -38,6 +39,7 @@ def render_pull_request_table(
             f"[white]{pr.number} ",
             pr.render_title(org, repository),
             pr.render_labels(label_colour_map),
+            pr.render_diff(),
             pr.render_updated_at(),
             pr.render_approved(),
             pr.render_approved_by_others(),
@@ -55,7 +57,7 @@ def generate_layout(log: bool = True, footer: bool = True) -> Layout:
         sections.append(Layout(name="footer", size=7))
     layout.split(*sections)
 
-    layout["main"].split_row(
+    layout["main"].split_row(  # type: ignore
         Layout(name="left_side", size=40),
         Layout(name="body", ratio=2, minimum_size=90),
     )

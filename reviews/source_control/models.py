@@ -23,6 +23,8 @@ class PullRequest:
     updated_at: datetime
     approved: str
     approved_by_others: bool
+    additions: int = 0
+    deletions: int = 0
     labels: List[Label] = field(default_factory=list)
 
     def render_approved(self) -> str:
@@ -78,3 +80,7 @@ class PullRequest:
             suffix = "[/]"
 
         return f"{colour}{humanize.naturaltime(self.updated_at, when=since)}{suffix}"
+
+    def render_diff(self) -> str:
+        """Renders the additions and deletions using the Github convention of +/-"""
+        return f"[green]+{self.additions}[/green] [red]-{self.deletions}[/red]"
