@@ -2,7 +2,7 @@ import os
 
 from decouple import Csv, config
 
-from . import config as application_config
+from reviews import config as application_config
 
 
 def test_repository_configuration():

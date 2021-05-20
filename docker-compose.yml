@@ -2,7 +2,7 @@ version: "3.7"
 services:
   cli: &cli
     build: .
-    command: python cli.py dashboard
+    command: python -m reviews dashboard
     working_dir: /usr/src/app/
     environment:
       - DEBUG=true
