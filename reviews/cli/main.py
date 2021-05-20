@@ -2,24 +2,24 @@ import asyncio
 
 import asyncclick as click
 
-from reviews.tasks import render, single_render
-from reviews.version import __version__
+from ..tasks import render, single_render
+from ..version import __version__
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
 
 
 @click.group(context_settings=CONTEXT_SETTINGS)
 @click.version_option(__version__, "-v", "--version", message="version %(version)s")
-async def main():
+async def cli() -> None:
     """Reviews - A terminal UI Dashboard for monitoring code review requests.\n
 
     For feature requests or bug reports: https://github.com/apoclyps/reviews/issues
     """
 
 
-@main.command(help="Visualize code review requests as a Dashboard")
+@cli.command(help="Visualize code review requests as a Dashboard")
 @click.option("-r", "--reload/--no-reload", default=True, is_flag=True)
-async def dashboard(reload):
+async def dashboard(reload: bool) -> None:
     """
     Command:\n
         reviews dashboard
@@ -40,5 +40,6 @@ async def dashboard(reload):
         single_render()
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+def main() -> None:
+    """Entry point to CLI"""
+    asyncio.run(cli())

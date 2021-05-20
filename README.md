@@ -47,12 +47,15 @@ $ source env/bin/activate
 (env)$ python cli.py dashboard
 ```
 
-If you wish to keep a copy of Reviews on your host system forever, you can install and run it using:
+If you wish to keep a copy of Reviews on your host system, you can install and run it using:
 
 ```bash
 $ export REPOSITORY_CONFIGURATION="apoclyps/reviews"
-$ pip install -e .
-$ reviews dashboard
+$ python -m venv env
+$ source env/bin/activate
+$ python -m pip install -e .
+$ command -v reviews
+$ reviews -h
 ```
 
 You can run the Reviews within Docker:

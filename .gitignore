@@ -64,3 +64,6 @@ ENV/
 # editors
 .vscode/*
 .idea/*
+
+# mypy
+.mypy_cache/

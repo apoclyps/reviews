@@ -11,7 +11,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="reviews",
-    packages=find_namespace_packages(include=["reviews.*"]),
+    packages=find_namespace_packages(include=["*"]),
     version="0.1.7",
     license="MIT",
     description=(
@@ -26,7 +26,7 @@ setup(
     download_url="https://pypi.org/project/reviews/",
     keywords=["Reviews", "pull request review"],
     install_requires=_requires_from_file("requirements.txt"),
-    entry_points={"console_scripts": ["reviews = cli:main"]},
+    entry_points={"console_scripts": ["reviews = reviews.cli.main:main"]},
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Console",

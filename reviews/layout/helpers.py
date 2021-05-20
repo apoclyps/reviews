@@ -9,8 +9,8 @@ from rich.progress import BarColumn, Progress, SpinnerColumn, TaskID, TextColumn
 from rich.table import Table
 from rich.tree import Tree
 
-from reviews.config import get_label_colour_map
-from reviews.source_control import PullRequest
+from ..config import get_label_colour_map
+from ..source_control import PullRequest
 
 
 def render_pull_request_table(

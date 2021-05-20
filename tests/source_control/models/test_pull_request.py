@@ -4,7 +4,7 @@ from typing import Dict
 import pytest
 from freezegun import freeze_time
 
-from reviews.source_control import PullRequest, Label
+from .source_control import PullRequest, Label
 
 
 @pytest.fixture
