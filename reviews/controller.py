@@ -3,9 +3,9 @@ from typing import Dict, List, Union
 from github.PullRequest import PullRequest as ghPullRequest
 from rich.table import Table
 
-from reviews import config
-from reviews.layout import render_pull_request_table
-from reviews.source_control import GithubAPI, Label, PullRequest
+from . import config
+from .layout import render_pull_request_table
+from .source_control import GithubAPI, Label, PullRequest
 
 
 class PullRequestController:

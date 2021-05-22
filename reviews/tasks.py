@@ -7,9 +7,9 @@ from rich.console import RenderGroup
 from rich.live import Live
 from rich.panel import Panel
 
-from reviews import config
-from reviews.controller import PullRequestController
-from reviews.layout import (
+from . import config
+from .controller import PullRequestController
+from .layout import (
     RenderLayoutManager,
     generate_layout,
     generate_log_table,

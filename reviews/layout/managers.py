@@ -5,7 +5,7 @@ from rich.layout import Layout
 from rich.panel import Panel
 from rich.table import Table
 
-from reviews.layout.components import Header
+from ..layout.components import Header
 
 console = Console()
 

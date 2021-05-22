@@ -44,28 +44,30 @@ $ python3 -m venv env
 $ source env/bin/activate
 (env)$ pip install -r requirements_dev.txt
 (env)$ pip install -r requirements.txt
-(env)$ python cli.py dashboard
+(env)$ python -m reviews dashboard
 ```
 
-If you wish to keep a copy of Reviews on your host system forever, you can install and run it using:
+If you wish to keep a copy of Reviews on your host system, you can install and run it using:
 
 ```bash
 $ export REPOSITORY_CONFIGURATION="apoclyps/reviews"
-$ pip install -e .
-$ reviews dashboard
+$ python -m venv env
+$ source env/bin/activate
+$ python -m pip install -e .
+$ reviews -h
 ```
 
 You can run the Reviews within Docker:
 
 ```bash
-docker-compose build cli && docker-compose run --rm cli python cli.py dashboard
+docker-compose build cli && docker-compose run --rm cli python -m reviews dashboard
 ```
 
 To build an image and run that image with all of the necessary dependencies using the following commands:
 
 ```bash
 $ docker-compose build cli
-$ docker-compose run --rm cli python cli.py dashboard
+$ docker-compose run --rm cli python -m reviews dashboard
 ```
 
 For instructions on setting up a development enviroment outside of Docker, checkout the [wiki](https://github.com/apoclyps/reviews/wiki/Development-Enviromnent).
