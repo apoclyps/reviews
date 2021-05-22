@@ -1,4 +1,3 @@
-import asyncio
 from datetime import datetime
 from time import sleep
 from typing import List, Tuple
@@ -138,11 +137,3 @@ def render() -> None:
                 overall_progress.update(overall_task, completed=completed)
 
             add_log_event(message="updated")
-
-
-async def update() -> None:
-    """Updates data in the background."""
-
-    while True:
-        print("working")
-        await asyncio.sleep(1)
