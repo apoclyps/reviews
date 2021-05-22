@@ -1,4 +1,4 @@
-asyncclick==7.1.2.3
+click==8.0.1
 humanize==3.5.0
 keyboard==0.13.5
 PyGithub==1.55
