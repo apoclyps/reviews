@@ -32,6 +32,14 @@ services:
     <<: *cli
     command: pylint --rcfile=.pylintrc reviews
 
+  bandit:
+    <<: *cli
+    command: bandit reviews
+
+  vulture:
+    <<: *cli
+    command: vulture --min-confidence 90 reviews
+
   test:
     <<: *cli
     environment:

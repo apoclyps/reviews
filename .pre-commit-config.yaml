@@ -89,3 +89,24 @@ repos:
         language: system
         types: [python]
         exclude: tests
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.0
+    hooks:
+    - id: bandit
+      description: Security oriented static analyser for python code
+      exclude: ^tests/
+
+  - repo: https://github.com/jendrikseipp/vulture
+    rev: v2.3
+    hooks:
+      - id: vulture
+        description: Find dead Python code
+        entry: vulture
+        args: [
+            "--min-confidence", "90",
+            "--exclude", "*env*",
+            ".",
+        ]
+        language: system
+        types: [python]
