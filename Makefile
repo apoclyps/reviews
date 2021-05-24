@@ -19,6 +19,8 @@ build.lint: ## Build the lint container
 	@docker-compose build flake8
 	@docker-compose build mypy
 	@docker-compose build pylint
+	@docker-compose build bandit
+	@docker-compose build vulture
 
 build.all: build.cli build.test build.lint  ## Build all containers
 
@@ -56,6 +58,8 @@ lint: ## lint and autocorrect the code
 	@docker-compose run --rm --no-deps mypy
 	@docker-compose run --rm --no-deps flake8
 	@docker-compose run --rm --no-deps pylint
+	@docker-compose run --rm --no-deps bandit
+	@docker-compose run --rm --no-deps vulture
 
 
 install: ## build and install the cli

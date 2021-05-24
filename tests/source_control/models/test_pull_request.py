@@ -24,7 +24,7 @@ def label_colour_map() -> Dict[str, str]:
 
 @pytest.fixture
 @freeze_time("2020-01-01T00:00:00+00:00")
-def pull_request(request) -> PullRequest:
+def pull_request() -> PullRequest:
     return PullRequest(
         number=1,
         draft=True,
