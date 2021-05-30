@@ -1,4 +1,3 @@
-from pathlib import Path
 from typing import Dict, List, Tuple
 
 from decouple import Csv, config
@@ -10,13 +9,8 @@ GITHUB_USER = config("GITHUB_USER", cast=str, default="")
 GITHUB_URL = config("GITHUB_URL", cast=str, default="https://api.github.com")
 DEFAULT_PAGE_SIZE = config("DEFAULT_PAGE_SIZE", cast=int, default=100)
 
-# Database Config
-DATA_PATH = config("DATA_PATH", cast=str, default=f"{str(Path.home())}/.reviews")
-FILENAME = config("FILENAME", cast=str, default="reviews.db")
-
 # Application Config
 DELAY_REFRESH = config("DELAY_REFRESH", cast=int, default=60)
-ENABLE_PERSISTED_DATA = config("ENABLE_PERSISTED_DATA", cast=bool, default=False)
 REPOSITORY_CONFIGURATION = config(
     "REPOSITORY_CONFIGURATION",
     cast=Csv(),
