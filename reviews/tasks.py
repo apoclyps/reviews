@@ -7,6 +7,7 @@ from rich.live import Live
 from rich.panel import Panel
 
 from . import config
+from .config import render_config_table
 from .controller import PullRequestController
 from .layout import (
     RenderLayoutManager,
@@ -137,3 +138,26 @@ def render() -> None:
                 overall_progress.update(overall_task, completed=completed)
 
             add_log_event(message="updated")
+
+
+def render_config(show: bool) -> None:
+    """Renders a table displaying configuration used by Reviews."""
+    configurations = [
+        {
+            "name": "GITHUB_TOKEN",
+            "value": config.GITHUB_TOKEN
+            if show
+            else "".join("*" for _ in range(0, len(config.GITHUB_TOKEN))),
+        },
+        {"name": "GITHUB_USER", "value": config.GITHUB_USER},
+        {"name": "GITHUB_URL", "value": config.GITHUB_URL},
+        {"name": "DEFAULT_PAGE_SIZE", "value": f"{config.DEFAULT_PAGE_SIZE}"},
+        {"name": "DELAY_REFRESH", "value": f"{config.DELAY_REFRESH}"},
+        {
+            "name": "REPOSITORY_CONFIGURATION",
+            "value": ", ".join(config.REPOSITORY_CONFIGURATION),
+        },
+        {"name": "LABEL_CONFIGURATION", "value": ", ".join(config.LABEL_CONFIGURATION)},
+    ]
+
+    render_config_table(configurations=configurations)

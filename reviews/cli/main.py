@@ -1,6 +1,6 @@
 import click
 
-from ..tasks import render, single_render
+from ..tasks import render, render_config, single_render
 from ..version import __version__
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
@@ -13,6 +13,20 @@ def cli() -> None:
 
     For feature requests or bug reports: https://github.com/apoclyps/reviews/issues
     """
+
+
+@cli.command(help="Show the current configuration used by Reviews")
+@click.option("-show", "--show/--hide", default=False, is_flag=True)
+def config(show: bool) -> None:
+    """
+    Command:\n
+        reviews config
+
+    Usage:\n
+        reviews config --show \n
+        reviews config --hide \n
+    """
+    render_config(show=show)
 
 
 @cli.command(help="Visualize code review requests as a Dashboard")

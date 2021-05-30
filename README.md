@@ -19,6 +19,8 @@ export REPOSITORY_CONFIGURATION="apoclyps/reviews"
 
 pip install --upgrade reviews
 
+reviews config --show
+
 reviews dashboard --no-reload
 ```
 
@@ -34,6 +36,13 @@ export GITHUB_USER=user
 export GITHUB_TOKEN=token
 ```
 
+If you wish to view the configuration used by reviews at any time, you can use the following command to show all configuration (with secerts hidden or shown):
+
+```bash
+reviews config --hide
+
+reviews config --show
+```
 
 ### Getting started with local development
 
