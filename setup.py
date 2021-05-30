@@ -12,7 +12,7 @@ with open("README.md", "r") as fh:
 setup(
     name="reviews",
     packages=find_namespace_packages(include=["*"]),
-    version="0.1.8",
+    version="0.1.9",
     license="MIT",
     description=(
         "A terminal UI Dashboard for monitoring requests for code review across "
