@@ -1,6 +1,9 @@
 import click
+from rich.console import Console
 
 from ..commands import render, render_config, single_render
+from ..config import GITHUB_TOKEN
+from ..errors import InvalidGithubToken
 from ..version import __version__
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
@@ -40,13 +43,48 @@ def dashboard(reload: bool) -> None:
         reviews dashboard --reload \n
         reviews dashboard --no-reload \n
     """
+    console = Console()
+    style = "bold"
 
-    click.echo("loading dashboard")
+    github_token_msg = (
+        "> a valid GITHUB_TOKEN should be provided as an environmental "  # nosec
+        "variable or a value within a settings.ini or .env file. Please see "
+        "the project [link=https://github.com/apoclyps/reviews]"
+        "README[/link] for more methods on providing configuration."
+        "\n"
+    )
+    missing_github_token_msg = (
+        "\n[red]GITHUB_TOKEN[/] is required and has not been provided as "
+        "configuration needed to use Reviews. \n\n"
+        f"{github_token_msg}"
+    )
+    invalid_github_token_msg = (
+        "\n[red]GITHUB_TOKEN[/] is required configuration and an invalid "
+        "token has been supplied to Reviews. \n\n"
+        f"{github_token_msg}"
+    )
 
-    if reload:
-        render()
-    else:
-        single_render()
+    if not GITHUB_TOKEN:
+        console.print(
+            missing_github_token_msg,
+            style=style,
+        )
+        return
+
+    try:
+        click.echo("loading dashboard")
+
+        if reload:
+            render()
+        else:
+            single_render()
+    except InvalidGithubToken:
+        console.print(
+            invalid_github_token_msg,
+            style=style,
+        )
+
+    return
 
 
 def main() -> None:
