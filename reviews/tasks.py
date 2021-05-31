@@ -151,6 +151,7 @@ def render_config(show: bool) -> None:
         },
         {"name": "GITHUB_USER", "value": config.GITHUB_USER},
         {"name": "GITHUB_URL", "value": config.GITHUB_URL},
+        {"name": "PATH_TO_CONFIG", "value": f"{config.PATH_TO_CONFIG}"},
         {"name": "DEFAULT_PAGE_SIZE", "value": f"{config.DEFAULT_PAGE_SIZE}"},
         {"name": "DELAY_REFRESH", "value": f"{config.DELAY_REFRESH}"},
         {

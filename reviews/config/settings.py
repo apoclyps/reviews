@@ -17,6 +17,7 @@ GITHUB_URL = config("GITHUB_URL", cast=str, default="https://api.github.com")
 DEFAULT_PAGE_SIZE = config("DEFAULT_PAGE_SIZE", cast=int, default=100)
 
 # Application Config
+PATH_TO_CONFIG = config("PATH_TO_CONFIG", cast=str, default=None)
 DELAY_REFRESH = config("DELAY_REFRESH", cast=int, default=60)
 REPOSITORY_CONFIGURATION = config(
     "REPOSITORY_CONFIGURATION",
