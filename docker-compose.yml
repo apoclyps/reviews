@@ -18,7 +18,7 @@ services:
 
   black:
     <<: *cli
-    command: black --line-length 88 --check .
+    command: black --line-length 119 --check .
 
   flake8:
     <<: *cli

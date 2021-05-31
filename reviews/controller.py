@@ -67,17 +67,9 @@ class PullRequestController:
                 approved_by_me = reviews.get(config.GITHUB_USER, "")  # NOQA: R1721
 
             approved_by_others = any(
-                [
-                    True
-                    for user, status in reviews.items()
-                    if user != config.GITHUB_USER and status == "APPROVED"
-                ]
+                [True for user, status in reviews.items() if user != config.GITHUB_USER and status == "APPROVED"]
             )
-            labels = [
-                Label(name=label.name)
-                for label in pull_request.get_labels()
-                if label.name
-            ]
+            labels = [Label(name=label.name) for label in pull_request.get_labels() if label.name]
 
             code_review_requests.append(
                 PullRequest(

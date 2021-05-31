@@ -29,7 +29,7 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Linting
         run: |
-          black --line-length 88 --check --diff .
+          black --line-length 119 --check --diff .
           isort --check-only --diff .
           flake8 .
           pylint --rcfile=.pylintrc reviews

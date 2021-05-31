@@ -25,21 +25,14 @@ def add_log_event(message: str) -> List[Tuple[str, str]]:
     global logs
 
     logs = logs[-20:]
-    logs.append(
-        (str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")), f"[white]{message}")
-    )
+    logs.append((str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")), f"[white]{message}"))
     return logs
 
 
-def _render_pull_requests(
-    controller: PullRequestController, configuration: List[Tuple[str, str]]
-) -> Panel:
+def _render_pull_requests(controller: PullRequestController, configuration: List[Tuple[str, str]]) -> Panel:
     """Renders all pull requests for the provided configuration"""
 
-    tables = [
-        controller.retrieve_pull_requests(org=org, repository=repo)
-        for (org, repo) in configuration
-    ]
+    tables = [controller.retrieve_pull_requests(org=org, repository=repo) for (org, repo) in configuration]
 
     # filter unrenderable `None` results
     return Panel(
@@ -57,9 +50,7 @@ def single_render() -> None:
 
     body = _render_pull_requests(controller=controller, configuration=configuration)
 
-    layout_manager = RenderLayoutManager(
-        layout=generate_layout(log=False, footer=False)
-    )
+    layout_manager = RenderLayoutManager(layout=generate_layout(log=False, footer=False))
     layout_manager.render_layout(
         progress_table=None,
         body=body,
@@ -118,12 +109,8 @@ def render() -> None:
             # update view (blocking operation)
             layout_manager.render_layout(
                 progress_table=progress_table,
-                body=_render_pull_requests(
-                    controller=controller, configuration=configuration
-                ),
-                pull_request_component=generate_tree_layout(
-                    configuration=configuration
-                ),
+                body=_render_pull_requests(controller=controller, configuration=configuration),
+                pull_request_component=generate_tree_layout(configuration=configuration),
                 log_component=generate_log_table(logs=logs),
             )
 
@@ -145,9 +132,7 @@ def render_config(show: bool) -> None:
     configurations = [
         {
             "name": "GITHUB_TOKEN",
-            "value": config.GITHUB_TOKEN
-            if show
-            else "".join("*" for _ in range(0, len(config.GITHUB_TOKEN))),
+            "value": config.GITHUB_TOKEN if show else "".join("*" for _ in range(0, len(config.GITHUB_TOKEN))),
         },
         {"name": "GITHUB_USER", "value": config.GITHUB_USER},
         {"name": "GITHUB_URL", "value": config.GITHUB_URL},
