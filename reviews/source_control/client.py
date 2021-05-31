@@ -1,12 +1,12 @@
 from typing import List
 
 from github import Github
-from github.GithubException import UnknownObjectException
+from github.GithubException import BadCredentialsException, UnknownObjectException
 from github.PullRequest import PullRequest
 from github.Repository import Repository
 
 from .. import config
-from ..errors import RepositoryDoesNotExist
+from ..errors import InvalidGithubToken, RepositoryDoesNotExist
 
 
 class GithubAPI:
@@ -25,6 +25,8 @@ class GithubAPI:
             return self._client.get_repo(f"{org}/{repo}")
         except UnknownObjectException:
             raise RepositoryDoesNotExist(f"{org}/{repo} does not exist")
+        except BadCredentialsException:
+            raise InvalidGithubToken("GITHUB_TOKEN is not valid.")
 
     @staticmethod
     def _get_pull_requests(
