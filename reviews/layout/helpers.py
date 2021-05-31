@@ -95,7 +95,7 @@ def generate_log_table(logs: List[Tuple[str, str]]) -> Table:
 
 
 def generate_progress_tracker() -> Tuple[Progress, Progress, TaskID, Table]:
-    """Tracks the progress of background tasks"""
+    """Tracks the progress of tasks"""
     progress = Progress(
         "{task.description}",
         SpinnerColumn(),

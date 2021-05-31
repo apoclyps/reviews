@@ -1,6 +1,6 @@
 import click
 
-from ..tasks import render, render_config, single_render
+from ..commands import render, render_config, single_render
 from ..version import __version__
 
 CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
