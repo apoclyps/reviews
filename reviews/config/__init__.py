@@ -6,6 +6,7 @@ from ..config.settings import (  # NOQA: F401
     GITHUB_URL,
     GITHUB_USER,
     LABEL_CONFIGURATION,
+    PATH_TO_CONFIG,
     REPOSITORY_CONFIGURATION,
     get_configuration,
     get_label_colour_map,
