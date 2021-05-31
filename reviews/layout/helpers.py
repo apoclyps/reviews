@@ -13,6 +13,30 @@ from ..config import get_label_colour_map
 from ..source_control import PullRequest
 
 
+def render_repository_does_not_exist(
+    title: str,
+    org: str,
+    repository: str,
+) -> Table:
+    """Renders a list of pull requests as a table"""
+    table = Table(show_header=True, header_style="bold white")
+    table.add_column("#", style="dim", width=7)
+    table.add_column(
+        f"[link=https://www.github.com/{org}/{repository}]{title}[/link]",
+        width=160,
+    )
+
+    table.add_row(
+        "",
+        (
+            "Please confirm this repository exists and that you can access it "
+            "before attempting to use it."
+        ),
+    )
+
+    return table
+
+
 def render_pull_request_table(
     title: str,
     pull_requests: List[PullRequest],
