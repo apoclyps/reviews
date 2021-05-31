@@ -1,3 +1,4 @@
+from ..config.helpers import get_configuration, get_label_colour_map  # NOQA: F401
 from ..config.render import render_config_table  # NOQA: F401
 from ..config.settings import (  # NOQA: F401
     DEFAULT_PAGE_SIZE,
@@ -8,6 +9,4 @@ from ..config.settings import (  # NOQA: F401
     LABEL_CONFIGURATION,
     PATH_TO_CONFIG,
     REPOSITORY_CONFIGURATION,
-    get_configuration,
-    get_label_colour_map,
 )
