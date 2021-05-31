@@ -15,15 +15,21 @@ setup(
     version="0.1.9",
     license="MIT",
     description=(
-        "A terminal UI Dashboard for monitoring requests for code review across "
-        "several Github repositories and pull requests."
+        "A terminal UI dashboard to monitor requests for code "
+        "review across Github repositories."
     ),
     author="Kyle Harrison",
     author_email="kyle.harrison.dev@gmail.com",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/apoclyps/reviews",
+    url="https://reviews-cli.dev/",
     download_url="https://pypi.org/project/reviews/",
+    project_urls={
+        "Funding": "https://ko-fi.com/apoclyps",
+        "Say Thanks!": "https://twitter.com/apoclyps",
+        "Source": "https://github.com/apoclyps/reviews",
+        "Tracker": "https://github.com/apoclyps/reviews/issues",
+    },
     keywords=["Reviews", "pull request review"],
     install_requires=_requires_from_file("requirements.txt"),
     entry_points={"console_scripts": ["reviews = reviews.cli.main:main"]},
@@ -35,6 +41,7 @@ setup(
         "Natural Language :: English",
         "Operating System :: MacOS",
         "Operating System :: Microsoft :: Windows :: Windows 10",
+        "Operating System :: Unix",
         "Programming Language :: Python :: 3.9",
         "Topic :: Terminals",
     ],
