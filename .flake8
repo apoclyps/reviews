@@ -1,6 +1,6 @@
 [flake8]
 exclude = .svn,CVS,.bzr,.hg,.git,__pycache,.venv,migrations,settings,tests,.tox,build
 max-complexity = 20
-max-line-length = 88
+max-line-length = 119
 select = C,E,F,W,B,B950
 ignore = E203,E501,D107,D102,W503

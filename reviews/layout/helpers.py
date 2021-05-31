@@ -28,10 +28,7 @@ def render_repository_does_not_exist(
 
     table.add_row(
         "",
-        (
-            "Please confirm this repository exists and that you can access it "
-            "before attempting to use it."
-        ),
+        "Please confirm this repository exists and that you can access it before attempting to use it.",
     )
 
     return table

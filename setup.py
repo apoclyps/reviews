@@ -14,10 +14,7 @@ setup(
     packages=find_namespace_packages(include=["*"]),
     version="0.1.10",
     license="MIT",
-    description=(
-        "A terminal UI dashboard to monitor requests for code "
-        "review across Github repositories."
-    ),
+    description=("A terminal UI dashboard to monitor requests for code " "review across Github repositories."),
     author="Kyle Harrison",
     author_email="kyle.harrison.dev@gmail.com",
     long_description=long_description,

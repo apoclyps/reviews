@@ -46,12 +46,7 @@ class PullRequest:
 
     def render_labels(self, colour_map: Dict[str, str]) -> str:
         """Renders the labels as a joined colourised string"""
-        return ", ".join(
-            [
-                f"{colour_map.get(label.name.lower(), '[white]')}{label.name}[/]"
-                for label in self.labels
-            ]
-        )
+        return ", ".join([f"{colour_map.get(label.name.lower(), '[white]')}{label.name}[/]" for label in self.labels])
 
     def render_title(self, org: str, repository: str) -> str:
         """Renders the title as a colourised string"""
@@ -66,8 +61,7 @@ class PullRequest:
             colour += "[bold grey][Draft][/] "
 
         return (
-            f"{colour}[white][link=https://www.github.com/{org}/{repository}/"
-            f"pull/{self.number}]{title}[/link][/]"
+            f"{colour}[white][link=https://www.github.com/{org}/{repository}/" f"pull/{self.number}]{title}[/link][/]"
         )
 
     def render_updated_at(self, since: Optional[datetime] = None) -> str:

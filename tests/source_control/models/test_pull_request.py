@@ -58,9 +58,7 @@ def test_pull_request_renders_approved(pull_request, approved, expected):
         (True, "[green]Ready[/]"),
     ],
 )
-def test_pull_request_renders_approved_by_others(
-    pull_request, approved_by_others, expected
-):
+def test_pull_request_renders_approved_by_others(pull_request, approved_by_others, expected):
     pull_request.approved_by_others = approved_by_others
     rendered = pull_request.render_approved_by_others()
     assert rendered == expected
@@ -96,9 +94,7 @@ def test_pull_request_renders_labels(pull_request, label_colour_map, labels, exp
         ),
     ],
 )
-def test_pull_request_renders_title(
-    pull_request, organization, repository, title, draft, expected
-):
+def test_pull_request_renders_title(pull_request, organization, repository, title, draft, expected):
     pull_request.draft = draft
     pull_request.title = title
     rendered = pull_request.render_title(org=organization, repository=repository)
