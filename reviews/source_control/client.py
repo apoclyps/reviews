@@ -1,10 +1,12 @@
 from typing import List
 
 from github import Github
+from github.GithubException import UnknownObjectException
 from github.PullRequest import PullRequest
 from github.Repository import Repository
 
 from .. import config
+from ..errors import RepositoryDoesNotExist
 
 
 class GithubAPI:
@@ -19,7 +21,10 @@ class GithubAPI:
 
     def get_repository(self, org: str, repo: str) -> Repository:
         """Returns a repository for a given organization."""
-        return self._client.get_repo(f"{org}/{repo}")
+        try:
+            return self._client.get_repo(f"{org}/{repo}")
+        except UnknownObjectException:
+            raise RepositoryDoesNotExist(f"{org}/{repo} does not exist")
 
     @staticmethod
     def _get_pull_requests(

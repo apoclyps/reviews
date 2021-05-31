@@ -4,7 +4,8 @@ from github.PullRequest import PullRequest as ghPullRequest
 from rich.table import Table
 
 from . import config
-from .layout import render_pull_request_table
+from .errors import RepositoryDoesNotExist
+from .layout import render_pull_request_table, render_repository_does_not_exist
 from .source_control import GithubAPI, Label, PullRequest
 
 
@@ -18,7 +19,15 @@ class PullRequestController:
         """Renders Terminal UI Dashboard"""
 
         title = f"{org}/{repository}"
-        pull_requests = self.update_pull_requests(org=org, repository=repository)
+        pull_requests = []
+        try:
+            pull_requests = self.update_pull_requests(org=org, repository=repository)
+        except RepositoryDoesNotExist:
+            return render_repository_does_not_exist(
+                title=f"{title} does not exist",
+                org=org,
+                repository=repository,
+            )
 
         if not pull_requests:
             return None
