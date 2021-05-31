@@ -1,7 +1,14 @@
+import os
 from typing import Dict, List, Tuple
 
-from decouple import Csv, config
+from decouple import AutoConfig, Csv
 from rich.color import ANSI_COLOR_NAMES
+
+# configures decouple to use settings.ini or .env file from another directory
+if path_to_config := os.environ.get("PATH_TO_CONFIG", None):
+    config = AutoConfig(search_path=path_to_config)
+else:
+    config = AutoConfig()
 
 # Github Config
 GITHUB_TOKEN = config("GITHUB_TOKEN", cast=str, default="")

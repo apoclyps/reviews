@@ -14,7 +14,7 @@ If you want to get up and running with Reviews immediately, run:
 
 ```bash
 export GITHUB_USER="your-github-username"
-export GITHUB_TOKEN="your personal github token used for interacting with the API"
+export GITHUB_TOKEN="your personal GitHub token used for interacting with the API"
 export REPOSITORY_CONFIGURATION="apoclyps/reviews"
 
 pip install --upgrade reviews
@@ -36,7 +36,7 @@ export GITHUB_USER=user
 export GITHUB_TOKEN=token
 ```
 
-If you wish to view the configuration used by reviews at any time, you can use the following command to show all configuration (with secerts hidden or shown):
+If you wish to view the configuration used by reviews at any time, you can use the following command to show all configuration (with secrets hidden or shown):
 
 ```bash
 reviews config --hide
@@ -79,11 +79,46 @@ $ docker-compose build cli
 $ docker-compose run --rm cli python -m reviews dashboard
 ```
 
-For instructions on setting up a development enviroment outside of Docker, checkout the [wiki](https://github.com/apoclyps/reviews/wiki/Development-Enviromnent).
+For instructions on setting up a development environment outside of Docker, check out the [wiki](https://github.com/apoclyps/reviews/wiki/Development-Enviromnent).
+
+### Configuration
+
+Reviews supports both .ini and .env files. Reviews always searches for Options in this order:
+
+* Environment variables;
+* Repository: ini or .env file;
+* Configuration Path
+* Review Defaults
+
+#### Ini file
+Create a `settings.ini` next to your configuration module in the form:
+
+```bash
+[settings]
+REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example
+Note: Since ConfigParser supports string interpolation, to represent the character % you need to escape it as %%.
+```
+
+#### Env file
+Create a `.env` text file on your repository's root directory in the form:
+
+```bash
+REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example
+```
+
+#### Providing a configuration path
+
+If you wish to set the configuration path to use an `ini` or `.env` file when running the application, you can use the configuration of a specific file by supplying the path to the configuration like so:
+
+```bash
+export PATH_TO_CONFIG=/home/apoclyps/workspace/apoclyps
+```
+
+If at any time, you want to confirm your configuration reflects the file you have provided, you can use `reviews config` to view what current configuration of Reviews.
 
 ### Testing
 
-A test suite has been included to ensure Reviews functions correctly:.
+A test suite has been included to ensure Reviews functions correctly.
 
 To run the entire test suite with verbose output, run the following:
 
