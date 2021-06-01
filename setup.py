@@ -12,7 +12,7 @@ with open("README.md", "r") as fh:
 setup(
     name="reviews",
     packages=find_namespace_packages(include=["*"]),
-    version="0.1.11",
+    version="0.2.0",
     license="MIT",
     description=("A terminal UI dashboard to monitor requests for code " "review across Github repositories."),
     author="Kyle Harrison",
