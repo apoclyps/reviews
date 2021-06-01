@@ -15,7 +15,7 @@ If you want to get up and running with Reviews immediately, run:
 ```bash
 export GITHUB_USER="your-github-username"
 export GITHUB_TOKEN="your personal GitHub token used for interacting with the API"
-export REPOSITORY_CONFIGURATION="apoclyps/reviews"
+export REVIEWS_REPOSITORY_CONFIGURATION="apoclyps/reviews"
 
 pip install --upgrade reviews
 
@@ -59,7 +59,7 @@ $ source env/bin/activate
 If you wish to keep a copy of Reviews on your host system, you can install and run it using:
 
 ```bash
-$ export REPOSITORY_CONFIGURATION="apoclyps/reviews"
+$ export REVIEWS_REPOSITORY_CONFIGURATION="apoclyps/reviews"
 $ python -m venv env
 $ source env/bin/activate
 $ python -m pip install -e .
@@ -95,7 +95,7 @@ Create a `settings.ini` next to your configuration module in the form:
 
 ```bash
 [settings]
-REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example
+REVIEWS_REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example
 Note: Since ConfigParser supports string interpolation, to represent the character % you need to escape it as %%.
 ```
 
@@ -103,7 +103,7 @@ Note: Since ConfigParser supports string interpolation, to represent the charact
 Create a `.env` text file on your repository's root directory in the form:
 
 ```bash
-REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example
+REVIEWS_REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example
 ```
 
 #### Providing a configuration path
@@ -111,7 +111,7 @@ REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example
 If you wish to set the configuration path to use an `ini` or `.env` file when running the application, you can use the configuration of a specific file by supplying the path to the configuration like so:
 
 ```bash
-export PATH_TO_CONFIG=/home/apoclyps/workspace/apoclyps
+export REVIEWS_PATH_TO_CONFIG=/home/apoclyps/workspace/apoclyps
 ```
 
 If at any time, you want to confirm your configuration reflects the file you have provided, you can use `reviews config` to view what current configuration of Reviews.

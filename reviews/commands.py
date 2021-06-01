@@ -114,7 +114,7 @@ def render() -> None:
                 log_component=generate_log_table(logs=logs),
             )
 
-            delay = config.DELAY_REFRESH * 0.01
+            delay = config.REVIEWS_DELAY_REFRESH * 0.01
             while not overall_progress.finished:
                 sleep(delay)
                 for job in job_progress.tasks:
@@ -136,14 +136,20 @@ def render_config(show: bool) -> None:
         },
         {"name": "GITHUB_USER", "value": config.GITHUB_USER},
         {"name": "GITHUB_URL", "value": config.GITHUB_URL},
-        {"name": "PATH_TO_CONFIG", "value": f"{config.PATH_TO_CONFIG}"},
-        {"name": "DEFAULT_PAGE_SIZE", "value": f"{config.DEFAULT_PAGE_SIZE}"},
-        {"name": "DELAY_REFRESH", "value": f"{config.DELAY_REFRESH}"},
+        {"name": "REVIEWS_PATH_TO_CONFIG", "value": f"{config.REVIEWS_PATH_TO_CONFIG}"},
         {
-            "name": "REPOSITORY_CONFIGURATION",
-            "value": ", ".join(config.REPOSITORY_CONFIGURATION),
+            "name": "GITHUB_DEFAULT_PAGE_SIZE",
+            "value": f"{config.GITHUB_DEFAULT_PAGE_SIZE}",
         },
-        {"name": "LABEL_CONFIGURATION", "value": ", ".join(config.LABEL_CONFIGURATION)},
+        {"name": "REVIEWS_DELAY_REFRESH", "value": f"{config.REVIEWS_DELAY_REFRESH}"},
+        {
+            "name": "REVIEWS_REPOSITORY_CONFIGURATION",
+            "value": ", ".join(config.REVIEWS_REPOSITORY_CONFIGURATION),
+        },
+        {
+            "name": "REVIEWS_LABEL_CONFIGURATION",
+            "value": ", ".join(config.REVIEWS_LABEL_CONFIGURATION),
+        },
     ]
 
     render_config_table(configurations=configurations)
