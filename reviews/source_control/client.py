@@ -15,7 +15,7 @@ class GithubAPI:
     def __init__(self) -> None:
         self._client = Github(
             config.GITHUB_TOKEN,
-            per_page=config.DEFAULT_PAGE_SIZE,
+            per_page=config.GITHUB_DEFAULT_PAGE_SIZE,
             base_url=config.GITHUB_URL,
         )
 
