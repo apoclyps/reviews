@@ -2,14 +2,17 @@
 
 bandit==1.7.0
 black==21.6b0
+codespell==2.1.0
 flake8-unused-arguments==0.0.6
 flake8==3.9.2
 freezegun==1.1.0
-isort==5.8.0
 ipdb==0.13.9
+isort==5.8.0
 mypy==0.902
 pre-commit==2.13.0
 pylint==2.8.3
 pytest-cov==2.12.1
 pytest==6.2.4
+types-click==7.1.1
+types-freezegun==0.1.3
 vulture==2.3

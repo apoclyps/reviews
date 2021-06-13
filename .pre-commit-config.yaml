@@ -41,6 +41,7 @@ repos:
       - id: pretty-format-json
         args: ["--no-sort-keys", "--autofix"]
         files: ^tests/app/
+      - id: check-ast
 
   - repo: meta
     hooks:
@@ -110,3 +111,13 @@ repos:
         ]
         language: system
         types: [python]
+
+  -   repo: https://github.com/codespell-project/codespell
+      rev: v2.1.0
+      hooks:
+      -   id: codespell
+          name: codespell
+          description: Checks for common misspellings in text files.
+          entry: codespell reviews
+          language: python
+          types: [text]
