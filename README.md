@@ -28,7 +28,7 @@ reviews dashboard --no-reload
 
 [![asciicast](https://asciinema.org/a/414444.svg)](https://asciinema.org/a/414444)
 
-### Addtional Support
+### Additional Support
 
 If you wish to use Reviews with a Github Enterprise instead of Github (https://api.github.com", you can set the `GITHUB_URL` with your custom hostname. You will also need to ensure your `GITHUB_USER` and `GITHUB_TOKEN` exist within your Enterprise Github instance:
 

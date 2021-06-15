@@ -6,7 +6,7 @@ from .settings import REVIEWS_LABEL_CONFIGURATION, REVIEWS_REPOSITORY_CONFIGURAT
 
 
 def get_configuration() -> List[Tuple[str, str]]:
-    """converts a comma seperated list of organizations/repositories into a list
+    """converts a comma separated list of organizations/repositories into a list
     of tuples.
     """
 
@@ -20,7 +20,7 @@ def get_configuration() -> List[Tuple[str, str]]:
 
 
 def get_label_colour_map() -> Dict[str, str]:
-    """converts a comma seperated list of organizations/repositories into a list
+    """converts a comma separated list of organizations/repositories into a list
     of tuples.
     """
 

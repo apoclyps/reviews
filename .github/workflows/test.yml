@@ -20,8 +20,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
-      - name: Install libnotify
-        run: sudo apt-get install libnotify-bin
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -33,6 +31,7 @@ jobs:
           isort --check-only --diff .
           flake8 .
           pylint --rcfile=.pylintrc reviews
+          codespell reviews
       - name: Typecheck with mypy
         run: mypy reviews --ignore-missing-imports --disallow-untyped-defs
       - name: Test with pytest
