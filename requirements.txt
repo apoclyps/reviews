@@ -1,5 +1,5 @@
 click==8.0.1
-humanize==3.8.0
+humanize==3.9.0
 keyboard==0.13.5
 PyGithub==1.55
 python-decouple==3.4
