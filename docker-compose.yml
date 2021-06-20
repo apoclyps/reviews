@@ -40,6 +40,14 @@ services:
     <<: *cli
     command: vulture --min-confidence 90 reviews
 
+  codespell:
+    <<: *cli
+    command: codespell reviews
+
+  pyupgrade:
+    <<: *cli
+    command: find . -name '*.py' -exec pyupgrade {} +
+
   test:
     <<: *cli
     environment:
