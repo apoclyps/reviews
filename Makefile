@@ -21,6 +21,9 @@ build.lint: ## Build the lint container
 	@docker-compose build pylint
 	@docker-compose build bandit
 	@docker-compose build vulture
+	@docker-compose build codespell
+	@docker-compose build pyupgrade
+
 
 build.all: build.cli build.test build.lint  ## Build all containers
 
@@ -60,6 +63,8 @@ lint: ## lint and autocorrect the code
 	@docker-compose run --rm --no-deps pylint
 	@docker-compose run --rm --no-deps bandit
 	@docker-compose run --rm --no-deps vulture
+	@docker-compose run --rm --no-deps codespell
+	@docker-compose run --rm --no-deps pyupgrade
 
 
 install: ## build and install the cli

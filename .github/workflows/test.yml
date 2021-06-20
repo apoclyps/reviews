@@ -32,6 +32,7 @@ jobs:
           flake8 .
           pylint --rcfile=.pylintrc reviews
           codespell reviews
+          find . -name '*.py' -exec pyupgrade {} +
       - name: Typecheck with mypy
         run: mypy reviews --ignore-missing-imports --disallow-untyped-defs
       - name: Test with pytest
