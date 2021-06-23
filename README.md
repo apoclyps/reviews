@@ -15,7 +15,7 @@ If you want to get up and running with Reviews immediately, run:
 ```bash
 export GITHUB_USER="your-github-username"
 export GITHUB_TOKEN="your personal GitHub token used for interacting with the API"
-export REVIEWS_REPOSITORY_CONFIGURATION="apoclyps/reviews"
+export REVIEWS_GITHUB_REPOSITORY_CONFIGURATION="apoclyps/reviews"
 
 pip install --upgrade reviews
 
@@ -30,6 +30,8 @@ reviews dashboard --no-reload
 
 ### Additional Support
 
+#### View Configuration
+
 If you wish to view the configuration used by reviews at any time, you can use the following command to show all configuration (with secrets hidden or shown):
 
 ```bash
@@ -38,7 +40,21 @@ reviews config --hide
 reviews config --show
 ```
 
+#### Gitlab
+
+If you wish to use `reviews` with Gitlab, you will need to specify the configuration like so: `product id:project name/repository` and use the `--provider=gitlab` flag when running `reviews`:
+
+```bash
+export GITLAB_USER=user
+export GITLAB_TOKEN=token
+export REVIEWS_GITLAB_REPOSITORY_CONFIGURATION="27629846:apoclyps/reviews"
+
+reviews dashboard --provider=gitlab
+```
+
 **Experimental**
+
+#### Github Enterprise
 
 The following features have been implemented but support is considered experimental and it may be removed in a future release.
 
@@ -65,7 +81,7 @@ $ source env/bin/activate
 If you wish to keep a copy of Reviews on your host system, you can install and run it using:
 
 ```bash
-$ export REVIEWS_REPOSITORY_CONFIGURATION="apoclyps/reviews"
+$ export REVIEWS_GITHUB_REPOSITORY_CONFIGURATION="apoclyps/reviews"
 $ python -m venv env
 $ source env/bin/activate
 $ python -m pip install -e .
@@ -101,7 +117,7 @@ Create a `settings.ini` next to your configuration module in the form:
 
 ```bash
 [settings]
-REVIEWS_REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example
+REVIEWS_GITHUB_REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example
 Note: Since ConfigParser supports string interpolation, to represent the character % you need to escape it as %%.
 ```
 
@@ -109,7 +125,7 @@ Note: Since ConfigParser supports string interpolation, to represent the charact
 Create a `.env` text file on your repository's root directory in the form:
 
 ```bash
-REVIEWS_REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example
+REVIEWS_GITHUB_REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example
 ```
 
 #### Providing a configuration path

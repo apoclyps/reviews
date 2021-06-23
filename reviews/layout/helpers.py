@@ -15,14 +15,13 @@ from ..source_control import PullRequest
 
 def render_repository_does_not_exist(
     title: str,
-    org: str,
-    repository: str,
+    link: str,
 ) -> Table:
     """Renders a list of pull requests as a table"""
     table = Table(show_header=True, header_style="bold white")
     table.add_column("#", style="dim", width=7)
     table.add_column(
-        f"[link=https://www.github.com/{org}/{repository}]{title}[/link]",
+        f"[link={link}]{title}[/link]",
         width=160,
     )
 
@@ -37,16 +36,19 @@ def render_repository_does_not_exist(
 def render_pull_request_table(
     title: str,
     pull_requests: List[PullRequest],
-    org: str,
-    repository: str,
 ) -> Table:
     """Renders a list of pull requests as a table"""
+
+    show_diff = False
+
+    if pull_requests and pull_requests[0].repository_url:
+        link = f"[link={pull_requests[0].repository_url}]{title}[/link]"
+    else:
+        link = f"{title}"
+
     table = Table(show_header=True, header_style="bold white")
     table.add_column("#", style="dim", width=5)
-    table.add_column(
-        f"[link=https://www.github.com/{org}/{repository}]{title}[/link]",
-        width=75,
-    )
+    table.add_column(link, width=75)
     table.add_column("Labels", width=30)
     table.add_column("Diff +/-", width=10)
     table.add_column("Activity", width=15)
@@ -56,15 +58,23 @@ def render_pull_request_table(
     label_colour_map = get_label_colour_map()
 
     for pr in sorted(pull_requests, key=attrgetter("updated_at"), reverse=True):
-        table.add_row(
+
+        row = [
             f"[white]{pr.number} ",
-            pr.render_title(org, repository),
+            pr.render_title(),
             pr.render_labels(label_colour_map),
-            pr.render_diff(),
-            pr.render_updated_at(),
-            pr.render_approved(),
-            pr.render_approved_by_others(),
-        )
+        ]
+
+        if show_diff:
+            row.append(pr.render_diff())
+        else:
+            row.append("    -    ")
+
+        row.append(pr.render_updated_at())
+        row.append(pr.render_approved())
+        row.append(pr.render_approved_by_others())
+
+        table.add_row(*row)
 
     return table
 

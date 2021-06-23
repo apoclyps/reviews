@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, List, Optional
 
 import humanize
@@ -19,6 +19,8 @@ class PullRequest:
     number: int
     title: str
     draft: bool
+    repository_url: str
+    link: str
     created_at: datetime
     updated_at: datetime
     approved: str
@@ -48,7 +50,7 @@ class PullRequest:
         """Renders the labels as a joined colourised string"""
         return ", ".join([f"{colour_map.get(label.name.lower(), '[white]')}{label.name}[/]" for label in self.labels])
 
-    def render_title(self, org: str, repository: str) -> str:
+    def render_title(self) -> str:
         """Renders the title as a colourised string"""
         colour = ""
         title = self.title
@@ -60,15 +62,15 @@ class PullRequest:
         if self.draft:
             colour += "[bold grey][Draft][/] "
 
-        return (
-            f"{colour}[white][link=https://www.github.com/{org}/{repository}/" f"pull/{self.number}]{title}[/link][/]"
-        )
+        return f"{colour}[white][link={self.link}]{title}[/link][/]"
 
     def render_updated_at(self, since: Optional[datetime] = None) -> str:
         """Renders the updated_at as a human-readable and colourised string"""
         colour = ""
         suffix = ""
-        days = ((since or datetime.now()) - self.updated_at).days
+
+        now = since or datetime.now(timezone.utc)
+        days = (now - self.updated_at).days
 
         if days >= 7:
             colour = "[red]"
@@ -78,7 +80,7 @@ class PullRequest:
         if colour:
             suffix = "[/]"
 
-        return f"{colour}{humanize.naturaltime(self.updated_at, when=since)}{suffix}"
+        return f"{colour}{humanize.naturaltime(self.updated_at, when=now)}{suffix}"
 
     def render_diff(self) -> str:
         """Renders the additions and deletions using the Github convention of +/-"""

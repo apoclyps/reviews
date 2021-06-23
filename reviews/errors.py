@@ -4,3 +4,7 @@ class RepositoryDoesNotExist(Exception):
 
 class InvalidGithubToken(Exception):
     """Unable to query Github using an empty or invalid Github Token"""
+
+
+class InvalidGitlabToken(Exception):
+    """Unable to query Gitlab using an empty or invalid Gitlab Token"""

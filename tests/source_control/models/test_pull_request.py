@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict
 
 import pytest
@@ -24,13 +24,15 @@ def label_colour_map() -> Dict[str, str]:
 
 @pytest.fixture
 @freeze_time("2020-01-01T00:00:00+00:00")
-def pull_request() -> PullRequest:
+def pull_request(organization, repository) -> PullRequest:
     return PullRequest(
         number=1,
         draft=True,
+        repository_url=f"https://www.github.com/{organization}/{repository}",
+        link=f"https://www.github.com/{organization}/{repository}/pull/1",
         title="[1] Initial Commit",
-        created_at=datetime.now(),
-        updated_at=datetime.now(),
+        created_at=datetime.now(timezone.utc),
+        updated_at=datetime.now(timezone.utc),
         approved="",
         approved_by_others=False,
         labels=[Label(name="Python")],
@@ -97,15 +99,15 @@ def test_pull_request_renders_labels(pull_request, label_colour_map, labels, exp
 def test_pull_request_renders_title(pull_request, organization, repository, title, draft, expected):
     pull_request.draft = draft
     pull_request.title = title
-    rendered = pull_request.render_title(org=organization, repository=repository)
+    rendered = pull_request.render_title()
     assert rendered.startswith(expected)
 
 
 @pytest.mark.parametrize(
     "since, expected",
     [
-        (datetime(2020, 1, 2), "[yellow]a day ago[/]"),
-        (datetime(2020, 1, 8), "[red]7 days ago[/]"),
+        (datetime(2020, 1, 2).astimezone(tz=timezone.utc), "[yellow]a day ago[/]"),
+        (datetime(2020, 1, 8).astimezone(tz=timezone.utc), "[red]7 days ago[/]"),
     ],
 )
 def test_pull_request_renders_updated_at(pull_request, since, expected):
