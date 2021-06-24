@@ -30,20 +30,24 @@ reviews dashboard --no-reload
 
 ### Additional Support
 
-If you wish to use Reviews with a Github Enterprise instead of Github (https://api.github.com", you can set the `GITHUB_URL` with your custom hostname. You will also need to ensure your `GITHUB_USER` and `GITHUB_TOKEN` exist within your Enterprise Github instance:
-
-```bash
-export GITHUB_URL=https://{hostname}/api/v3
-export GITHUB_USER=user
-export GITHUB_TOKEN=token
-```
-
 If you wish to view the configuration used by reviews at any time, you can use the following command to show all configuration (with secrets hidden or shown):
 
 ```bash
 reviews config --hide
 
 reviews config --show
+```
+
+**Experimental**
+
+The following features have been implemented but support is considered experimental and it may be removed in a future release.
+
+If you wish to use Reviews with a Github Enterprise instead of Github (https://api.github.com", you can set the `GITHUB_URL` with your custom hostname. You will also need to ensure your `GITHUB_USER` and `GITHUB_TOKEN` exist within your Enterprise Github instance:
+
+```bash
+export GITHUB_URL=https://{hostname}/api/v3
+export GITHUB_USER=user
+export GITHUB_TOKEN=token
 ```
 
 ### Getting started with local development
