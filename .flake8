@@ -3,4 +3,6 @@ exclude = .svn,CVS,.bzr,.hg,.git,__pycache,.venv,migrations,settings,tests,.tox,
 max-complexity = 20
 max-line-length = 119
 select = C,E,F,W,B,B950
-ignore = E203,E501,D107,D102,W503
+ignore = E203,E501,D107,D102,W503,R0801
+# Ignore unused import warnings in __init__.py files
+per-file-ignores = __init__.py:F401

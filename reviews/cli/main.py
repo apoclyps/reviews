@@ -43,8 +43,9 @@ def config(show: bool) -> None:
 
 
 @cli.command(help="Visualize code review requests as a Dashboard")
+@click.option("-p", "--provider", type=str, default="github", show_default="github")
 @click.option("-r", "--reload/--no-reload", default=True, is_flag=True)
-def dashboard(reload: bool) -> None:
+def dashboard(reload: bool, provider: str) -> None:
     """
     Command:\n
         reviews dashboard
@@ -52,6 +53,8 @@ def dashboard(reload: bool) -> None:
     Usage:\n
         reviews dashboard --reload \n
         reviews dashboard --no-reload \n
+        reviews dashboard --provider=github \n
+        reviews dashboard --provider=gitlab \n
     """
     console = Console()
     style = "bold"
@@ -63,32 +66,39 @@ def dashboard(reload: bool) -> None:
         "README[/link] for more methods on providing configuration."
         "\n"
     )
-    missing_github_token_msg = (
-        "\n[red]GITHUB_TOKEN[/] is required and has not been provided as "
-        "configuration needed to use Reviews. \n\n"
-        f"{github_token_msg}"
-    )
-    invalid_github_token_msg = (
-        "\n[red]GITHUB_TOKEN[/] is required configuration and an invalid "
-        "token has been supplied to Reviews. \n\n"
-        f"{github_token_msg}"
-    )
 
     if not GITHUB_TOKEN:
-        console.print(
-            missing_github_token_msg,
-            style=style,
+        missing_github_token_msg = (
+            "\n[red]GITHUB_TOKEN[/] is required and has not been provided as "
+            "configuration needed to use Reviews. \n\n"
+            f"{github_token_msg}"
         )
+        console.print(missing_github_token_msg, style=style)
+        return
+
+    provider = provider.lower()
+    if provider not in ["github", "gitlab"]:
+        invalid_providern_msg = (
+            "\n[red]--provider=[/] uses an unsupported value. "
+            "Please provider either `github` or `gitlab` as the provider value. \n\n"
+            f"{github_token_msg}"
+        )
+        console.print(invalid_providern_msg, style=style)
         return
 
     try:
-        click.echo("loading dashboard")
+        click.echo(f"loading dashboard for {provider}...")
 
         if reload:
-            render()
+            render(provider=provider)
         else:
-            single_render()
+            single_render(provider=provider)
     except InvalidGithubToken:
+        invalid_github_token_msg = (
+            "\n[red]GITHUB_TOKEN[/] is required configuration and an invalid "
+            "token has been supplied to Reviews. \n\n"
+            f"{github_token_msg}"
+        )
         console.print(
             invalid_github_token_msg,
             style=style,

@@ -6,15 +6,29 @@ from rich.console import RenderGroup
 from rich.live import Live
 from rich.panel import Panel
 
-from . import config
-from .config import render_config_table
-from .controller import GithubPullRequestController, GitlabPullRequestController, PullRequestController
-from .layout import (
+from ..controller import GithubPullRequestController, GitlabPullRequestController, PullRequestController
+from ..layout import (
     RenderLayoutManager,
     generate_layout,
     generate_log_table,
     generate_progress_tracker,
     generate_tree_layout,
+)
+from .helpers import get_configuration
+from .render import render_config_table
+from .settings import (
+    GITHUB_DEFAULT_PAGE_SIZE,
+    GITHUB_TOKEN,
+    GITHUB_URL,
+    GITHUB_USER,
+    GITLAB_TOKEN,
+    GITLAB_URL,
+    GITLAB_USER,
+    REVIEWS_DELAY_REFRESH,
+    REVIEWS_GITHUB_REPOSITORY_CONFIGURATION,
+    REVIEWS_GITLAB_REPOSITORY_CONFIGURATION,
+    REVIEWS_LABEL_CONFIGURATION,
+    REVIEWS_PATH_TO_CONFIG,
 )
 
 logs: List[Tuple[str, str]] = []
@@ -36,10 +50,10 @@ def single_render(provider: str) -> None:
     body = None
 
     if provider == "gitlab":
-        configuration = config.get_configuration(config=config.REVIEWS_GITLAB_REPOSITORY_CONFIGURATION)
+        configuration = get_configuration(config=REVIEWS_GITLAB_REPOSITORY_CONFIGURATION)
         body = GitlabPullRequestController().render(configuration=configuration)
     else:
-        configuration = config.get_configuration(config=config.REVIEWS_GITHUB_REPOSITORY_CONFIGURATION)
+        configuration = get_configuration(config=REVIEWS_GITHUB_REPOSITORY_CONFIGURATION)
         body = GithubPullRequestController().render(configuration=configuration)
 
     layout_manager = RenderLayoutManager(layout=generate_layout(log=False, footer=False))
@@ -75,11 +89,10 @@ def render(provider: str) -> None:
     controller: PullRequestController
 
     if provider == "gitlab":
-        configuration = config.get_configuration(config=config.REVIEWS_GITLAB_REPOSITORY_CONFIGURATION)
+        configuration = get_configuration(config=REVIEWS_GITLAB_REPOSITORY_CONFIGURATION)
         controller = GitlabPullRequestController()
     else:
-        configuration = config.get_configuration(config=config.REVIEWS_GITHUB_REPOSITORY_CONFIGURATION)
-        controller = GitlabPullRequestController()
+        configuration = get_configuration(config=REVIEWS_GITHUB_REPOSITORY_CONFIGURATION)
         controller = GithubPullRequestController()
 
     layout_manager = RenderLayoutManager(layout=generate_layout())
@@ -114,7 +127,7 @@ def render(provider: str) -> None:
                 log_component=generate_log_table(logs=logs),
             )
 
-            delay = config.REVIEWS_DELAY_REFRESH * 0.01
+            delay = REVIEWS_DELAY_REFRESH * 0.01
             while not overall_progress.finished:
                 sleep(delay)
                 for job in job_progress.tasks:
@@ -132,33 +145,33 @@ def render_config(show: bool) -> None:
     configurations = [
         {
             "name": "GITHUB_TOKEN",
-            "value": config.GITHUB_TOKEN if show else "".join("*" for _ in range(len(config.GITHUB_TOKEN))),
+            "value": GITHUB_TOKEN if show else "".join("*" for _ in range(len(GITHUB_TOKEN))),
         },
-        {"name": "GITHUB_USER", "value": config.GITHUB_USER},
-        {"name": "GITHUB_URL", "value": config.GITHUB_URL},
+        {"name": "GITHUB_USER", "value": GITHUB_USER},
+        {"name": "GITHUB_URL", "value": GITHUB_URL},
         {
             "name": "GITLAB_TOKEN",
-            "value": config.GITLAB_TOKEN if show else "".join("*" for _ in range(len(config.GITLAB_TOKEN))),
+            "value": GITLAB_TOKEN if show else "".join("*" for _ in range(len(GITLAB_TOKEN))),
         },
-        {"name": "GITLAB_USER", "value": config.GITLAB_USER},
-        {"name": "GITLAB_URL", "value": config.GITLAB_URL},
-        {"name": "REVIEWS_PATH_TO_CONFIG", "value": f"{config.REVIEWS_PATH_TO_CONFIG}"},
+        {"name": "GITLAB_USER", "value": GITLAB_USER},
+        {"name": "GITLAB_URL", "value": GITLAB_URL},
+        {"name": "REVIEWS_PATH_TO_CONFIG", "value": f"{REVIEWS_PATH_TO_CONFIG}"},
         {
             "name": "GITHUB_DEFAULT_PAGE_SIZE",
-            "value": f"{config.GITHUB_DEFAULT_PAGE_SIZE}",
+            "value": f"{GITHUB_DEFAULT_PAGE_SIZE}",
         },
-        {"name": "REVIEWS_DELAY_REFRESH", "value": f"{config.REVIEWS_DELAY_REFRESH}"},
+        {"name": "REVIEWS_DELAY_REFRESH", "value": f"{REVIEWS_DELAY_REFRESH}"},
         {
             "name": "REVIEWS_GITHUB_REPOSITORY_CONFIGURATION",
-            "value": ", ".join(config.REVIEWS_GITHUB_REPOSITORY_CONFIGURATION),
+            "value": ", ".join(REVIEWS_GITHUB_REPOSITORY_CONFIGURATION),
         },
         {
             "name": "REVIEWS_GITLAB_REPOSITORY_CONFIGURATION",
-            "value": ", ".join(config.REVIEWS_GITLAB_REPOSITORY_CONFIGURATION),
+            "value": ", ".join(REVIEWS_GITLAB_REPOSITORY_CONFIGURATION),
         },
         {
             "name": "REVIEWS_LABEL_CONFIGURATION",
-            "value": ", ".join(config.REVIEWS_LABEL_CONFIGURATION),
+            "value": ", ".join(REVIEWS_LABEL_CONFIGURATION),
         },
     ]
 

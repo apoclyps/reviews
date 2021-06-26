@@ -80,7 +80,10 @@ repos:
         types: [python]
         args: ["--ignore-missing-imports", "--scripts-are-modules", "--config-file=mypy.ini"]
         require_serial: true
-        additional_dependencies: []
+        additional_dependencies: [
+          types-click==7.1.2,
+          types-freezegun==0.1.4
+        ]
 
   - repo: local
     hooks:
