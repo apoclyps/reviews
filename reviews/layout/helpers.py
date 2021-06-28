@@ -2,6 +2,7 @@ from operator import attrgetter
 from typing import Dict, List, Tuple
 
 from rich import box
+from rich.color import ANSI_COLOR_NAMES
 from rich.console import RenderGroup
 from rich.layout import Layout
 from rich.panel import Panel
@@ -9,8 +10,23 @@ from rich.progress import BarColumn, Progress, SpinnerColumn, TaskID, TextColumn
 from rich.table import Table
 from rich.tree import Tree
 
-from ..config import get_label_colour_map
+from ..config import settings
 from ..source_control import PullRequest
+
+
+def get_label_colour_map() -> Dict[str, str]:
+    """converts a comma separated list of organizations/repositories into a list
+    of tuples.
+    """
+
+    def _preproc(label_colour: str) -> List[str]:
+        return label_colour.lower().split(sep="/")
+
+    return {
+        label: f"[{colour}]"
+        for label, colour in map(_preproc, settings.REVIEWS_LABEL_CONFIGURATION)
+        if colour in ANSI_COLOR_NAMES
+    }
 
 
 def render_repository_does_not_exist(

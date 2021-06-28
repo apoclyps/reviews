@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Dict, List, Optional
 
 import humanize
 from github.Repository import Repository
@@ -53,3 +53,16 @@ def repository_metrics() -> None:
 
         console.print(table)
         console.print()
+
+
+def render_config_table(configurations: List[Dict[str, str]]) -> None:
+    """Renders a table using the supplied configuration."""
+    table = Table()
+    table.add_column("Name", style="white", no_wrap=True)
+    table.add_column("Value", style="cyan")
+
+    for configuration in configurations:
+        table.add_row(configuration["name"], configuration["value"])
+
+    console = Console()
+    console.print(table)

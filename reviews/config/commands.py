@@ -14,8 +14,8 @@ from ..layout import (
     generate_progress_tracker,
     generate_tree_layout,
 )
+from .controller import render_config_table
 from .helpers import get_configuration
-from .render import render_config_table
 from .settings import (
     GITHUB_DEFAULT_PAGE_SIZE,
     GITHUB_TOKEN,

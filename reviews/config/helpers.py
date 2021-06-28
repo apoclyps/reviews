@@ -1,9 +1,6 @@
-from typing import Dict, List, Tuple
+from typing import List, Tuple
 
 from decouple import Csv
-from rich.color import ANSI_COLOR_NAMES
-
-from .settings import REVIEWS_LABEL_CONFIGURATION
 
 
 def get_configuration(config: Csv) -> List[Tuple[str, str]]:
@@ -21,18 +18,3 @@ def get_configuration(config: Csv) -> List[Tuple[str, str]]:
         return configuration.split(sep="/", maxsplit=1)
 
     return [_to_tuple(values=split(configuration=configuration)) for configuration in config]
-
-
-def get_label_colour_map() -> Dict[str, str]:
-    """converts a comma separated list of organizations/repositories into a list
-    of tuples.
-    """
-
-    def _preproc(label_colour: str) -> List[str]:
-        return label_colour.lower().split(sep="/")
-
-    return {
-        label: f"[{colour}]"
-        for label, colour in map(_preproc, REVIEWS_LABEL_CONFIGURATION)
-        if colour in ANSI_COLOR_NAMES
-    }
