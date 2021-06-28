@@ -165,12 +165,16 @@ $ docker-compose build pytest && docker-compose run --rm pytest
 To run individual linting steps:
 
 ```
-docker-compose build
-docker-compose run --rm black
-docker-compose run --rm flake8
-docker-compose run --rm isort
-docker-compose run --rm mypy
-docker-compose run --rm pylint
+docker-compose build test
+docker-compose run --rm --no-deps test isort .
+docker-compose run --rm --no-deps test black --line-length 119 --check .
+docker-compose run --rm --no-deps test mypy .
+docker-compose run --rm --no-deps test flake8 .
+docker-compose run --rm --no-deps test pylint --rcfile=.pylintrc reviews
+docker-compose run --rm --no-deps test bandit reviews
+docker-compose run --rm --no-deps test vulture --min-confidence 90 reviews
+docker-compose run --rm --no-deps test codespell reviews
+docker-compose run --rm --no-deps test find . -name '*.py' -exec pyupgrade {} +
 ```
 
 You can also set up ``pre-commit`` to run the linting steps automatically during the commit phase,
