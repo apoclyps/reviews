@@ -14,16 +14,7 @@ build.test: ## Build the test container
 	@docker-compose build test
 
 build.lint: ## Build the lint container
-	@docker-compose build isort
-	@docker-compose build black
-	@docker-compose build flake8
-	@docker-compose build mypy
-	@docker-compose build pylint
-	@docker-compose build bandit
-	@docker-compose build vulture
-	@docker-compose build codespell
-	@docker-compose build pyupgrade
-
+	@docker-compose build test
 
 build.all: build.cli build.test build.lint  ## Build all containers
 
@@ -55,16 +46,17 @@ test: build.test network ## Run the unit tests and linters
 	@docker-compose down
 
 lint: ## lint and autocorrect the code
-	@docker-compose build cli
-	@docker-compose run --rm --no-deps black
-	@docker-compose run --rm --no-deps isort
-	@docker-compose run --rm --no-deps mypy
-	@docker-compose run --rm --no-deps flake8
-	@docker-compose run --rm --no-deps pylint
-	@docker-compose run --rm --no-deps bandit
-	@docker-compose run --rm --no-deps vulture
-	@docker-compose run --rm --no-deps codespell
-	@docker-compose run --rm --no-deps pyupgrade
+	@docker-compose build test
+	@docker-compose run --rm --no-deps test
+	@docker-compose run --rm --no-deps test isort .
+	@docker-compose run --rm --no-deps test black --line-length 119 --check .
+	@docker-compose run --rm --no-deps test mypy .
+	@docker-compose run --rm --no-deps test flake8 .
+	@docker-compose run --rm --no-deps test pylint --rcfile=.pylintrc reviews
+	@docker-compose run --rm --no-deps test bandit reviews
+	@docker-compose run --rm --no-deps test vulture --min-confidence 90 reviews
+	@docker-compose run --rm --no-deps test codespell reviews
+	@docker-compose run --rm --no-deps test find . -name '*.py' -exec pyupgrade {} +
 
 
 install: ## build and install the cli
