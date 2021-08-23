@@ -10,7 +10,7 @@ ipdb==0.13.9
 isort==5.9.3
 mypy==0.910
 pre-commit==2.14.0
-pylint==2.9.6
+pylint==2.10.2
 pytest==6.2.4
 pytest-cov==2.12.1
 pyupgrade==2.24.0
