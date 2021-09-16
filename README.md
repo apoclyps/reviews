@@ -179,6 +179,7 @@ docker-compose run --rm --no-deps test find . -name '*.py' -exec pyupgrade {} +
 
 You can also set up ``pre-commit`` to run the linting steps automatically during the commit phase,
 the pre-commit pipeline can be set up by running the following command on the project root:
+
 ```bash
 pre-commit install
 ```
