@@ -48,7 +48,12 @@ class PullRequest:
 
     def render_labels(self, colour_map: Dict[str, str]) -> str:
         """Renders the labels as a joined colourised string"""
-        return ", ".join([f"{colour_map.get(label.name.lower(), '[white]')}{label.name}[/]" for label in self.labels])
+        return ", ".join(
+            [
+                f"{colour_map.get(label.name.lower(), '[white]')}{label.name}[/]"
+                for label in self.labels
+            ]
+        )
 
     def render_title(self) -> str:
         """Renders the title as a colourised string"""

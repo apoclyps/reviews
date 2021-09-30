@@ -24,12 +24,9 @@ repos:
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
-      - id: check-docstring-first
       - id: debug-statements
       - id: check-merge-conflict
       - id: sort-simple-yaml
-      - id: requirements-txt-fixer
-      - id: name-tests-test
       - id: fix-encoding-pragma
         args: ["--remove"]
       - id: forbid-new-submodules
@@ -38,74 +35,35 @@ repos:
         description: Forces to replace line ending by the UNIX 'lf' character.
       - id: check-added-large-files
         args: ["--maxkb=500"]
+      - id: no-commit-to-branch
+        args: [--branch, master]
       - id: check-yaml
       - id: check-json
         files: ^tests/app/
       - id: pretty-format-json
         args: ["--no-sort-keys", "--autofix"]
         files: ^tests/app/
-      - id: check-ast
 
   - repo: meta
     hooks:
+      - id: check-hooks-apply
       - id: check-useless-excludes
 
-  - repo: https://github.com/psf/black
+  - repo: https://github.com/ambv/black
     rev: 21.9b0
     hooks:
       - id: black
-        args: [--safe, --quiet, --line-length=119]
-
-  - repo: https://github.com/PyCQA/flake8
-    rev: 3.9.2
-    hooks:
-      - id: flake8
-  - repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v1.5.7
-    hooks:
-    -   id: autopep8
-  - repo: https://github.com/pycqa/isort
-    rev: 5.9.3
-    hooks:
-      - id: isort
-        name: isort (python)
-      - id: isort
-        name: isort (cython)
-        types: [cython]
-      - id: isort
-        name: isort (pyi)
-        types: [pyi]
-
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.910
-    hooks:
-      - id: mypy
-        name: mypy
-        entry: mypy
-        language: python
-        types: [python]
-        args: ["--ignore-missing-imports", "--scripts-are-modules", "--config-file=mypy.ini"]
-        require_serial: true
-        additional_dependencies: [
-          types-click==7.1.2,
-          types-freezegun==0.1.4
-        ]
-
-  - repo: local
-    hooks:
-    -   id: pylint
-        name: pylint
-        entry: pylint
-        language: system
-        types: [python]
-        exclude: tests
+        language_version: python3.9
 
   - repo: https://github.com/PyCQA/bandit
     rev: 1.7.0
     hooks:
     - id: bandit
       description: Security oriented static analyser for python code
-      exclude: ^tests/
+      exclude: tests/|scripts/
+      args:
+        - -s
+        - B101
 
   - repo: https://github.com/jendrikseipp/vulture
     rev: v2.3
@@ -115,7 +73,8 @@ repos:
         entry: vulture
         args: [
             "--min-confidence", "90",
-            "--exclude", "*env*",
+            "--exclude", "tests,env",
+            "--ignore-names", "einfo,task_id,retval,logger,log_method,exc",
             ".",
         ]
         language: system
@@ -127,11 +86,11 @@ repos:
       -   id: codespell
           name: codespell
           description: Checks for common misspellings in text files.
-          entry: codespell reviews
+          entry: codespell -L som
           language: python
           types: [text]
 
   -   repo: https://github.com/asottile/pyupgrade
-      rev: v2.29.0
+      rev: v2.28.0
       hooks:
       -   id: pyupgrade

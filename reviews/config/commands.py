@@ -6,7 +6,11 @@ from rich.console import RenderGroup
 from rich.live import Live
 from rich.panel import Panel
 
-from ..controller import GithubPullRequestController, GitlabPullRequestController, PullRequestController
+from ..controller import (
+    GithubPullRequestController,
+    GitlabPullRequestController,
+    PullRequestController,
+)
 from ..layout import (
     RenderLayoutManager,
     generate_layout,
@@ -39,7 +43,9 @@ def add_log_event(message: str) -> List[Tuple[str, str]]:
     global logs
 
     logs = logs[-20:]
-    logs.append((str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")), f"[white]{message}"))
+    logs.append(
+        (str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")), f"[white]{message}")
+    )
     return logs
 
 
@@ -50,13 +56,19 @@ def single_render(provider: str) -> None:
     body = None
 
     if provider == "gitlab":
-        configuration = get_configuration(config=REVIEWS_GITLAB_REPOSITORY_CONFIGURATION)
+        configuration = get_configuration(
+            config=REVIEWS_GITLAB_REPOSITORY_CONFIGURATION
+        )
         body = GitlabPullRequestController().render(configuration=configuration)
     else:
-        configuration = get_configuration(config=REVIEWS_GITHUB_REPOSITORY_CONFIGURATION)
+        configuration = get_configuration(
+            config=REVIEWS_GITHUB_REPOSITORY_CONFIGURATION
+        )
         body = GithubPullRequestController().render(configuration=configuration)
 
-    layout_manager = RenderLayoutManager(layout=generate_layout(log=False, footer=False))
+    layout_manager = RenderLayoutManager(
+        layout=generate_layout(log=False, footer=False)
+    )
     layout_manager.render_layout(
         progress_table=None,
         body=body,
@@ -89,10 +101,14 @@ def render(provider: str) -> None:
     controller: PullRequestController
 
     if provider == "gitlab":
-        configuration = get_configuration(config=REVIEWS_GITLAB_REPOSITORY_CONFIGURATION)
+        configuration = get_configuration(
+            config=REVIEWS_GITLAB_REPOSITORY_CONFIGURATION
+        )
         controller = GitlabPullRequestController()
     else:
-        configuration = get_configuration(config=REVIEWS_GITHUB_REPOSITORY_CONFIGURATION)
+        configuration = get_configuration(
+            config=REVIEWS_GITHUB_REPOSITORY_CONFIGURATION
+        )
         controller = GithubPullRequestController()
 
     layout_manager = RenderLayoutManager(layout=generate_layout())
@@ -123,7 +139,9 @@ def render(provider: str) -> None:
             layout_manager.render_layout(
                 progress_table=progress_table,
                 body=controller.render(configuration=configuration),
-                pull_request_component=generate_tree_layout(configuration=configuration),
+                pull_request_component=generate_tree_layout(
+                    configuration=configuration
+                ),
                 log_component=generate_log_table(logs=logs),
             )
 
@@ -145,13 +163,17 @@ def render_config(show: bool) -> None:
     configurations = [
         {
             "name": "GITHUB_TOKEN",
-            "value": GITHUB_TOKEN if show else "".join("*" for _ in range(len(GITHUB_TOKEN))),
+            "value": GITHUB_TOKEN
+            if show
+            else "".join("*" for _ in range(len(GITHUB_TOKEN))),
         },
         {"name": "GITHUB_USER", "value": GITHUB_USER},
         {"name": "GITHUB_URL", "value": GITHUB_URL},
         {
             "name": "GITLAB_TOKEN",
-            "value": GITLAB_TOKEN if show else "".join("*" for _ in range(len(GITLAB_TOKEN))),
+            "value": GITLAB_TOKEN
+            if show
+            else "".join("*" for _ in range(len(GITLAB_TOKEN))),
         },
         {"name": "GITLAB_USER", "value": GITLAB_USER},
         {"name": "GITLAB_URL", "value": GITLAB_URL},

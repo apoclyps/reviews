@@ -44,7 +44,9 @@ class RenderLayoutManager:
 
     def render_configuration(self, component: RenderGroup) -> None:
         """Renders the Main Body component"""
-        self.layout["configuration"].update(Panel(component, title="Configuration", border_style="blue"))
+        self.layout["configuration"].update(
+            Panel(component, title="Configuration", border_style="blue")
+        )
 
     def render_log(self, component: Table) -> None:
         """Rends the log component"""

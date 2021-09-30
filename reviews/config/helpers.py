@@ -17,4 +17,6 @@ def get_configuration(config: Csv) -> List[Tuple[str, str]]:
 
         return configuration.split(sep="/", maxsplit=1)
 
-    return [_to_tuple(values=split(configuration=configuration)) for configuration in config]
+    return [
+        _to_tuple(values=split(configuration=configuration)) for configuration in config
+    ]

@@ -68,7 +68,9 @@ class GitlabAPI:
     ) -> List[PullRequest]:
         return list(repository.get_pulls(state=state, sort=sort))
 
-    def get_pull_requests(self, project_id: str, namespace: str) -> List[GitlabMergeRequest]:
+    def get_pull_requests(
+        self, project_id: str, namespace: str
+    ) -> List[GitlabMergeRequest]:
         """Returns a list of pull requests for a given organization and repository."""
         repository = self.get_repository(project_id=project_id, namespace=namespace)
         return repository.mergerequests.list(state="opened", order_by="created_at", sort="asc")  # type: ignore

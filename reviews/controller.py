@@ -20,7 +20,9 @@ class PullRequestController:
 
     def render(self, configuration: List[Tuple[str, str]]) -> Panel:
         """Renders all pull requests for the provided configuration"""
-        raise NotImplementedError("the render method needs to be implemented for your specified provider")
+        raise NotImplementedError(
+            "the render method needs to be implemented for your specified provider"
+        )
 
 
 class GithubPullRequestController(PullRequestController):
@@ -78,9 +80,17 @@ class GithubPullRequestController(PullRequestController):
                 approved_by_me = reviews.get(config.GITHUB_USER, "")  # NOQA: R1721
 
             approved_by_others = any(
-                [True for user, status in reviews.items() if user != config.GITHUB_USER and status == "APPROVED"]
+                [
+                    True
+                    for user, status in reviews.items()
+                    if user != config.GITHUB_USER and status == "APPROVED"
+                ]
             )
-            labels = [Label(name=label.name) for label in pull_request.get_labels() if label.name]
+            labels = [
+                Label(name=label.name)
+                for label in pull_request.get_labels()
+                if label.name
+            ]
 
             code_review_requests.append(
                 PullRequest(
@@ -104,7 +114,10 @@ class GithubPullRequestController(PullRequestController):
     def render(self, configuration: List[Tuple[str, str]]) -> Panel:
         """Renders all pull requests for the provided configuration"""
 
-        tables = [self.retrieve_pull_requests(org=org, repository=repo) for (org, repo) in configuration]
+        tables = [
+            self.retrieve_pull_requests(org=org, repository=repo)
+            for (org, repo) in configuration
+        ]
 
         # filter unrenderable `None` results
         return Panel(
@@ -120,11 +133,15 @@ class GitlabPullRequestController(PullRequestController):
     def __init__(self) -> None:
         self.client = GitlabAPI()
 
-    def retrieve_pull_requests(self, project_id: str, namespace: str) -> Union[Table, None]:
+    def retrieve_pull_requests(
+        self, project_id: str, namespace: str
+    ) -> Union[Table, None]:
         """Renders Terminal UI Dashboard"""
         pull_requests = []
         try:
-            pull_requests = self.update_pull_requests(project_id=project_id, namespace=namespace)
+            pull_requests = self.update_pull_requests(
+                project_id=project_id, namespace=namespace
+            )
         except RepositoryDoesNotExist:
             return render_repository_does_not_exist(
                 title=namespace,
@@ -139,17 +156,24 @@ class GitlabPullRequestController(PullRequestController):
             pull_requests=pull_requests,
         )
 
-    def update_pull_requests(self, project_id: str, namespace: str) -> List[PullRequest]:
+    def update_pull_requests(
+        self, project_id: str, namespace: str
+    ) -> List[PullRequest]:
         """Updates repository models."""
 
         def _get_reviews(pull_request: GitlabMergeRequest) -> Dict[str, str]:
             """Inner function to retrieve reviews for a pull request"""
             reviews = pull_request.approvals.get()
 
-            return {reviewer["user"]["username"]: "approved" for reviewer in reviews.approvers}
+            return {
+                reviewer["user"]["username"]: "approved"
+                for reviewer in reviews.approvers
+            }
 
         # ProjectMergeRequest
-        pull_requests = self.client.get_pull_requests(project_id=project_id, namespace=namespace)
+        pull_requests = self.client.get_pull_requests(
+            project_id=project_id, namespace=namespace
+        )
 
         code_review_requests = []
         for pull_request in pull_requests:
@@ -162,7 +186,11 @@ class GitlabPullRequestController(PullRequestController):
                 approved_by_me = reviews.get(config.GITLAB_USER, "")  # NOQA: R1721
 
             approved_by_others = any(
-                [True for user, status in reviews.items() if user != config.GITLAB_USER and status == "APPROVED"]
+                [
+                    True
+                    for user, status in reviews.items()
+                    if user != config.GITLAB_USER and status == "APPROVED"
+                ]
             )
 
             def get_labels(labels: List[str]) -> List[Label]:
@@ -204,8 +232,12 @@ class GitlabPullRequestController(PullRequestController):
                     deletions=0,
                     link=link,
                     repository_url=link.split("/-/")[0],
-                    created_at=datetime.strptime(pull_request.created_at, "%Y-%m-%dT%H:%M:%S.%f%z"),
-                    updated_at=datetime.strptime(pull_request.updated_at, "%Y-%m-%dT%H:%M:%S.%f%z"),
+                    created_at=datetime.strptime(
+                        pull_request.created_at, "%Y-%m-%dT%H:%M:%S.%f%z"
+                    ),
+                    updated_at=datetime.strptime(
+                        pull_request.updated_at, "%Y-%m-%dT%H:%M:%S.%f%z"
+                    ),
                     approved=approved_by_me,
                     approved_by_others=approved_by_others,
                     labels=labels,
