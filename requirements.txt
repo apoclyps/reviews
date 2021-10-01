@@ -3,6 +3,6 @@ humanize==3.11.0
 idna==2.10
 keyboard==0.13.5
 PyGithub==1.55
-python-decouple==3.4
+python-decouple==3.5
 python-gitlab==2.10.1
 rich==10.11.0
