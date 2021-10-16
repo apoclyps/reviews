@@ -68,9 +68,12 @@ export GITHUB_TOKEN=token
 
 ### Getting started with local development
 
-To build and run the CLI on your host, you will need Python 3.9, pip, and virtualenv to build and run `review`:
+To build and run the CLI on your host, you will need Python 3.9, pip, and virtualenv to build and run `review`. 
+If you wish to publish a PR with your changes, first create a fork on Github and clone that code.
 
 ```bash
+$ gh repo clone apoclyps/reviews
+$ cd reviews
 $ python3 -m venv env
 $ source env/bin/activate
 (env)$ pip install -r requirements_dev.txt
