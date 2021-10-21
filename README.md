@@ -68,7 +68,7 @@ export GITHUB_TOKEN=token
 
 ### Getting started with local development
 
-To build and run the CLI on your host, you will need Python 3.9, pip, and virtualenv to build and run `review`. 
+To build and run the CLI on your host, you will need Python 3.9, pip, and virtualenv to build and run `review`.
 If you wish to publish a PR with your changes, first create a fork on Github and clone that code.
 
 ```bash
@@ -108,27 +108,33 @@ For instructions on setting up a development environment outside of Docker, chec
 
 ### Configuration
 
-Reviews supports both .ini and .env files. Reviews always searches for Options in this order:
+Reviews supports both .ini and .env files. Reviews always searches for configuration in this order:
 
 * Environment variables;
 * Repository: ini or .env file;
 * Configuration Path
 * Review Defaults
 
-#### Ini file
-Create a `settings.ini` next to your configuration module in the form:
+The following steps are used to provide the configuration using a `.env` or `.ini` file. The configuration can be read from within the module/repository (default location set by decouple) using the `.env` file or via a location specified by an environmental variable that points to a `.ini` file located in the root of the project or in a location specified by `PATH_TO_CONFIG`.
+
+#### Using an `.env` file within the repository
 
 ```bash
-[settings]
-REVIEWS_GITHUB_REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example
-Note: Since ConfigParser supports string interpolation, to represent the character % you need to escape it as %%.
+cd /home/<your-user>/workspace/apoclyps/reviews
+touch .env
+
+echo "REVIEWS_REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example" >> .env
+python -m reviews config
 ```
 
-#### Env file
-Create a `.env` text file on your repository's root directory in the form:
+#### Using an `.ini` file within the repository
 
 ```bash
-REVIEWS_GITHUB_REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example
+cd /home/<your-user>/workspace/apoclyps/reviews
+touch settings.ini
+echo "[settings]\nREVIEWS_REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example" >> settings.ini
+
+python -m reviews config
 ```
 
 #### Providing a configuration path
@@ -136,7 +142,14 @@ REVIEWS_GITHUB_REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example
 If you wish to set the configuration path to use an `ini` or `.env` file when running the application, you can use the configuration of a specific file by supplying the path to the configuration like so:
 
 ```bash
-export REVIEWS_PATH_TO_CONFIG=/home/apoclyps/workspace/apoclyps
+cd /home/apoclyps/
+touch settings.ini
+echo "[settings]\nREVIEWS_REPOSITORY_CONFIGURATION=apoclyps/micropython-by-example" >> settings.ini
+
+cd /home/<your-user>/workspace/apoclyps/reviews
+export REVIEWS_PATH_TO_CONFIG=/home/<your-user>/
+
+python -m reviews config
 ```
 
 If at any time, you want to confirm your configuration reflects the file you have provided, you can use `reviews config` to view what current configuration of Reviews.
