@@ -29,7 +29,6 @@ repos:
       - id: check-merge-conflict
       - id: sort-simple-yaml
       - id: requirements-txt-fixer
-      - id: name-tests-test
       - id: fix-encoding-pragma
         args: ["--remove"]
       - id: forbid-new-submodules
