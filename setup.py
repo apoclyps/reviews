@@ -2,7 +2,8 @@ from setuptools import find_namespace_packages, setup
 
 
 def _requires_from_file(filename):
-    return open(filename).read().splitlines()
+    with open(filename) as f:
+        return f.read().splitlines()
 
 
 with open("README.md", "r") as fh:
