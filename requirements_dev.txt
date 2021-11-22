@@ -4,7 +4,7 @@ bandit==1.7.1
 black==21.11b1
 codespell==2.1.0
 flake8==4.0.1
-flake8-unused-arguments==0.0.8
+flake8-unused-arguments==0.0.9
 freezegun==1.1.0
 ipdb==0.13.9
 isort==5.10.1
