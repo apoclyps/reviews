@@ -1,4 +1,4 @@
-FROM python:3.10.0-alpine
+FROM python:3.10.1-alpine
 
 # Don't write .pyc files (or __pycache__ dirs) inside the container
 ENV PYTHONDONTWRITEBYTECODE 1
