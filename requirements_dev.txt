@@ -8,7 +8,7 @@ flake8-unused-arguments==0.0.9
 freezegun==1.1.0
 ipdb==0.13.9
 isort==5.10.1
-mypy==0.920
+mypy==0.921
 pre-commit==2.16.0
 pylint==2.12.2
 pytest==6.2.5
