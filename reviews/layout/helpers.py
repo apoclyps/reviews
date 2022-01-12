@@ -3,7 +3,7 @@ from typing import Dict, List, Tuple
 
 from rich import box
 from rich.color import ANSI_COLOR_NAMES
-from rich.console import RenderGroup
+from rich.console import Group
 from rich.layout import Layout
 from rich.panel import Panel
 from rich.progress import BarColumn, Progress, SpinnerColumn, TaskID, TextColumn
@@ -118,7 +118,7 @@ def generate_layout(log: bool = True, footer: bool = True) -> Layout:
     return layout
 
 
-def generate_tree_layout(configuration: List[Tuple[str, str]]) -> RenderGroup:
+def generate_tree_layout(configuration: List[Tuple[str, str]]) -> Group:
     """Generates a tree layout for the settings configuration"""
     organization_tree_mapping: Dict[str, Tree] = {}
     for (org, repo) in configuration:
@@ -126,7 +126,7 @@ def generate_tree_layout(configuration: List[Tuple[str, str]]) -> RenderGroup:
         tree.add(f"[link=https://www.github.com/{org}/{repo}]{repo}[/link]")
         organization_tree_mapping[org] = tree
 
-    return RenderGroup(*organization_tree_mapping.values())
+    return Group(*organization_tree_mapping.values())
 
 
 def generate_log_table(logs: List[Tuple[str, str]]) -> Table:

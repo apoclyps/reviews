@@ -1,6 +1,6 @@
 from typing import Optional
 
-from rich.console import Console, RenderGroup
+from rich.console import Console, Group
 from rich.layout import Layout
 from rich.panel import Panel
 from rich.table import Table
@@ -19,7 +19,7 @@ class RenderLayoutManager:
     def render_layout(
         self,
         body: Panel,
-        pull_request_component: RenderGroup,
+        pull_request_component: Group,
         log_component: Optional[Table],
         progress_table: Optional[Table],
     ) -> Layout:
@@ -42,7 +42,7 @@ class RenderLayoutManager:
         """Renders the Body component"""
         self.layout["body"].update(component)
 
-    def render_configuration(self, component: RenderGroup) -> None:
+    def render_configuration(self, component: Group) -> None:
         """Renders the Main Body component"""
         self.layout["configuration"].update(Panel(component, title="Configuration", border_style="blue"))
 
