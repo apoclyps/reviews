@@ -2,7 +2,7 @@ from datetime import datetime
 from time import sleep
 from typing import List, Tuple
 
-from rich.console import RenderGroup
+from rich.console import Group
 from rich.live import Live
 from rich.panel import Panel
 
@@ -87,7 +87,7 @@ def render(provider: str) -> None:
     layout_manager.render_layout(
         progress_table=progress_table,
         body=Panel(
-            RenderGroup(),
+            Group(),
             title="Activity",
             border_style="blue",
         ),

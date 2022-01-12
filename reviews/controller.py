@@ -3,7 +3,7 @@ from typing import Dict, List, Tuple, Union
 
 from github.PullRequest import PullRequest as ghPullRequest
 from gitlab.v4.objects.merge_requests import MergeRequest as GitlabMergeRequest
-from rich.console import RenderGroup
+from rich.console import Group
 from rich.panel import Panel
 from rich.table import Table
 
@@ -108,7 +108,7 @@ class GithubPullRequestController(PullRequestController):
 
         # filter unrenderable `None` results
         return Panel(
-            RenderGroup(*[t for t in tables if t]),
+            Group(*[t for t in tables if t]),
             title="Activity",
             border_style="blue",
         )
@@ -224,7 +224,7 @@ class GitlabPullRequestController(PullRequestController):
 
         # filter unrenderable `None` results
         return Panel(
-            RenderGroup(*[t for t in tables if t]),
+            Group(*[t for t in tables if t]),
             title="Activity",
             border_style="blue",
         )
