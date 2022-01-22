@@ -64,12 +64,13 @@ def render_pull_request_table(
 
     table = Table(show_header=True, header_style="bold white")
     table.add_column("#", style="dim", width=5)
-    table.add_column(link, width=75)
-    table.add_column("Labels", width=30)
-    table.add_column("Diff +/-", width=10)
-    table.add_column("Activity", width=15)
-    table.add_column("Approved", width=10)
-    table.add_column("Mergeable", width=10)
+    table.add_column(link, width=50)
+    table.add_column("Author", width=30)
+    table.add_column("Labels", width=25)
+    table.add_column("Diff +/-", width=15)
+    table.add_column("Activity", width=20)
+    table.add_column("Approved", width=20)
+    table.add_column("Mergeable", width=20)
 
     label_colour_map = get_label_colour_map()
 
@@ -78,6 +79,7 @@ def render_pull_request_table(
         row = [
             f"[white]{pr.number} ",
             pr.render_title(),
+            f"[white]{pr.user.login} ",
             pr.render_labels(label_colour_map),
         ]
 
@@ -105,7 +107,7 @@ def generate_layout(log: bool = True, footer: bool = True) -> Layout:
     layout.split(*sections)
 
     layout["main"].split_row(  # type: ignore
-        Layout(name="left_side", size=40),
+        Layout(name="left_side", size=25),
         Layout(name="body", ratio=2, minimum_size=90),
     )
 

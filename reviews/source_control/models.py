@@ -18,6 +18,7 @@ class PullRequest:
 
     number: int
     title: str
+    user: str
     draft: bool
     repository_url: str
     link: str
