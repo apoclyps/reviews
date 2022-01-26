@@ -79,7 +79,7 @@ def render_pull_request_table(
         row = [
             f"[white]{pr.number} ",
             pr.render_title(),
-            f"[white]{pr.user.login} ",
+            f"[white]{pr.user} ",
             pr.render_labels(label_colour_map),
         ]
 

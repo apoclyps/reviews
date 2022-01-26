@@ -86,7 +86,7 @@ class GithubPullRequestController(PullRequestController):
                 PullRequest(
                     number=pull_request.number,
                     title=pull_request.title,
-                    user=pull_request.user,
+                    user=pull_request.user.login,
                     draft=pull_request.draft,
                     repository_url=f"https://www.github.com/{org}/{repository}",
                     link=f"https://www.github.com/{org}/{repository}/pull/{pull_request.number}",
@@ -200,6 +200,7 @@ class GitlabPullRequestController(PullRequestController):
                 PullRequest(
                     number=pull_request.iid,
                     title=pull_request.title,
+                    user=pull_request.author['username'],
                     draft=pull_request.draft,
                     additions=0,
                     deletions=0,
