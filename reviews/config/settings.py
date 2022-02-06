@@ -8,6 +8,9 @@ if REVIEWS_PATH_TO_CONFIG := os.environ.get("REVIEWS_PATH_TO_CONFIG", None):
 else:
     config = AutoConfig()
 
+# Layout Config
+REVIEWS_AUTHOR = config("REVIEWS_AUTHOR", cast=bool, default=True)
+
 # Github Config
 GITHUB_TOKEN = config("GITHUB_TOKEN", cast=str, default="")
 GITHUB_USER = config("GITHUB_USER", cast=str, default="")

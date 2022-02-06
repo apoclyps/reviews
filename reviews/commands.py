@@ -143,7 +143,10 @@ def render_config(show: bool) -> None:
         },
         {"name": "GITLAB_USER", "value": settings.GITLAB_USER},
         {"name": "GITLAB_URL", "value": settings.GITLAB_URL},
-        {"name": "REVIEWS_PATH_TO_CONFIG", "value": f"{settings.REVIEWS_PATH_TO_CONFIG}"},
+        {
+            "name": "REVIEWS_PATH_TO_CONFIG",
+            "value": f"{settings.REVIEWS_PATH_TO_CONFIG}",
+        },
         {
             "name": "GITHUB_DEFAULT_PAGE_SIZE",
             "value": f"{settings.GITHUB_DEFAULT_PAGE_SIZE}",

@@ -56,6 +56,7 @@ def render_pull_request_table(
     """Renders a list of pull requests as a table"""
 
     show_diff = False
+    show_author = settings.REVIEWS_AUTHOR
 
     if pull_requests and pull_requests[0].repository_url:
         link = f"[link={pull_requests[0].repository_url}]{title}[/link]"
@@ -64,24 +65,29 @@ def render_pull_request_table(
 
     table = Table(show_header=True, header_style="bold white")
     table.add_column("#", style="dim", width=5)
-    table.add_column(link, width=50)
-    table.add_column("Author", width=30)
-    table.add_column("Labels", width=25)
-    table.add_column("Diff +/-", width=15)
-    table.add_column("Activity", width=20)
-    table.add_column("Approved", width=20)
-    table.add_column("Mergeable", width=20)
+    table.add_column(link, width=55)
+
+    if show_author:
+        table.add_column("Author", width=20)
+
+    table.add_column("Labels", width=30)
+    table.add_column("Diff +/-", width=10)
+    table.add_column("Activity", width=15)
+    table.add_column("Approved", width=10)
+    table.add_column("Mergeable", width=10)
 
     label_colour_map = get_label_colour_map()
 
     for pr in sorted(pull_requests, key=attrgetter("updated_at"), reverse=True):
-
         row = [
             f"[white]{pr.number} ",
             pr.render_title(),
-            f"[white]{pr.render_author()} ",
-            pr.render_labels(label_colour_map),
         ]
+
+        if show_author:
+            row.append(pr.render_author())
+
+        row.append(pr.render_labels(label_colour_map))
 
         if show_diff:
             row.append(pr.render_diff())
