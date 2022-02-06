@@ -18,7 +18,7 @@ class PullRequest:
 
     number: int
     title: str
-    user: str
+    author: str
     draft: bool
     repository_url: str
     link: str
@@ -82,6 +82,10 @@ class PullRequest:
             suffix = "[/]"
 
         return f"{colour}{humanize.naturaltime(self.updated_at, when=now)}{suffix}"
+
+    def render_author(self) -> str:
+        """Renders the author as a colourised string"""
+        return f"[grey]{self.author}[/]"
 
     def render_diff(self) -> str:
         """Renders the additions and deletions using the Github convention of +/-"""

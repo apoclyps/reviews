@@ -86,7 +86,6 @@ class GithubPullRequestController(PullRequestController):
                 PullRequest(
                     number=pull_request.number,
                     title=pull_request.title,
-                    user=pull_request.user.login,
                     draft=pull_request.draft,
                     repository_url=f"https://www.github.com/{org}/{repository}",
                     link=f"https://www.github.com/{org}/{repository}/pull/{pull_request.number}",
@@ -94,6 +93,7 @@ class GithubPullRequestController(PullRequestController):
                     deletions=pull_request.deletions,
                     created_at=pull_request.created_at.astimezone(tz=timezone.utc),
                     updated_at=pull_request.updated_at.astimezone(tz=timezone.utc),
+                    author=pull_request.user.login,
                     approved=approved_by_me,
                     approved_by_others=approved_by_others,
                     labels=labels,
@@ -200,7 +200,7 @@ class GitlabPullRequestController(PullRequestController):
                 PullRequest(
                     number=pull_request.iid,
                     title=pull_request.title,
-                    user=pull_request.author['username'],
+                    author=pull_request.author["username"],
                     draft=pull_request.draft,
                     additions=0,
                     deletions=0,
