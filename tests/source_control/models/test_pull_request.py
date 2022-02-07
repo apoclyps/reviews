@@ -28,6 +28,7 @@ def pull_request(organization, repository) -> PullRequest:
     return PullRequest(
         number=1,
         draft=True,
+        author="me",
         repository_url=f"https://www.github.com/{organization}/{repository}",
         link=f"https://www.github.com/{organization}/{repository}/pull/1",
         title="[1] Initial Commit",

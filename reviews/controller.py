@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from typing import Dict, List, Tuple, Union
 
 from github.PullRequest import PullRequest as ghPullRequest
-from gitlab.v4.objects.merge_requests import MergeRequest as GitlabMergeRequest
+from gitlab.v4.objects import ProjectMergeRequest as GitlabMergeRequest
 from rich.console import Group
 from rich.panel import Panel
 from rich.table import Table
@@ -93,6 +93,7 @@ class GithubPullRequestController(PullRequestController):
                     deletions=pull_request.deletions,
                     created_at=pull_request.created_at.astimezone(tz=timezone.utc),
                     updated_at=pull_request.updated_at.astimezone(tz=timezone.utc),
+                    author=pull_request.user.login,
                     approved=approved_by_me,
                     approved_by_others=approved_by_others,
                     labels=labels,
@@ -145,8 +146,9 @@ class GitlabPullRequestController(PullRequestController):
         def _get_reviews(pull_request: GitlabMergeRequest) -> Dict[str, str]:
             """Inner function to retrieve reviews for a pull request"""
             reviews = pull_request.approvals.get()
+            approvers = getattr(reviews, "approvers", [])
 
-            return {reviewer["user"]["username"]: "approved" for reviewer in reviews.approvers}
+            return {approver["user"]["username"]: "approved" for approver in approvers} if approvers else {}
 
         # ProjectMergeRequest
         pull_requests = self.client.get_pull_requests(project_id=project_id, namespace=namespace)
@@ -199,6 +201,7 @@ class GitlabPullRequestController(PullRequestController):
                 PullRequest(
                     number=pull_request.iid,
                     title=pull_request.title,
+                    author=pull_request.author["username"],
                     draft=pull_request.draft,
                     additions=0,
                     deletions=0,

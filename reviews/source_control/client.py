@@ -5,7 +5,7 @@ from github.GithubException import BadCredentialsException, UnknownObjectExcepti
 from github.PullRequest import PullRequest
 from github.Repository import Repository
 from gitlab import Gitlab
-from gitlab.v4.objects.merge_requests import MergeRequest as GitlabMergeRequest
+from gitlab.v4.objects import ProjectMergeRequest as GitlabMergeRequest
 from gitlab.v4.objects.projects import Project as GitlabRepository
 
 from .. import config
@@ -70,5 +70,5 @@ class GitlabAPI:
 
     def get_pull_requests(self, project_id: str, namespace: str) -> List[GitlabMergeRequest]:
         """Returns a list of pull requests for a given organization and repository."""
-        repository = self.get_repository(project_id=project_id, namespace=namespace)
+        repository = self.get_repository(project_id=project_id, namespace=namespace)  # type: ignore
         return repository.mergerequests.list(state="opened", order_by="created_at", sort="asc")  # type: ignore
