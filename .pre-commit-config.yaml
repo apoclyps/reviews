@@ -117,8 +117,6 @@ repos:
             "--exclude", "*env*",
             ".",
         ]
-        language: system
-        types: [python]
 
   -   repo: https://github.com/codespell-project/codespell
       rev: v2.1.0
