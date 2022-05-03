@@ -159,7 +159,7 @@ def generate_progress_tracker() -> Tuple[Progress, Progress, TaskID, Table]:
     )
     progress.add_task("[white]Pull Requests", total=100)
 
-    total = sum(task.total for task in progress.tasks)
+    total = sum(task.total for task in progress.tasks if isinstance(task.total, (int, float)))
     overall_progress = Progress()
     overall_task = overall_progress.add_task(description="All", total=int(total))
 
