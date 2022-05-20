@@ -107,7 +107,7 @@ repos:
       exclude: ^tests/
 
   - repo: https://github.com/jendrikseipp/vulture
-    rev: v2.3
+    rev: v2.4
     hooks:
       - id: vulture
         description: Find dead Python code
