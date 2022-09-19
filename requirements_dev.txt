@@ -16,4 +16,4 @@ pytest-cov==3.0.0
 pyupgrade==2.38.0
 types-click==7.1.8
 types-freezegun==1.1.10
-vulture==2.5
+vulture==2.6
