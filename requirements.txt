@@ -4,5 +4,5 @@ idna==3.4
 keyboard==0.13.5
 PyGithub==1.56
 python-decouple==3.6
-python-gitlab==3.10.0
+python-gitlab==3.11.0
 rich==12.6.0
