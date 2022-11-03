@@ -6,7 +6,7 @@ def _requires_from_file(filename):
         return f.read().splitlines()
 
 
-with open("README.md", "r") as fh:
+with open("README.md") as fh:
     long_description = fh.read()
 
 
