@@ -1,3 +1,4 @@
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from typing import Dict, List, Tuple, Union
 
@@ -105,7 +106,9 @@ class GithubPullRequestController(PullRequestController):
     def render(self, configuration: List[Tuple[str, str]]) -> Panel:
         """Renders all pull requests for the provided configuration"""
 
-        tables = [self.retrieve_pull_requests(org=org, repository=repo) for (org, repo) in configuration]
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            arguments = ((org, repo) for (org, repo) in configuration)
+            tables = list(executor.map(lambda f: self.retrieve_pull_requests(*f), arguments))
 
         # filter unrenderable `None` results
         return Panel(
