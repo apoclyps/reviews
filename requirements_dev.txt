@@ -13,7 +13,7 @@ pre-commit==2.20.0
 pylint==2.15.6
 pytest==7.2.0
 pytest-cov==4.0.0
-pyupgrade==3.2.2
+pyupgrade==3.2.3
 types-click==7.1.8
 types-freezegun==1.1.10
 vulture==2.6
