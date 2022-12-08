@@ -6,7 +6,7 @@ from decouple import AutoConfig, Csv
 if REVIEWS_PATH_TO_CONFIG := os.environ.get("REVIEWS_PATH_TO_CONFIG", None):
     config = AutoConfig(search_path=REVIEWS_PATH_TO_CONFIG)
 else:
-    config = AutoConfig()
+    config = AutoConfig(search_path=".")
 
 # Layout Config
 REVIEWS_AUTHOR = config("REVIEWS_AUTHOR", cast=bool, default=True)
