@@ -1,4 +1,4 @@
-.PHONY: help build.test build.cli run start debug stop clean logs shell lint test
+.PHONY: help build.test build.cli run start debug stop clean logs shell lint test test-shell
 
 GIT_SHA = $(shell git rev-parse HEAD)
 DOCKER_REPOTAG = $(DOCKER_REGISTRY)/$(DOCKER_IMAGE_NAME):$(GIT_SHA)
@@ -43,11 +43,12 @@ shell: ## shell into a development container
 
 test: build.test network ## Run the unit tests and linters
 	@docker-compose -f docker-compose.yml run --rm test
-	@docker-compose down
+
+test-shell: build.test network ## Run the unit tests and linters
+	@docker-compose -f docker-compose.yml run --rm test bash
 
 lint: ## lint and autocorrect the code
 	@docker-compose build test
-	@docker-compose run --rm --no-deps test
 	@docker-compose run --rm --no-deps test isort .
 	@docker-compose run --rm --no-deps test black --line-length 119 --check .
 	@docker-compose run --rm --no-deps test mypy .
