@@ -20,7 +20,7 @@ setup(
     author_email="kyle.harrison.dev@gmail.com",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://reviews-cli.dev/",
+    url="https://github.com/apoclyps/reviews",
     download_url="https://pypi.org/project/reviews/",
     project_urls={
         "Funding": "https://ko-fi.com/apoclyps",
