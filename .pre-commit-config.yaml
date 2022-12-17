@@ -60,11 +60,11 @@ repos:
     hooks:
       - id: flake8
   - repo: https://github.com/pre-commit/mirrors-autopep8
-    rev: v2.0.0
+    rev: v2.0.1
     hooks:
     -   id: autopep8
   - repo: https://github.com/pycqa/isort
-    rev: 5.11.2
+    rev: v5.11.3
     hooks:
       - id: isort
         name: isort (python)
