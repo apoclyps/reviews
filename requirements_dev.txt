@@ -9,7 +9,7 @@ freezegun==1.2.2
 ipdb==0.13.11
 isort==5.11.4
 mypy==0.991
-pre-commit==2.20.0
+pre-commit==2.21.0
 pylint==2.15.9
 pytest==7.2.0
 pytest-cov==4.0.0
