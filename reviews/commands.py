@@ -9,7 +9,11 @@ from rich.panel import Panel
 from .config import settings
 from .config.controller import render_config_table
 from .config.helpers import get_configuration
-from .controller import GithubPullRequestController, GitlabPullRequestController, PullRequestController
+from .controller import (
+    GithubPullRequestController,
+    GitlabPullRequestController,
+    PullRequestController,
+)
 from .layout import (
     RenderLayoutManager,
     generate_layout,

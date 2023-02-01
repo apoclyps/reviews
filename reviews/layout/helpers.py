@@ -129,7 +129,7 @@ def generate_layout(log: bool = True, footer: bool = True) -> Layout:
 def generate_tree_layout(configuration: List[Tuple[str, str]]) -> Group:
     """Generates a tree layout for the settings configuration"""
     organization_tree_mapping: Dict[str, Tree] = {}
-    for (org, repo) in configuration:
+    for org, repo in configuration:
         tree = organization_tree_mapping.get(f"{org}", Tree(f"[white]{org}"))
         tree.add(f"[link=https://www.github.com/{org}/{repo}]{repo}[/link]")
         organization_tree_mapping[org] = tree

@@ -6,7 +6,11 @@ from rich.console import Group
 from rich.live import Live
 from rich.panel import Panel
 
-from ..controller import GithubPullRequestController, GitlabPullRequestController, PullRequestController
+from ..controller import (
+    GithubPullRequestController,
+    GitlabPullRequestController,
+    PullRequestController,
+)
 from ..layout import (
     RenderLayoutManager,
     generate_layout,
