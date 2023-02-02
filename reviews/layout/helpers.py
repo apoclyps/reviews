@@ -52,7 +52,6 @@ def render_pull_request_table(
 ) -> Table:
     """Renders a list of pull requests as a table"""
 
-    show_diff = False
     show_author = settings.REVIEWS_AUTHOR
 
     if pull_requests and pull_requests[0].repository_url:
@@ -68,7 +67,6 @@ def render_pull_request_table(
         table.add_column("Author", width=20)
 
     table.add_column("Labels", width=30)
-    table.add_column("Diff +/-", width=10)
     table.add_column("Activity", width=15)
     table.add_column("Approved", width=10)
     table.add_column("Mergeable", width=10)
@@ -86,11 +84,6 @@ def render_pull_request_table(
 
         row.append(pr.render_labels(label_colour_map))
 
-        if show_diff:
-            row.append(pr.render_diff())
-        else:
-            row.append("    -    ")
-
         row.append(pr.render_updated_at())
         row.append(pr.render_approved())
         row.append(pr.render_approved_by_others())
@@ -102,22 +95,7 @@ def render_pull_request_table(
 
 def generate_layout() -> Layout:
     """Define the layout for the terminal UI."""
-    layout = Layout(name="root")
-
-    sections = [Layout(name="main", ratio=1)]
-
-    layout.split(*sections)
-
-    layout["main"].split_row(  # type: ignore
-        Layout(name="left_side", size=25),
-        Layout(name="body", ratio=2, minimum_size=90),
-    )
-
-    nav_sections = [Layout(name="configuration")]
-
-    layout["left_side"].split(*nav_sections)
-
-    return layout
+    return Layout(name="body")
 
 
 def generate_tree_layout(configuration: List[Tuple[str, str]]) -> Group:

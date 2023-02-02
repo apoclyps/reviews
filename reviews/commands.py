@@ -4,7 +4,7 @@ from .config import settings
 from .config.controller import render_config_table
 from .config.helpers import get_configuration
 from .controller import GithubPullRequestController, GitlabPullRequestController
-from .layout import RenderLayoutManager, generate_layout, generate_tree_layout
+from .layout import RenderLayoutManager, generate_layout
 
 
 def render(provider: str) -> None:
@@ -21,10 +21,7 @@ def render(provider: str) -> None:
         body = GithubPullRequestController().render(configuration=configuration)
 
     layout_manager = RenderLayoutManager(layout=generate_layout())
-    layout_manager.render_layout(
-        body=body,
-        pull_request_component=generate_tree_layout(configuration=configuration),
-    )
+    layout_manager.render_layout(body=body)
 
     with Live(
         renderable=layout_manager.layout,
