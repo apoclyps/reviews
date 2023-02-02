@@ -1,7 +1,7 @@
 import click
 from rich.console import Console
 
-from ..commands import render, render_config, single_render
+from ..commands import render, render_config
 from ..config import GITHUB_TOKEN
 from ..errors import InvalidGithubToken
 from ..metrics import repository_metrics
@@ -44,15 +44,13 @@ def config(show: bool) -> None:
 
 @cli.command(help="Visualize code review requests as a Dashboard")
 @click.option("-p", "--provider", type=str, default="github", show_default="github")
-@click.option("-r", "--reload/--no-reload", default=True, is_flag=True)
-def dashboard(reload: bool, provider: str) -> None:
+def dashboard(provider: str) -> None:
     """
     Command:\n
         reviews dashboard
 
     Usage:\n
-        reviews dashboard --reload \n
-        reviews dashboard --no-reload \n
+        reviews dashboard \n
         reviews dashboard --provider=github \n
         reviews dashboard --provider=gitlab \n
     """
@@ -89,10 +87,7 @@ def dashboard(reload: bool, provider: str) -> None:
     try:
         click.echo(f"loading dashboard for {provider}...")
 
-        if reload:
-            render(provider=provider)
-        else:
-            single_render(provider=provider)
+        render(provider=provider)
     except InvalidGithubToken:
         invalid_github_token_msg = (
             "\n[red]GITHUB_TOKEN[/] is required configuration and an invalid "

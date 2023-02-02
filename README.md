@@ -23,7 +23,7 @@ reviews config --show
 
 reviews metrics
 
-reviews dashboard --no-reload
+reviews dashboard
 ```
 
 [![asciicast](https://asciinema.org/a/414444.svg)](https://asciinema.org/a/414444)
