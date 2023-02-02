@@ -21,8 +21,6 @@ pip install --upgrade reviews
 
 reviews config --show
 
-reviews metrics
-
 reviews dashboard
 ```
 

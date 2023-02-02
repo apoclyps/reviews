@@ -4,7 +4,6 @@ from rich.console import Console
 from ..commands import render, render_config
 from ..config import GITHUB_TOKEN
 from ..errors import InvalidGithubToken
-from ..metrics import repository_metrics
 from ..version import __version__
 
 CONTEXT_SETTINGS: dict[str, list[str]] = {"help_option_names": ["-h", "--help"]}
@@ -17,15 +16,6 @@ def cli() -> None:
 
     For feature requests or bug reports: https://github.com/apoclyps/reviews/issues
     """
-
-
-@cli.command(help="Show the activity metrics per repository")
-def metrics() -> None:
-    """
-    Command:\n
-        reviews metrics
-    """
-    repository_metrics()
 
 
 @cli.command(help="Show the current configuration used by Reviews")
