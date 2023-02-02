@@ -4,7 +4,6 @@ from .config import settings
 from .config.controller import render_config_table
 from .config.helpers import get_configuration
 from .controller import GithubPullRequestController, GitlabPullRequestController
-from .layout import RenderLayoutManager, generate_layout
 
 
 def render(provider: str) -> None:
@@ -21,10 +20,7 @@ def render(provider: str) -> None:
         configuration = get_configuration(config=settings.REVIEWS_GITHUB_REPOSITORY_CONFIGURATION)
         body = GithubPullRequestController().render(configuration=configuration)
 
-    layout_manager = RenderLayoutManager(layout=generate_layout())
-    layout_manager.render_layout(body=body)
-
-    console.print(layout_manager.layout, justify="center")
+    console.print(body, justify="center")
 
 
 def render_config(show: bool) -> None:

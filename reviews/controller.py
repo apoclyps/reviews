@@ -5,7 +5,6 @@ from typing import Dict, List, Tuple, Union
 from github.PullRequest import PullRequest as ghPullRequest
 from gitlab.v4.objects import ProjectMergeRequest as GitlabMergeRequest
 from rich.console import Group
-from rich.panel import Panel
 from rich.table import Table
 
 from reviews.source_control.client import GitlabAPI
@@ -19,7 +18,7 @@ from .source_control import GithubAPI, Label, PullRequest
 class PullRequestController:
     """Abstract base class for providier specific pull request controllers"""
 
-    def render(self, configuration: List[Tuple[str, str]]) -> Panel:
+    def render(self, configuration: List[Tuple[str, str]]) -> Group:
         """Renders all pull requests for the provided configuration"""
         raise NotImplementedError("the render method needs to be implemented for your specified provider")
 
@@ -102,7 +101,7 @@ class GithubPullRequestController(PullRequestController):
 
         return code_review_requests
 
-    def render(self, configuration: List[Tuple[str, str]]) -> Panel:
+    def render(self, configuration: List[Tuple[str, str]]) -> Group:
         """Renders all pull requests for the provided configuration"""
 
         with ThreadPoolExecutor(max_workers=10) as executor:
@@ -110,10 +109,7 @@ class GithubPullRequestController(PullRequestController):
             tables = list(executor.map(lambda f: self.retrieve_pull_requests(*f), arguments))
 
         # filter unrenderable `None` results
-        return Panel(
-            Group(*[t for t in tables if t]),
-            title="Activity",
-        )
+        return Group(*[t for t in tables if t])
 
 
 class GitlabPullRequestController(PullRequestController):
@@ -217,7 +213,7 @@ class GitlabPullRequestController(PullRequestController):
 
         return code_review_requests
 
-    def render(self, configuration: List[Tuple[str, str]]) -> Panel:
+    def render(self, configuration: List[Tuple[str, str]]) -> Group:
         """Renders all pull requests for the provided configuration"""
 
         tables = [
@@ -226,7 +222,4 @@ class GitlabPullRequestController(PullRequestController):
         ]
 
         # filter unrenderable `None` results
-        return Panel(
-            Group(*[t for t in tables if t]),
-            title="Activity",
-        )
+        return Group(*[t for t in tables if t])
