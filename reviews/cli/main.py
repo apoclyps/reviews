@@ -7,7 +7,7 @@ from ..errors import InvalidGithubToken
 from ..metrics import repository_metrics
 from ..version import __version__
 
-CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
+CONTEXT_SETTINGS: dict[str, list[str]] = {"help_option_names": ["-h", "--help"]}
 
 
 @click.group(context_settings=CONTEXT_SETTINGS)

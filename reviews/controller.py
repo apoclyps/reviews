@@ -70,7 +70,6 @@ class GithubPullRequestController(PullRequestController):
 
         code_review_requests = []
         for pull_request in pull_requests:
-
             reviews = _get_reviews(pull_request=pull_request)
 
             if pull_request.user.login == config.GITHUB_USER:
@@ -158,7 +157,6 @@ class GitlabPullRequestController(PullRequestController):
 
         code_review_requests = []
         for pull_request in pull_requests:
-
             reviews = _get_reviews(pull_request=pull_request)
 
             if pull_request.author["username"] == config.GITLAB_USER:

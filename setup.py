@@ -2,11 +2,11 @@ from setuptools import find_namespace_packages, setup
 
 
 def _requires_from_file(filename):
-    with open(filename) as f:
+    with open(filename, encoding="utf-8") as f:
         return f.read().splitlines()
 
 
-with open("README.md") as fh:
+with open("README.md", encoding="utf-8") as fh:
     long_description = fh.read()
 
 
