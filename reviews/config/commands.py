@@ -1,12 +1,4 @@
-from datetime import datetime
-from typing import List, Tuple
-
-from rich.live import Live
-
-from ..controller import GithubPullRequestController, GitlabPullRequestController
-from ..layout import RenderLayoutManager, generate_layout, generate_tree_layout
 from .controller import render_config_table
-from .helpers import get_configuration
 from .settings import (
     GITHUB_DEFAULT_PAGE_SIZE,
     GITHUB_TOKEN,
@@ -21,47 +13,6 @@ from .settings import (
     REVIEWS_LABEL_CONFIGURATION,
     REVIEWS_PATH_TO_CONFIG,
 )
-
-logs: List[Tuple[str, str]] = []
-
-
-def add_log_event(message: str) -> List[Tuple[str, str]]:
-    """adds a log event to a list of logs and displays the top 20."""
-    global logs
-
-    logs = logs[-20:]
-    logs.append((str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")), f"[white]{message}"))
-    return logs
-
-
-def render(provider: str) -> None:
-    """Renders the Terminal UI Dashboard once before closing the application"""
-
-    configuration = None
-    body = None
-
-    if provider == "gitlab":
-        configuration = get_configuration(config=REVIEWS_GITLAB_REPOSITORY_CONFIGURATION)
-        body = GitlabPullRequestController().render(configuration=configuration)
-    else:
-        configuration = get_configuration(config=REVIEWS_GITHUB_REPOSITORY_CONFIGURATION)
-        body = GithubPullRequestController().render(configuration=configuration)
-
-    layout_manager = RenderLayoutManager(layout=generate_layout(log=False, footer=False))
-    layout_manager.render_layout(
-        progress_table=None,
-        body=body,
-        pull_request_component=generate_tree_layout(configuration=configuration),
-        log_component=None,
-    )
-
-    with Live(
-        renderable=layout_manager.layout,
-        refresh_per_second=5,
-        transient=False,
-        screen=False,
-    ):
-        add_log_event(message="updated")
 
 
 def render_config(show: bool) -> None:

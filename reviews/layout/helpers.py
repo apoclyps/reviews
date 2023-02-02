@@ -1,12 +1,9 @@
 from operator import attrgetter
 from typing import Dict, List, Tuple
 
-from rich import box
 from rich.color import ANSI_COLOR_NAMES
 from rich.console import Group
 from rich.layout import Layout
-from rich.panel import Panel
-from rich.progress import BarColumn, Progress, SpinnerColumn, TaskID, TextColumn
 from rich.table import Table
 from rich.tree import Tree
 
@@ -34,7 +31,7 @@ def render_repository_does_not_exist(
     link: str,
 ) -> Table:
     """Renders a list of pull requests as a table"""
-    table = Table(show_header=True, header_style="bold white")
+    table = Table()
     table.add_column("#", style="dim", width=7)
     table.add_column(
         f"[link={link}]{title}[/link]",
@@ -103,13 +100,12 @@ def render_pull_request_table(
     return table
 
 
-def generate_layout(log: bool = True, footer: bool = True) -> Layout:
+def generate_layout() -> Layout:
     """Define the layout for the terminal UI."""
     layout = Layout(name="root")
 
-    sections = [Layout(name="header", size=3), Layout(name="main", ratio=1)]
-    if footer:
-        sections.append(Layout(name="footer", size=7))
+    sections = [Layout(name="main", ratio=1)]
+
     layout.split(*sections)
 
     layout["main"].split_row(  # type: ignore
@@ -118,8 +114,6 @@ def generate_layout(log: bool = True, footer: bool = True) -> Layout:
     )
 
     nav_sections = [Layout(name="configuration")]
-    if log:
-        nav_sections.append(Layout(name="log"))
 
     layout["left_side"].split(*nav_sections)
 
@@ -135,47 +129,3 @@ def generate_tree_layout(configuration: List[Tuple[str, str]]) -> Group:
         organization_tree_mapping[org] = tree
 
     return Group(*organization_tree_mapping.values())
-
-
-def generate_log_table(logs: List[Tuple[str, str]]) -> Table:
-    """Generetes a table for logging activity"""
-    table = Table("Time", "Message", box=box.SIMPLE)
-
-    if logs:
-        for log in logs:
-            time, message = log
-            table.add_row(time, message)
-
-    return table
-
-
-def generate_progress_tracker() -> Tuple[Progress, Progress, TaskID, Table]:
-    """Tracks the progress of tasks"""
-    progress = Progress(
-        "{task.description}",
-        SpinnerColumn(),
-        BarColumn(),
-        TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
-    )
-    progress.add_task("[white]Pull Requests", total=100)
-
-    total = sum(task.total for task in progress.tasks if isinstance(task.total, (int, float)))
-    overall_progress = Progress()
-    overall_task = overall_progress.add_task(description="All", total=int(total))
-
-    progress_table = Table.grid(expand=True)
-    progress_table.add_row(
-        Panel(
-            renderable=overall_progress,  # type: ignore
-            title="Next Refresh",
-            border_style="blue",
-        ),
-        Panel(
-            renderable=progress,  # type: ignore
-            title="[b]Next fetch for:",
-            border_style="blue",
-            padding=(1, 2),
-        ),
-    )
-
-    return progress, overall_progress, overall_task, progress_table
