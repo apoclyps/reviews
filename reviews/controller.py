@@ -113,7 +113,6 @@ class GithubPullRequestController(PullRequestController):
         return Panel(
             Group(*[t for t in tables if t]),
             title="Activity",
-            border_style="blue",
         )
 
 
@@ -230,5 +229,4 @@ class GitlabPullRequestController(PullRequestController):
         return Panel(
             Group(*[t for t in tables if t]),
             title="Activity",
-            border_style="blue",
         )

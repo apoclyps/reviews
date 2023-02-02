@@ -138,16 +138,6 @@ python -m reviews config
 
 If at any time, you want to confirm your configuration reflects the file you have provided, you can use `reviews config` to view what current configuration of Reviews.
 
-#### Configuring Layout
-
-Reviews provides the option to configure some optional columns to display/hide those base on provided configuration.
-
-For example, the following configuration can be used to show or hide authors:
-
-```bash
-export REVIEWS_AUTHOR=false
-```
-
 ### Testing
 
 A test suite has been included to ensure Reviews functions correctly.
