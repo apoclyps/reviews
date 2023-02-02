@@ -52,8 +52,6 @@ def render_pull_request_table(
 ) -> Table:
     """Renders a list of pull requests as a table"""
 
-    show_author = settings.REVIEWS_AUTHOR
-
     if pull_requests and pull_requests[0].repository_url:
         link = f"[link={pull_requests[0].repository_url}]{title}[/link]"
     else:
@@ -62,10 +60,7 @@ def render_pull_request_table(
     table = Table(show_header=True, header_style="bold white")
     table.add_column("#", style="dim", width=5)
     table.add_column(link, width=55)
-
-    if show_author:
-        table.add_column("Author", width=20)
-
+    table.add_column("Author", width=20)
     table.add_column("Labels", width=30)
     table.add_column("Activity", width=15)
     table.add_column("Approved", width=10)
@@ -79,11 +74,8 @@ def render_pull_request_table(
             pr.render_title(),
         ]
 
-        if show_author:
-            row.append(pr.render_author())
-
+        row.append(pr.render_author())
         row.append(pr.render_labels(label_colour_map))
-
         row.append(pr.render_updated_at())
         row.append(pr.render_approved())
         row.append(pr.render_approved_by_others())

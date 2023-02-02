@@ -1,4 +1,4 @@
-from rich.live import Live
+from rich.console import Console
 
 from .config import settings
 from .config.controller import render_config_table
@@ -12,6 +12,7 @@ def render(provider: str) -> None:
 
     configuration = None
     body = None
+    console: Console = Console()
 
     if provider == "gitlab":
         configuration = get_configuration(config=settings.REVIEWS_GITLAB_REPOSITORY_CONFIGURATION)
@@ -23,13 +24,7 @@ def render(provider: str) -> None:
     layout_manager = RenderLayoutManager(layout=generate_layout())
     layout_manager.render_layout(body=body)
 
-    with Live(
-        renderable=layout_manager.layout,
-        refresh_per_second=5,
-        transient=False,
-        screen=False,
-    ):
-        pass
+    console.print(layout_manager.layout, justify="center")
 
 
 def render_config(show: bool) -> None:
