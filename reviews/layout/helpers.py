@@ -1,11 +1,8 @@
 from operator import attrgetter
-from typing import Dict, List, Tuple
+from typing import Dict, List
 
 from rich.color import ANSI_COLOR_NAMES
-from rich.console import Group
-from rich.layout import Layout
 from rich.table import Table
-from rich.tree import Tree
 
 from ..config import settings
 from ..source_control import PullRequest
@@ -58,13 +55,13 @@ def render_pull_request_table(
         link = f"{title}"
 
     table = Table(show_header=True, header_style="bold white")
-    table.add_column("#", style="dim", width=5)
+    table.add_column("#", style="dim", width=8)
     table.add_column(link, width=55)
-    table.add_column("Author", width=20)
-    table.add_column("Labels", width=30)
+    table.add_column("Author", width=13)
+    table.add_column("Labels", width=20)
     table.add_column("Activity", width=15)
     table.add_column("Approved", width=10)
-    table.add_column("Mergeable", width=10)
+    table.add_column("Ready", width=10)
 
     label_colour_map = get_label_colour_map()
 
@@ -83,19 +80,3 @@ def render_pull_request_table(
         table.add_row(*row)
 
     return table
-
-
-def generate_layout() -> Layout:
-    """Define the layout for the terminal UI."""
-    return Layout(name="body")
-
-
-def generate_tree_layout(configuration: List[Tuple[str, str]]) -> Group:
-    """Generates a tree layout for the settings configuration"""
-    organization_tree_mapping: Dict[str, Tree] = {}
-    for org, repo in configuration:
-        tree = organization_tree_mapping.get(f"{org}", Tree(f"[white]{org}"))
-        tree.add(f"[link=https://www.github.com/{org}/{repo}]{repo}[/link]")
-        organization_tree_mapping[org] = tree
-
-    return Group(*organization_tree_mapping.values())
