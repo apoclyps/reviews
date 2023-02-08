@@ -10,7 +10,14 @@ Simplify requests for code review with an all-in-one TUI dashboard providing an 
 
 ### Quick Start
 
-If you want to get up and running with Reviews immediately, run:
+If you want to get up and running with Reviews, you will first first need to create a personal access token. To [create a Personal Access Token](https://github.com/settings/tokens) with the required permissions for reviews, you can `generate a new token (classic)` and enable the following full scopes for the following:
+
+- `repo`
+- `admin:org`
+
+> Note: Whilst reviews only requires read only access, providing only `public_repo` and `read:org` permissions is insufficent as it does encompass all types of read-only access for repositories.
+
+To start using reviews, you can run the following:
 
 ```bash
 export GITHUB_USER="your-github-username"
@@ -94,10 +101,10 @@ For instructions on setting up a development environment outside of Docker, chec
 
 Reviews supports both .ini and .env files. Reviews always searches for configuration in this order:
 
-* Environment variables;
-* Repository: ini or .env file;
-* Configuration Path
-* Review Defaults
+- Environment variables;
+- Repository: ini or .env file;
+- Configuration Path
+- Review Defaults
 
 The following steps are used to provide the configuration using a `.env` or `.ini` file. The configuration can be read from within the module/repository (default location set by decouple) using the `.env` file or via a location specified by an environmental variable that points to a `.ini` file located in the root of the project or in a location specified by `PATH_TO_CONFIG`.
 
@@ -177,8 +184,9 @@ docker-compose run --rm --no-deps test codespell reviews
 docker-compose run --rm --no-deps test find . -name '*.py' -exec pyupgrade {} +
 ```
 
-You can also set up ``pre-commit`` to run the linting steps automatically during the commit phase,
+You can also set up `pre-commit` to run the linting steps automatically during the commit phase,
 the pre-commit pipeline can be set up by running the following command on the project root:
+
 ```bash
 pre-commit install
 ```
