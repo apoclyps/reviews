@@ -5,4 +5,4 @@ keyboard==0.13.5
 PyGithub==1.58.1
 python-decouple==3.8
 python-gitlab==3.13.0
-rich==13.3.2
+rich==13.3.3
