@@ -1,4 +1,4 @@
-FROM python:3.11.2-slim-bullseye
+FROM python:3.11.3-slim-bullseye
 
 # Don't write .pyc files (or __pycache__ dirs) inside the container
 ENV PYTHONDONTWRITEBYTECODE=1
