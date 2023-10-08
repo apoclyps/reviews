@@ -20,7 +20,7 @@
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -107,7 +107,7 @@ repos:
       exclude: ^tests/
 
   - repo: https://github.com/jendrikseipp/vulture
-    rev: v2.9.1
+    rev: v2.10
     hooks:
       - id: vulture
         description: Find dead Python code
@@ -129,6 +129,6 @@ repos:
           types: [text]
 
   -   repo: https://github.com/asottile/pyupgrade
-      rev: v3.14.0
+      rev: v3.15.0
       hooks:
       -   id: pyupgrade
