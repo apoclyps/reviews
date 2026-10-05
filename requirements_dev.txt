@@ -2,7 +2,7 @@
 
 bandit==1.7.5
 black==23.9.1
-codespell==2.2.5
+codespell==2.4.3
 flake8==6.1.0
 flake8-unused-arguments==0.0.13
 freezegun==1.2.2
