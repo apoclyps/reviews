@@ -50,7 +50,7 @@ repos:
       - id: check-useless-excludes
 
   - repo: https://github.com/psf/black
-    rev: 26.10.0
+    rev: 26.10.1
     hooks:
       - id: black
         args: [--safe, --quiet, --line-length=119]
@@ -129,6 +129,6 @@ repos:
           types: [text]
 
   -   repo: https://github.com/asottile/pyupgrade
-      rev: v3.21.2
+      rev: v3.22.0
       hooks:
       -   id: pyupgrade
