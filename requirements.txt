@@ -1,6 +1,6 @@
 click==8.1.6
 humanize==4.6.0
-idna==3.4
+idna==3.20
 keyboard==0.13.5
 PyGithub==1.59.1
 python-decouple==3.8
