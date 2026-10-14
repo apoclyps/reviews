@@ -1,6 +1,6 @@
 -r requirements.txt
 
-bandit==1.7.5
+bandit==1.9.4
 black==23.9.1
 codespell==2.2.5
 flake8==6.1.0
